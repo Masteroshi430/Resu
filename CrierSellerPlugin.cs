@@ -322,15 +322,17 @@ namespace Turbo.Plugins.Resu
                  {
                   var HellfireAmuletPlural = "s";
                   long HellfireAmuletNumber = Math.Min((int)(ForgottenSoul/10),Math.Min(Regret,Math.Min(Vial,Math.Min(Idol,Heart))));
-                  if (HellfireAmuletNumber == 1) HellfireAmuletPlural = string.Empty;  
-                  HellfireAmuletSentence = "- I can craft you " + HellfireAmuletNumber + " HellFire Amulet" + HellfireAmuletPlural + ".";
+                  if (HellfireAmuletNumber == 1) HellfireAmuletPlural = string.Empty;
+                  else if (HellfireAmuletNumber == 0 && JewellerSentence == 1) JewellerSentence = 2; 
+                  else HellfireAmuletSentence = "- I can craft you " + HellfireAmuletNumber + " HellFire Amulet" + HellfireAmuletPlural + ".";
                  }
                    
                 long HellfireRingNumber = Math.Min(Regret,Math.Min(Vial,Math.Min(Idol,Heart)));
                   
                 var HellfireRingPlural = "s";
-                if (HellfireRingNumber == 1) HellfireRingPlural = string.Empty;  
-                      HellfireRingSentence = "- ...And also " + HellfireRingNumber + " HellFire Ring" + HellfireRingPlural + ".";
+                if (HellfireRingNumber == 1) HellfireRingPlural = string.Empty;
+                else if (HellfireRingNumber == 0 && JewellerSentence == 2) JewellerSentence = 3;                
+                else HellfireRingSentence = "- ...And also " + HellfireRingNumber + " HellFire Ring" + HellfireRingPlural + ".";
 
                 if (HellfireAmuletSentence == string.Empty && JewellerSentence == 1) JewellerSentence = 2;
                 if (HellfireRingSentence == string.Empty && JewellerSentence == 2) JewellerSentence = 3; 
