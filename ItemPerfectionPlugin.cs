@@ -17,6 +17,7 @@ using System.Collections.Generic;
 
 
 
+ 
 namespace Turbo.Plugins.Resu
 {
     public class ItemPerfectionPlugin : BasePlugin, IInGameTopPainter
