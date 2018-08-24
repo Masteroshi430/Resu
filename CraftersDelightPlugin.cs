@@ -7,16 +7,6 @@ using System.Linq;
 using Turbo.Plugins.Default;
 using System.Threading;
 using System;
- 
- 
- 
- 
- 
-
-
- 
- 
- 
 
 namespace Turbo.Plugins.Resu
 {

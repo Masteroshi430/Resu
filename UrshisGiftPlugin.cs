@@ -8,11 +8,6 @@ using System.Globalization;
 using System.Linq;
 using Turbo.Plugins.Default;
 using System.Collections.Generic;
- 
- 
- 
-
- 
 
 namespace Turbo.Plugins.Resu
 {

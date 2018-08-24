@@ -9,10 +9,6 @@ using Turbo.Plugins.Default;
 using System.Collections.Generic;
 using System.Globalization;
 
-
-
-
-
 namespace Turbo.Plugins.Resu
 {
     public class DangerPlugin : BasePlugin, IInGameWorldPainter
