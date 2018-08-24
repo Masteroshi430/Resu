@@ -11,7 +11,6 @@ using System;
 
 
 
-
 namespace Turbo.Plugins.Resu
 {
     public class DeluxeShrineLabelsPlugin : BasePlugin, ICustomizer, IInGameWorldPainter
