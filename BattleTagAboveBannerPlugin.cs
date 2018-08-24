@@ -11,7 +11,6 @@ using Turbo.Plugins.Default;
 
 
 
-
 namespace Turbo.Plugins.Resu
 {
     public class BattleTagAboveBanner : BasePlugin, IInGameWorldPainter
