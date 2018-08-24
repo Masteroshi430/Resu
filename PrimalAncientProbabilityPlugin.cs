@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 
 
+
 namespace Turbo.Plugins.Resu
 {
     public class PrimalAncientProbabilityPlugin : BasePlugin, IInGameTopPainter, ILootGeneratedHandler

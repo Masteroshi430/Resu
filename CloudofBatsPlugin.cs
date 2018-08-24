@@ -12,6 +12,7 @@ using System.Linq;
 
 
 
+
 namespace Turbo.Plugins.Resu
 {
     public class CloudofBatsPlugin : BasePlugin, IInGameTopPainter

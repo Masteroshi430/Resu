@@ -12,6 +12,7 @@ using System.Threading;
 
 
 
+
 namespace Turbo.Plugins.Resu
 {
     public class ChannelingPlugin : BasePlugin, IInGameTopPainter
