@@ -9,6 +9,7 @@ using Turbo.Plugins.Default;
 using System.Linq;
 
 
+
 namespace Turbo.Plugins.Resu
 {
     public class CustomLifeWarningPlugin : BasePlugin, IInGameTopPainter, IInGameWorldPainter
