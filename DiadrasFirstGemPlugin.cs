@@ -10,7 +10,6 @@ using System.Linq;
 
 
 
-
 namespace Turbo.Plugins.Resu
 {
 
