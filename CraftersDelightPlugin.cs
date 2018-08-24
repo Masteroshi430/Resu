@@ -9,6 +9,7 @@ using System.Threading;
 using System;
  
  
+ 
 namespace Turbo.Plugins.Resu
 {
     public class CraftersDelightPlugin : BasePlugin, IInGameWorldPainter, ILootGeneratedHandler, ICustomizer, IInGameTopPainter
