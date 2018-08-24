@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crier Seller Plugin for TurboHUD version 21/08/2018 08:42
+// Crier Seller Plugin for TurboHUD version 24/08/2018 22:58
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,8 @@ namespace Turbo.Plugins.Resu
         public int KadalaSentence { get; set; }
         public int JewellerSentence { get; set; }
         public int MysticSentence { get; set; }
+        public int BlackSmithSentence { get; set; }
+        public int KulleSentence { get; set; }
         
         public CrierSellerPlugin()
         {
@@ -40,14 +42,16 @@ namespace Turbo.Plugins.Resu
          KadalaSentence = 0;
          JewellerSentence = 0;
          MysticSentence = 0;
-         
+         BlackSmithSentence = 0;
+         KulleSentence = 0;
+                  
         }
         
          public void PaintWorld(WorldLayer layer)
          {
            if (!Hud.Game.IsInTown) return;
            if (Hud.Inventory.InventoryMainUiElement.Visible) return;
-           var Sellers = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 361241 || x.SnoActor.Sno == 56949 || x.SnoActor.Sno == 56948 || x.SnoActor.Sno == 56947); //  429005 Kulle
+           var Sellers = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 361241 || x.SnoActor.Sno == 56949 || x.SnoActor.Sno == 56948 || x.SnoActor.Sno == 56947 || x.SnoActor.Sno == 429005);
            string SellerMessage = string.Empty;
            int Seconds = (int)(Hud.Game.CurrentRealTimeMilliseconds/1000);
            
@@ -60,6 +64,10 @@ namespace Turbo.Plugins.Resu
              if (JewellerSentence == 4) JewellerSentence = 0;
              MysticSentence++;
              if (MysticSentence == 5) MysticSentence = 0;
+             BlackSmithSentence++;
+             if (BlackSmithSentence == 3) BlackSmithSentence = 0;
+             KulleSentence++;
+             if (KulleSentence == 6)KulleSentence = 0;
              PrevSeconds = Seconds;
             }
            
@@ -103,9 +111,22 @@ namespace Turbo.Plugins.Resu
                  GemsCount.TryGetValue(GemNameInventory, out DictQuantity2);  
                  GemsCount[GemNameInventory] = DictQuantity2 + GemQuantityInventory;    
                 } 
-              
            }
            
+           long Khanduran = Hud.Game.Me.Materials.KhanduranRune;
+           long Caldeum = Hud.Game.Me.Materials.CaldeumNightShade;
+           long Arreat = Hud.Game.Me.Materials.ArreatWarTapestry;
+           long AngelFlesh = Hud.Game.Me.Materials.CorruptedAngelFlesh;
+           long HolyWater = Hud.Game.Me.Materials.WestmarchHolyWater;
+           long DeathsBreath = Hud.Game.Me.Materials.DeathsBreath; 
+           long ArcaneDust = Hud.Game.Me.Materials.ArcaneDust;
+           long VeiledCrystal = Hud.Game.Me.Materials.VeiledCrystal;
+           long ReusableParts = Hud.Game.Me.Materials.ReusableParts; 
+           long ForgottenSoul = Hud.Game.Me.Materials.ForgottenSoul;
+           long Regret = Hud.Game.Me.Materials.LeoricsRegret;
+           long Vial = Hud.Game.Me.Materials.VialOfPutridness;
+           long Idol = Hud.Game.Me.Materials.IdolOfTerror;
+           long Heart = Hud.Game.Me.Materials.HeartOfFright;
            
            foreach (var Seller in Sellers)
            {
@@ -213,6 +234,7 @@ namespace Turbo.Plugins.Resu
                    SellerMessage = HundredMessage;
                    break;
                   }
+              if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
               }
               
              else if (Seller.SnoActor.Sno == 56949) // Jeweler
@@ -295,62 +317,21 @@ namespace Turbo.Plugins.Resu
                 if (GemSentence == string.Empty && JewellerSentence == 0) JewellerSentence = 1;
                 string HellfireRingSentence = string.Empty;
                 string HellfireAmuletSentence = string.Empty;
-                if (Hud.Game.Me.Materials.LeoricsRegret > 0 && Hud.Game.Me.Materials.VialOfPutridness > 0 && Hud.Game.Me.Materials.IdolOfTerror > 0 && Hud.Game.Me.Materials.HeartOfFright > 0)
+                
+                if (ForgottenSoul >= 10)
                  {
-                   if (Hud.Game.Me.Materials.ForgottenSoul >= 10)
-                    {
-                      long ForgottenSouls = (int)(Hud.Game.Me.Materials.ForgottenSoul/10);
-                      var HellfireAmuletPlural = "s";
-                      long HellfireAmuletNumber = 0;
-                      if (ForgottenSouls <= Hud.Game.Me.Materials.LeoricsRegret && ForgottenSouls <= Hud.Game.Me.Materials.VialOfPutridness && ForgottenSouls <= Hud.Game.Me.Materials.IdolOfTerror && ForgottenSouls <= Hud.Game.Me.Materials.HeartOfFright)
-                       {
-                        HellfireAmuletNumber = ForgottenSouls;
-                       }
-                      else if (Hud.Game.Me.Materials.LeoricsRegret <= ForgottenSouls && Hud.Game.Me.Materials.LeoricsRegret <= Hud.Game.Me.Materials.VialOfPutridness && Hud.Game.Me.Materials.LeoricsRegret <= Hud.Game.Me.Materials.IdolOfTerror && Hud.Game.Me.Materials.LeoricsRegret <= Hud.Game.Me.Materials.HeartOfFright)
-                       {
-                        HellfireAmuletNumber = Hud.Game.Me.Materials.LeoricsRegret;
-                       }
-                      else if (Hud.Game.Me.Materials.VialOfPutridness <= ForgottenSouls && Hud.Game.Me.Materials.VialOfPutridness <= Hud.Game.Me.Materials.LeoricsRegret && Hud.Game.Me.Materials.VialOfPutridness <= Hud.Game.Me.Materials.IdolOfTerror && Hud.Game.Me.Materials.VialOfPutridness <= Hud.Game.Me.Materials.HeartOfFright)
-                       {
-                        HellfireAmuletNumber = Hud.Game.Me.Materials.VialOfPutridness;
-                       }
-                       else if (Hud.Game.Me.Materials.IdolOfTerror <= ForgottenSouls && Hud.Game.Me.Materials.IdolOfTerror <= Hud.Game.Me.Materials.LeoricsRegret && Hud.Game.Me.Materials.IdolOfTerror <= Hud.Game.Me.Materials.VialOfPutridness && Hud.Game.Me.Materials.IdolOfTerror <= Hud.Game.Me.Materials.HeartOfFright)
-                       {
-                        HellfireAmuletNumber = Hud.Game.Me.Materials.IdolOfTerror;
-                       }
-                      else if (Hud.Game.Me.Materials.HeartOfFright <= ForgottenSouls && Hud.Game.Me.Materials.HeartOfFright <= Hud.Game.Me.Materials.LeoricsRegret && Hud.Game.Me.Materials.HeartOfFright <= Hud.Game.Me.Materials.VialOfPutridness && Hud.Game.Me.Materials.HeartOfFright <= Hud.Game.Me.Materials.IdolOfTerror)
-                       {
-                        HellfireAmuletNumber = Hud.Game.Me.Materials.HeartOfFright;
-                       }
-                       
-                      if (HellfireAmuletNumber == 1) HellfireAmuletPlural = string.Empty;  
-                      HellfireAmuletSentence = "- I can craft you " + HellfireAmuletNumber + " HellFire Amulet" + HellfireAmuletPlural + ".";
-                    }
+                  var HellfireAmuletPlural = "s";
+                  long HellfireAmuletNumber = Math.Min((int)(ForgottenSoul/10),Math.Min(Regret,Math.Min(Vial,Math.Min(Idol,Heart))));
+                  if (HellfireAmuletNumber == 1) HellfireAmuletPlural = string.Empty;  
+                  HellfireAmuletSentence = "- I can craft you " + HellfireAmuletNumber + " HellFire Amulet" + HellfireAmuletPlural + ".";
+                 }
                    
-                   long HellfireRingNumber = 0;
-                   var HellfireRingPlural = "s";
-                   if (Hud.Game.Me.Materials.LeoricsRegret <= Hud.Game.Me.Materials.VialOfPutridness && Hud.Game.Me.Materials.LeoricsRegret <= Hud.Game.Me.Materials.IdolOfTerror && Hud.Game.Me.Materials.LeoricsRegret <= Hud.Game.Me.Materials.HeartOfFright)
-                    {
-                     HellfireRingNumber = Hud.Game.Me.Materials.LeoricsRegret;
-                    }
-                   else if (Hud.Game.Me.Materials.VialOfPutridness <= Hud.Game.Me.Materials.LeoricsRegret && Hud.Game.Me.Materials.VialOfPutridness <= Hud.Game.Me.Materials.IdolOfTerror && Hud.Game.Me.Materials.VialOfPutridness <= Hud.Game.Me.Materials.HeartOfFright)
-                    {
-                     HellfireRingNumber = Hud.Game.Me.Materials.VialOfPutridness;
-                    }
-                    else if (Hud.Game.Me.Materials.IdolOfTerror <= Hud.Game.Me.Materials.LeoricsRegret && Hud.Game.Me.Materials.IdolOfTerror <= Hud.Game.Me.Materials.VialOfPutridness && Hud.Game.Me.Materials.IdolOfTerror <= Hud.Game.Me.Materials.HeartOfFright)
-                    {
-                     HellfireRingNumber = Hud.Game.Me.Materials.IdolOfTerror;
-                    }
-                   else if (Hud.Game.Me.Materials.HeartOfFright <= Hud.Game.Me.Materials.LeoricsRegret && Hud.Game.Me.Materials.HeartOfFright <= Hud.Game.Me.Materials.VialOfPutridness && Hud.Game.Me.Materials.HeartOfFright <= Hud.Game.Me.Materials.IdolOfTerror)
-                    {
-                     HellfireRingNumber = Hud.Game.Me.Materials.HeartOfFright;
-                    }
+                long HellfireRingNumber = Math.Min(Regret,Math.Min(Vial,Math.Min(Idol,Heart)));
                   
-                  if (HellfireRingNumber == 1) HellfireRingPlural = string.Empty;  
+                var HellfireRingPlural = "s";
+                if (HellfireRingNumber == 1) HellfireRingPlural = string.Empty;  
                       HellfireRingSentence = "- ...And also " + HellfireRingNumber + " HellFire Ring" + HellfireRingPlural + ".";
 
-                    
-                 }
                 if (HellfireAmuletSentence == string.Empty && JewellerSentence == 1) JewellerSentence = 2;
                 if (HellfireRingSentence == string.Empty && JewellerSentence == 2) JewellerSentence = 3; 
                 
@@ -368,91 +349,19 @@ namespace Turbo.Plugins.Resu
                    case 3:
                    SellerMessage = "...And extracting gems from your gear is free of course... *sigh*.";
                    break;
-                  } 
+                  }
+               if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);                  
               }
               else if (Seller.SnoActor.Sno == 56948) // Mystik
               {
-               long ArcaneDust = (int)(Hud.Game.Me.Materials.ArcaneDust/5);
-               long VeiledCrystal = (int)(Hud.Game.Me.Materials.VeiledCrystal/15);
-               long ForgottenSoul = Hud.Game.Me.Materials.ForgottenSoul;
-               long DeathsBreath = Hud.Game.Me.Materials.DeathsBreath;
                long ImperialRubies = GemsCount["Imperial Ruby"];
                long ImperialTopaz = GemsCount["Imperial Topaz"];
                long ImperialEmerald = GemsCount["Imperial Emerald"];
                long ImperialDiamond = GemsCount["Imperial Diamond"];
                long ImperialAmethyst = GemsCount["Imperial Amethyst"];
                
-               long EnchantTrinketsCount = 0;
-               
-               if (ArcaneDust <= VeiledCrystal && ArcaneDust <= ForgottenSoul && ArcaneDust <= DeathsBreath && ArcaneDust <= ImperialRubies && ArcaneDust <= ImperialTopaz
-                   && ArcaneDust <= ImperialEmerald && ArcaneDust <= ImperialDiamond && ArcaneDust <= ImperialAmethyst)
-                   {
-                    EnchantTrinketsCount = ArcaneDust;    
-                   }
-               else if (VeiledCrystal <= ArcaneDust && VeiledCrystal <= ForgottenSoul && VeiledCrystal <= DeathsBreath && VeiledCrystal <= ImperialRubies &&
-                        VeiledCrystal <= ImperialTopaz && VeiledCrystal <= ImperialEmerald && VeiledCrystal <= ImperialDiamond && VeiledCrystal <= ImperialAmethyst)
-                   {
-                    EnchantTrinketsCount = VeiledCrystal;    
-                   }
-               else if (ForgottenSoul <= ArcaneDust && ForgottenSoul <= VeiledCrystal && ForgottenSoul <= DeathsBreath && ForgottenSoul <= ImperialRubies &&
-                        ForgottenSoul <= ImperialTopaz && ForgottenSoul <= ImperialEmerald && ForgottenSoul <= ImperialDiamond && ForgottenSoul <= ImperialAmethyst)
-                   {
-                    EnchantTrinketsCount = ForgottenSoul;    
-                   }
-               else if (DeathsBreath <= ArcaneDust && DeathsBreath <= VeiledCrystal && DeathsBreath <= ForgottenSoul && DeathsBreath <= ImperialRubies &&
-                        DeathsBreath <= ImperialTopaz && DeathsBreath <= ImperialEmerald && DeathsBreath <= ImperialDiamond && DeathsBreath <= ImperialAmethyst)
-                   {
-                    EnchantTrinketsCount = DeathsBreath;    
-                   }
-               else if (ImperialRubies <= ArcaneDust && ImperialRubies <= VeiledCrystal && ImperialRubies <= ForgottenSoul && ImperialRubies <= DeathsBreath &&
-                        ImperialRubies <= ImperialTopaz && ImperialRubies <= ImperialEmerald && ImperialRubies <= ImperialDiamond && ImperialRubies <= ImperialAmethyst
-                        && ImperialRubies != 0)
-                   {
-                    EnchantTrinketsCount = ImperialRubies;    
-                   }
-               else if (ImperialTopaz <= ArcaneDust && ImperialTopaz <= VeiledCrystal && ImperialTopaz <= ForgottenSoul && ImperialTopaz <= DeathsBreath &&
-                        ImperialTopaz <= ImperialRubies && ImperialTopaz <= ImperialEmerald && ImperialTopaz <= ImperialDiamond && ImperialTopaz <= ImperialAmethyst
-                        && ImperialTopaz != 0)
-                   {
-                    EnchantTrinketsCount = ImperialTopaz;    
-                   }
-               else if (ImperialEmerald <= ArcaneDust && ImperialEmerald <= VeiledCrystal && ImperialEmerald <= ForgottenSoul && ImperialEmerald <= DeathsBreath &&
-                        ImperialEmerald <= ImperialRubies && ImperialEmerald <= ImperialTopaz && ImperialEmerald <= ImperialDiamond && ImperialEmerald <= ImperialAmethyst
-                        && ImperialEmerald != 0)
-                   {
-                    EnchantTrinketsCount = ImperialEmerald;    
-                   }
-               else if (ImperialDiamond <= ArcaneDust && ImperialDiamond <= VeiledCrystal && ImperialDiamond <= ForgottenSoul && ImperialDiamond <= DeathsBreath &&
-                        ImperialDiamond <= ImperialRubies && ImperialDiamond <= ImperialTopaz && ImperialDiamond <= ImperialEmerald && ImperialDiamond <= ImperialAmethyst
-                        && ImperialDiamond != 0)
-                   {
-                    EnchantTrinketsCount = ImperialDiamond;    
-                   }
-               else if (ImperialAmethyst <= ArcaneDust && ImperialAmethyst <= VeiledCrystal && ImperialAmethyst <= ForgottenSoul && ImperialAmethyst <= DeathsBreath &&
-                        ImperialAmethyst <= ImperialRubies && ImperialAmethyst <= ImperialTopaz && ImperialAmethyst <= ImperialEmerald && ImperialAmethyst <= ImperialDiamond
-                        && ImperialAmethyst != 0)
-                   {
-                    EnchantTrinketsCount = ImperialAmethyst;    
-                   }
-               
-               long EnchantCount = 0;
-               
-                    if (ArcaneDust <= VeiledCrystal && ArcaneDust <= ForgottenSoul && ArcaneDust <= DeathsBreath)
-                   {
-                    EnchantCount = ArcaneDust;    
-                   }
-               else if (VeiledCrystal <= ArcaneDust && VeiledCrystal <= ForgottenSoul && VeiledCrystal <= DeathsBreath)
-                   {
-                    EnchantCount = VeiledCrystal;    
-                   }
-               else if (ForgottenSoul <= ArcaneDust && ForgottenSoul <= VeiledCrystal && ForgottenSoul <= DeathsBreath)
-                   {
-                    EnchantCount = ForgottenSoul;    
-                   }
-               else if (DeathsBreath <= ArcaneDust && DeathsBreath <= VeiledCrystal && DeathsBreath <= ForgottenSoul)
-                   {
-                    EnchantCount = DeathsBreath;    
-                   }
+               long EnchantTrinketsCount = Math.Min((int)(ArcaneDust/5),Math.Min((int)(VeiledCrystal/15),Math.Min(ForgottenSoul,Math.Min(DeathsBreath,Math.Min(ImperialRubies,Math.Min(ImperialTopaz,Math.Min(ImperialEmerald,Math.Min(ImperialDiamond,ImperialAmethyst))))))));
+               long EnchantCount = Math.Min((int)(ArcaneDust/5),Math.Min((int)(VeiledCrystal/15),Math.Min(ForgottenSoul,DeathsBreath)));
 
 
                string EnchantTrinketsSentence = string.Empty;
@@ -496,22 +405,164 @@ namespace Turbo.Plugins.Resu
                    case 4:
                    SellerMessage = DyeSentence;
                    break;
-                  }    
+                  }
+               if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);   
               }
-              
               else if (Seller.SnoActor.Sno == 56947) // Blacksmith
               {
-              // 20 reusable 20 arcane  30 vieled 1 Khanduran 1 corrupted
-              // 15 reusable 15 arcane 20 vieled
-              // staff of herding : 1 wirt's bell 1 Black Mushroom 1 liquid rainbow 1 gibbering gemstone 1 leoric's shinbone
-              // 30 30 50 1 1 (weapon)
-              
-              
-              
-              
+               int BellCount = 0;
+               int MushroomCount = 0;
+               int RainbowCount = 0;
+               int GemstoneCount = 0;
+               int ShinboneCount = 0;
+                              
+               var StaffStash = Hud.Inventory.ItemsInStash.Where(x => x.SnoItem.MainGroupCode == "pony" && x.Quantity != 0);
+               foreach (var Pony in StaffStash)
+               {
+                if (Pony == null) continue;
+                if (Pony.SnoItem == null) continue;
+                if (Pony.SnoItem.Sno == null) continue;
+                
+                if (Pony.SnoItem.Sno == 3495098760) BellCount++;
+                else if (Pony.SnoItem.Sno == 2301417192) MushroomCount++;
+                else if (Pony.SnoItem.Sno == 725082635) RainbowCount++;
+                else if (Pony.SnoItem.Sno == 3494992897) GemstoneCount++;
+                else if (Pony.SnoItem.Sno == 3665447244) ShinboneCount++;
+               }   
+               
+               var StaffInventory = Hud.Inventory.ItemsInInventory.Where(x => x.SnoItem.MainGroupCode == "pony" && x.Quantity != 0);
+               foreach (var Pony in StaffInventory)
+               {
+                if (Pony == null) continue;
+                if (Pony.SnoItem == null) continue;
+                if (Pony.SnoItem.Sno == null) continue;
+                
+                if (Pony.SnoItem.Sno == 3495098760) BellCount++;
+                else if (Pony.SnoItem.Sno == 2301417192) MushroomCount++;
+                else if (Pony.SnoItem.Sno == 725082635) RainbowCount++;
+                else if (Pony.SnoItem.Sno == 3494992897) GemstoneCount++;
+                else if (Pony.SnoItem.Sno == 3665447244) ShinboneCount++;
+               } 
+               int StaffCount = Math.Min(BellCount, Math.Min(MushroomCount, Math.Min(RainbowCount, Math.Min(GemstoneCount, ShinboneCount)))); 
+               long CraftItemCount = Math.Min((int)(ArcaneDust/30), Math.Min((int)(VeiledCrystal/50), Math.Min((int)(ReusableParts/30), Math.Min(Khanduran, Math.Min(Caldeum, Math.Min(Arreat, Math.Min(AngelFlesh, HolyWater)))))));
+               long HallowedBreach =  Math.Min((int)(ReusableParts/20),Math.Min((int)(ArcaneDust/20),Math.Min((int)(VeiledCrystal/30),Math.Min(Khanduran,Math.Min(AngelFlesh,(int)(Hud.Game.Me.Materials.Gold/72000))))));
+               
+               var freeSpace = Hud.Game.Me.InventorySpaceTotal - Hud.Game.InventorySpaceUsed;
+               string InventorySentence = string.Empty;
+               if (freeSpace <= 10) InventorySentence = "- Time to empty your inventory is coming!" + Environment.NewLine + "  Let me salvage those...";
+               else if (BlackSmithSentence == 2) BlackSmithSentence = 0;               
+                
+               string StaffSentence = string.Empty;
+               string StaffPlural = "s";
+               if (StaffCount == 1) StaffPlural = string.Empty;
+               else if (StaffCount == 0 && BlackSmithSentence == 0) BlackSmithSentence = 1;           
+               else StaffSentence = "- I can craft you " + StaffCount + " Staff" + StaffPlural + " of Herding!";
+               
+               string BestItemSentence = string.Empty;
+               if (CraftItemCount == 0 && BlackSmithSentence == 1) BlackSmithSentence = 2;           
+               else BestItemSentence = "- You have enough materials to have " + CraftItemCount + " of my best items crafted!";
+
+               switch (BlackSmithSentence)
+               {
+                case 0:
+                SellerMessage = StaffSentence;
+                break;
+                case 1:
+                SellerMessage = BestItemSentence;
+                break;
+                case 2:
+                SellerMessage = InventorySentence;
+                break;
+               }
+              if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);               
+              }
+              else if (Seller.SnoActor.Sno == 429005) // Kulle
+              {
+                var puzzleRingCount = 0;
+                var bovineBardicheCount = 0;
+                
+                foreach (var item in Hud.Inventory.ItemsInStash)
+               {
+                if (item.SnoItem.Sno == 2346057823) bovineBardicheCount += (int)item.Quantity; // Bovine Bardiche
+                if (item.SnoItem.Sno == 3106130529) puzzleRingCount += (int)item.Quantity; // Puzzle Ring
+               }
+
+                foreach (var item in Hud.Inventory.ItemsInInventory)
+               {
+                if (item.SnoItem.Sno == 2346057823) bovineBardicheCount += (int)item.Quantity; // Bovine Bardiche
+                if (item.SnoItem.Sno == 3106130529) puzzleRingCount += (int)item.Quantity; // Puzzle Ring
+               }              
+               
+               puzzleRingCount = Math.Abs(puzzleRingCount);
+               bovineBardicheCount = Math.Abs(bovineBardicheCount);
+                 
+               long Extract = Math.Min(Khanduran, Math.Min(Caldeum, Math.Min(Arreat, Math.Min(AngelFlesh, Math.Min(HolyWater, (int)(DeathsBreath/5)))))); 
+               long Reforge = Math.Min((int)(Khanduran/5), Math.Min((int)(Caldeum/5), Math.Min((int)(Arreat/5), Math.Min((int)(AngelFlesh/5), Math.Min((int)(HolyWater/5), (int)(ForgottenSoul/50)))))); 
+               long Upgrade = Math.Min((int)(VeiledCrystal/50), Math.Min((int)(ArcaneDust/50), Math.Min((int)(ReusableParts/50), (int)(DeathsBreath/25)))); 
+               long Convert = Math.Min((int)(DeathsBreath/10),(int)(ForgottenSoul/10)); 
+
+               string ConvertSentence = string.Empty;
+               string ConvertPlural = "s";
+               if (Convert == 1) ConvertPlural = string.Empty;
+               else if (Convert == 0 && KulleSentence == 5) KulleSentence = 0;           
+               else ConvertSentence = "- You can convert a set item " + Convert + " time" + ConvertPlural + ".";
+               
+               string UpgradeSentence = string.Empty;
+               string UpgradePlural = "s";
+               if (Upgrade == 1) UpgradePlural = string.Empty;
+               else if (Upgrade == 0 && KulleSentence == 4) KulleSentence = 5;           
+               else UpgradeSentence = "- You can upgrade " + Upgrade + " rare item" + UpgradePlural + "."; 
+                
+               string ReforgeSentence = string.Empty;
+               string ReforgePlural = "s";
+               if (Reforge == 1) ReforgePlural = string.Empty;
+               else if (Reforge == 0 && KulleSentence == 3) KulleSentence = 4;           
+               else ReforgeSentence = "- You can reforge " + Reforge + " legendary item" + ReforgePlural + ".";  
+                
+               string ExtractSentence = string.Empty;
+               string ExtractPlural = "s";
+               if (Extract == 1) ExtractPlural = string.Empty;
+               else if (Extract == 0 && KulleSentence == 2) KulleSentence = 3;           
+               else ExtractSentence = "- You can extract " + Extract + " legendary power" + ExtractPlural + "."; 
+               
+               string GoblinSentence = string.Empty;
+               string GoblinPlural = "s";
+               if (puzzleRingCount == 1) GoblinPlural = string.Empty;
+               else if (puzzleRingCount == 0 && KulleSentence == 1) KulleSentence = 2;           
+               else GoblinSentence = "- You have " + puzzleRingCount + " ticket" + GoblinPlural + " to Greed's realm.";
+
+               string BovineSentence = string.Empty;
+               string BovinePlural = "s";
+               if (bovineBardicheCount == 1) BovinePlural = string.Empty;
+               else if (bovineBardicheCount == 0 && KulleSentence == 0) KulleSentence = 1;           
+               else BovineSentence = "- I can help you access to a place that doesn't exist " + bovineBardicheCount + " time" + BovinePlural + ".";               
+               
+               
+               switch (KulleSentence)
+               {
+                case 0:
+                SellerMessage = BovineSentence;
+                break;
+                case 1:
+                SellerMessage = GoblinSentence;
+                break;
+                case 2:
+                SellerMessage = ExtractSentence;
+                break;
+                case 3:
+                SellerMessage = ReforgeSentence;
+                break;
+                case 4:
+                SellerMessage = UpgradeSentence;
+                break;
+                case 5:
+                SellerMessage = ConvertSentence;
+                break;
+               } 
+               if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
               }
               
-            if (Seller.FloorCoordinate.IsOnScreen() && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
+            
            }
 
 
