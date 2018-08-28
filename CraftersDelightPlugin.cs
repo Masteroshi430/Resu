@@ -353,7 +353,7 @@ namespace Turbo.Plugins.Resu
           if (SameAsEquipped(item.SnoItem.Sno) && Equipped && item.IsLegendary)
                     {
                      var soundPlayer = Hud.Sound.LoadSoundPlayer("Equipped-Drop-By-Resu.wav");
-            
+                     
                      ThreadPool.QueueUserWorkItem(state =>
                        {
                         try 

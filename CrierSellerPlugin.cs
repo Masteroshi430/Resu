@@ -132,7 +132,7 @@ namespace Turbo.Plugins.Resu
            {
              if (Seller == null) continue;
              if (Seller.SnoActor == null) continue;
-             if (Seller.SnoActor.Sno == null) continue;
+             if (Seller.SnoActor.Sno == 0) continue;
              if (Seller.FloorCoordinate == null) continue;
              
              if (Seller.SnoActor.Sno == 361241) // Kadala
@@ -423,7 +423,7 @@ namespace Turbo.Plugins.Resu
                {
                 if (Pony == null) continue;
                 if (Pony.SnoItem == null) continue;
-                if (Pony.SnoItem.Sno == null) continue;
+                if (Pony.SnoItem.Sno == 0) continue;
                 
                 if (Pony.SnoItem.Sno == 3495098760) BellCount++;
                 else if (Pony.SnoItem.Sno == 2301417192) MushroomCount++;
@@ -437,7 +437,7 @@ namespace Turbo.Plugins.Resu
                {
                 if (Pony == null) continue;
                 if (Pony.SnoItem == null) continue;
-                if (Pony.SnoItem.Sno == null) continue;
+                if (Pony.SnoItem.Sno == 0) continue;
                 
                 if (Pony.SnoItem.Sno == 3495098760) BellCount++;
                 else if (Pony.SnoItem.Sno == 2301417192) MushroomCount++;
