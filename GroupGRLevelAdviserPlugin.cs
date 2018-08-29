@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 21/08/2018 08:42
+// Group GR Level Adviser Plugin for TurboHUD version 29/08/2018 18:16
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,9 @@ namespace Turbo.Plugins.Resu
         public string Party { get; set; }
         public float CircleSize { get; set; }
         public WorldDecoratorCollection CircleDecorator { get; set; }
+        public WorldDecoratorCollection TalkToUrshiDecorator { get; set; }
+        public bool GardianIsDead { get; set; }
+        public bool TalkedToUrshi { get; set; }
         
         public GroupGRLevelAdviserPlugin()
         {
@@ -35,7 +38,7 @@ namespace Turbo.Plugins.Resu
           {
            TextFont = Hud.Render.CreateFont("arial", 7, 220, 198, 174, 49, true, false, 255, 0, 0, 0, true),
            TextFunc = () => "",
-           HintFunc = () => Party + Environment.NewLine + "Greater Rift level advised for" + Environment.NewLine + "this " + Hud.Game.NumberOfPlayersInGame + " players group : " + GRLevelText
+           HintFunc = () => (Hud.Game.NumberOfPlayersInGame == 1) ? Hud.Game.Me.HeroName + "'s highest GR level : " + Hud.Game.Me.HighestHeroSoloRiftLevel : Party + Environment.NewLine + "Greater Rift level advised for" + Environment.NewLine + "this " + Hud.Game.NumberOfPlayersInGame + " players group : " + GRLevelText
           };
 
          ObeliskClose = new WorldDecoratorCollection( 
@@ -46,12 +49,17 @@ namespace Turbo.Plugins.Resu
            TextFont = Hud.Render.CreateFont("arial", 7, 200, 255, 255, 110, true, false, 255, 0, 0, 0, true)
           });
 
+         TalkToUrshiDecorator = new WorldDecoratorCollection(
+          new GroundLabelDecorator(Hud)
+          {
+           BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+           TextFont = Hud.Render.CreateFont("tahoma", 20, 255, 255, 255, 255, true, true, true),
+          });
+          
         }
         
          public void PaintWorld(WorldLayer layer)
          {
-          if (Hud.Game.NumberOfPlayersInGame > 1)
-           {
             int maxGRlevel = 0;
             int PlayerInTownCount = 0;
             Party = "";
@@ -63,7 +71,7 @@ namespace Turbo.Plugins.Resu
                   }
                   
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
-             {                
+             {
               int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / Hud.Game.NumberOfPlayersInGame + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
               GRLevelText = GRAverage.ToString();
               var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
@@ -126,7 +134,7 @@ namespace Turbo.Plugins.Resu
                  var Rift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 337492);
                  var GRift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 382695);
                  
-                 bool GardianIsDead = false;
+                 GardianIsDead = false;
                  
                  if (Rift != null) 
                   {
@@ -139,14 +147,13 @@ namespace Turbo.Plugins.Resu
                  else return; 
                        
                        
-            if (PlayerInTownCount == Hud.Game.NumberOfPlayersInGame && Hud.Game.RiftPercentage == 100 && Hud.Game.IsInTown && GardianIsDead)
+            if (PlayerInTownCount == Hud.Game.NumberOfPlayersInGame && Hud.Game.RiftPercentage == 100 && Hud.Game.IsInTown && GardianIsDead && Hud.Game.NumberOfPlayersInGame != 1)
              {
                var Obelisk = Hud.Game.Actors.FirstOrDefault(x => x.SnoActor.Sno == 345935);
                if (Obelisk != null) ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
              }
 
-           }
-           
+
            // 5% of Rift circle part
            CircleDecorator = new WorldDecoratorCollection( 
               new MapShapeDecorator(Hud)
@@ -188,6 +195,15 @@ namespace Turbo.Plugins.Resu
                     }
                    
                   }
+           }
+           
+           bool UrshiPanel = Hud.Render.GetUiElement("Root.NormalLayer.vendor_dialog_mainPage.riftReward_dialog.LayoutRoot.gemUpgradePane.items_list._content").Visible;
+           if (UrshiPanel) TalkedToUrshi = true;
+           if (Hud.Game.Me.IsInTown) TalkedToUrshi = false;
+           
+          if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && GardianIsDead && Hud.Game.Me.AnimationState == AcdAnimationState.CastingPortal && !TalkedToUrshi)
+           {
+            TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
            }
         }
     }
