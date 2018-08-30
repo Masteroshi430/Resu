@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 15/08/2018 14:48
+// Ariadne's Thread plugin for TurboHUD version 29/08/2018 22:21
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -409,6 +409,7 @@ namespace Turbo.Plugins.Resu
               bool SameArea = false;
               if (Hud.Game.Me.SnoArea.NameEnglish == RealBannerArea) SameArea = true; else SameArea = false;
               BannerDecorator.ToggleDecorators<MapShapeDecorator>(SameArea);
+              BannerDecorator.ToggleDecorators<MapShapeDecorator>(!Hud.Game.Me.IsInTown);
               
               if (NearestPlayer == "banner near ") NearestPlayer = "banner";
               if (RealBannerArea.Contains("[TEMP]")) RealBannerArea = RealBannerArea.Replace("[TEMP]",string.Empty).Trim();
