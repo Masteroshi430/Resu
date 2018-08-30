@@ -233,7 +233,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 #### [GroupGRLevelAdviserPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/GroupGRLevelAdviserPlugin.cs) 
 - Displays an advised group GRift level when rift dialogue is open.
 - When Rift or Grift is over and all players are in town, the Nephalem Obelisk tells you you can close.
-- Circle around 5% of Rift completion monster groups on minimap.
+- Red circle around 5% of Rift completion monster groups on minimap.
+- "Talk to Urshi" reminder when teleporting after Greater rift.
 
 ![alt text](READMEpics/gr.png)
 
