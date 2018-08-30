@@ -365,7 +365,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 		});	
 // End of Settings for Hot Enabler/Disabler Plugin
 ```
-#### [OtherPlayersHeadsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/OtherPlayersHeadsPlugin.cs) - Other players' heroes' face on minimap (helps identifying hero class at a glance) & optional followers diplay (on by default). 
+#### [OtherPlayersHeadsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/OtherPlayersHeadsPlugin.cs) - Other players' heroes' face on minimap (helps identifying hero class at a glance) & optional followers diplay (on by default).
+- Support for Z class (ZDPS, Sup). 
 Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
 ```C#
 // Settings for Other Player's Heads Plugin
