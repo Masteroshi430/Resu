@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 30/08/2018 21:09
+// Paragon Percentage Plugin for TurboHUD Version 31/08/2018 00:11
 
 using System;
 using System.Globalization;
@@ -78,7 +78,7 @@ namespace Turbo.Plugins.Resu
             {
                 BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                 BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
-                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 70, 255, 255, 0, true, false, false),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 120, 0, 191, 255, true, false, false),
                 
                 TextFunc = () =>  "Z",
                     
