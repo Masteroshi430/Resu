@@ -235,6 +235,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 - When Rift or Grift is over and all players are in town, the Nephalem Obelisk tells you you can close.
 - Red circle around 5% of Rift completion monster groups on minimap.
 - "Talk to Urshi" reminder when teleporting after Greater rift.
+- Support for Z class (ZDPS, Sup). 
 
 ![alt text](READMEpics/gr.png)
 
@@ -270,6 +271,7 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 ![alt text](READMEpics/itemperf.png)
 #### [ParagonPercentagePlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ParagonPercentagePlugin.cs) - Shows EXP percentage with two decimal right to portrait paragon level (a bit more precise than the top stats 2 decimals paragon level) with EXP/h & time to next paragon level in the hint and replaces portrait level 70 (only if reached) by each player's highest Greater Rift level with Class, Sheet DPS, EHP and Nemesis Bracers [N] & Unity [U] indicator in the hint.
+- Support for Z class (ZDPS, Sup). 
 ![alt text](READMEpics/Portrait.png)
 
 Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
