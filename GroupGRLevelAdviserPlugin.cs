@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 29/08/2018 18:16
+// Group GR Level Adviser Plugin for TurboHUD version 30/08/2018 17:09
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -67,7 +67,8 @@ namespace Turbo.Plugins.Resu
                   {
                    maxGRlevel +=  player.HighestHeroSoloRiftLevel;
                    if (player.IsInTown) PlayerInTownCount++;
-                   Party = Party + player.BattleTagAbovePortrait + " " +  player.HeroClassDefinition.HeroClass + " " + player.HighestHeroSoloRiftLevel + Environment.NewLine;
+                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();
+                   Party = Party + player.BattleTagAbovePortrait + " " +  ZClass + " " + player.HighestHeroSoloRiftLevel + Environment.NewLine;
                   }
                   
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
@@ -205,6 +206,33 @@ namespace Turbo.Plugins.Resu
            {
             TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
            }
+        }
+        
+        private bool IsZDPS(IPlayer player)
+        {
+         int Points = 0;
+         
+         var IllusoryBoots = player.Powers.GetBuff(318761);
+         if (IllusoryBoots == null || !IllusoryBoots.Active) {} else {Points++;}
+         
+         var LeoricsCrown = player.Powers.GetBuff(442353);
+         if (LeoricsCrown == null || !LeoricsCrown.Active) {} else {Points++;}
+         
+         var EfficaciousToxin = player.Powers.GetBuff(403461);
+         if (EfficaciousToxin == null || !EfficaciousToxin.Active) {} else {Points++;}
+         
+         var OculusRing = player.Powers.GetBuff(402461);
+         if (OculusRing == null || !OculusRing.Active) {} else {Points++;}
+         
+         var ZodiacRing = player.Powers.GetBuff(402459);
+         if (ZodiacRing == null || !ZodiacRing.Active) {} else {Points++;}
+         
+         if (player.Damage.TotalDamage < 500000D) Points++;
+         
+         if (player.Defense.EhpMax > 80000000f) Points++;
+        
+        if (Points >= 4) {return true;} else {return false;}
+         
         }
     }
 
