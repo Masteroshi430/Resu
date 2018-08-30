@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Other Player's heads Plugin for TurboHUD Version 05/08/2018 15:02
+// Other Player's heads Plugin for TurboHUD Version 30/08/2018 23:46
 
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +10,18 @@ namespace Turbo.Plugins.Resu
 {
 
     public class OtherPlayersHeadsPlugin : BasePlugin, IInGameWorldPainter, ICustomizer
-	{
+   {
 
         public Dictionary<HeroClass, WorldDecoratorCollection> DecoratorByClass { get; set; }
         public float NameOffsetX { get; set; }
         public float NameOffsetY { get; set; }
         public float NameOffsetZ { get; set; }
         public bool ShowCompanions { get; set; }
+        public WorldDecoratorCollection ZDPSDecorator { get; set; }
+
 
         public OtherPlayersHeadsPlugin()
-		{
+       {
             Enabled = true;
             DecoratorByClass = new Dictionary<HeroClass, WorldDecoratorCollection>();
             NameOffsetX = 0.0f;
@@ -33,7 +35,14 @@ namespace Turbo.Plugins.Resu
             base.Load(hud);
 
             var grounLabelBackgroundBrush = Hud.Render.CreateBrush(120, 0, 0, 0, 0);
-
+            
+            ZDPSDecorator = new WorldDecoratorCollection(
+                new MapLabelDecorator2(Hud)
+                {
+                    LabelFont = Hud.Render.CreateFont("tahoma", 6f, 255, 255, 255, 255, false, false, 128, 0, 0, 0, true),
+                    UpUp = true,
+                });
+            
             DecoratorByClass.Add(HeroClass.Barbarian, new WorldDecoratorCollection(
                 new MapLabelDecorator2(Hud)
                 {
@@ -189,6 +198,7 @@ namespace Turbo.Plugins.Resu
                 if (!DecoratorByClass.TryGetValue(player.HeroClassDefinition.HeroClass, out decorator)) continue;
 
                 decorator.Paint(layer, null, player.FloorCoordinate.Offset(NameOffsetX, NameOffsetY, NameOffsetZ), player.BattleTagAbovePortrait);
+                if(IsZDPS(player)) ZDPSDecorator.Paint(layer, null, player.FloorCoordinate, "Z");
             }
             
             if (ShowCompanions && Hud.Game.NumberOfPlayersInGame == 1)
@@ -218,6 +228,33 @@ namespace Turbo.Plugins.Resu
            
         }
         
+        private bool IsZDPS(IPlayer player)
+        {
+         int Points = 0;
+         
+         var IllusoryBoots = player.Powers.GetBuff(318761);
+         if (IllusoryBoots == null || !IllusoryBoots.Active) {} else {Points++;}
+         
+         var LeoricsCrown = player.Powers.GetBuff(442353);
+         if (LeoricsCrown == null || !LeoricsCrown.Active) {} else {Points++;}
+         
+         var EfficaciousToxin = player.Powers.GetBuff(403461);
+         if (EfficaciousToxin == null || !EfficaciousToxin.Active) {} else {Points++;}
+         
+         var OculusRing = player.Powers.GetBuff(402461);
+         if (OculusRing == null || !OculusRing.Active) {} else {Points++;}
+         
+         var ZodiacRing = player.Powers.GetBuff(402459);
+         if (ZodiacRing == null || !ZodiacRing.Active) {} else {Points++;}
+         
+         if (player.Damage.TotalDamage < 500000D) Points++;
+         
+         if (player.Defense.EhpMax > 80000000f) Points++;
+        
+        if (Points >= 4) {return true;} else {return false;}
+         
+        }
+        
          public void Customize()
         {
             Hud.TogglePlugin<OtherPlayersPlugin>(false);  // disables OtherPlayersPlugin
@@ -225,7 +262,7 @@ namespace Turbo.Plugins.Resu
     }
     
     
-        public class MapLabelDecorator2 : IWorldDecorator
+     public class MapLabelDecorator2 : IWorldDecorator
     {
 
         public bool Enabled { get; set; }
@@ -234,6 +271,7 @@ namespace Turbo.Plugins.Resu
 
         public IFont LabelFont { get; set; }
         public bool Up { get; set; }
+        public bool UpUp { get; set; }
         public bool Down { get; set; }
         public float RadiusOffset { get; set; }
 
@@ -242,7 +280,7 @@ namespace Turbo.Plugins.Resu
             Enabled = true;
             Layer = WorldLayer.Map;
             Hud = hud;
-
+            UpUp = false;
             Up = false;
             Down = false;
         }
@@ -260,6 +298,10 @@ namespace Turbo.Plugins.Resu
             if (Up)
             {
                 LabelFont.DrawText(layout, mapx - layout.Metrics.Width / 2, mapy + RadiusOffset - layout.Metrics.Height);
+            }
+            else if (UpUp)
+            {
+                LabelFont.DrawText(layout, mapx - layout.Metrics.Width / 2, mapy + RadiusOffset - (layout.Metrics.Height)*2);
             }
             else if (Down)
             {
