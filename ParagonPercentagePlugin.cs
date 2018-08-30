@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 19/08/2018 10:50
+// Paragon Percentage Plugin for TurboHUD Version 30/08/2018 21:09
 
 using System;
 using System.Globalization;
@@ -19,7 +19,7 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator HighestSoloRiftLevelDecorator { get; set; }
         public TopLabelDecorator NemesisDecorator { get; set; }
         public TopLabelDecorator UnityDecorator { get; set; }
-        
+        public TopLabelDecorator ZDPSDecorator { get; set; }
         
         public int GRlevel { get; set; }
         public float SheetDPS { get; set; }
@@ -74,6 +74,16 @@ namespace Turbo.Plugins.Resu
                 HintFunc = () =>  Class + Nemesis + Unity +  Environment.NewLine + "Sheet DPS : " + ValueToString((long)SheetDPS, ValueFormat.LongNumber) + Environment.NewLine + "EHP : " + ValueToString((long)EHP, ValueFormat.LongNumber),
             };
             
+            ZDPSDecorator = new TopLabelDecorator(Hud)
+            {
+                BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 70, 255, 255, 0, true, false, false),
+                
+                TextFunc = () =>  "Z",
+                    
+                HintFunc = () => "",
+            };
             
             NemesisDecorator = new TopLabelDecorator(Hud)
             {
@@ -136,7 +146,7 @@ namespace Turbo.Plugins.Resu
                   GRlevel = player.HighestHeroSoloRiftLevel; 
                   SheetDPS = player.Offense.SheetDps;
                   EHP = player.Defense.EhpCur;
-                  Class = player.HeroClassDefinition.HeroClass.ToString();
+                  Class = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();;
                   var Nemo = player.Powers.GetBuff(318820);
                   if (Nemo == null || !Nemo.Active) {Nemesis = "";} else {Nemesis = " [Nemesis]";}
                   var Unit = player.Powers.GetBuff(318769);
@@ -157,7 +167,7 @@ namespace Turbo.Plugins.Resu
                   
                   if (!player.IsMe)
                     {
-                       if (Nemo == null || !Nemo.Active){}  
+                       if (Nemo == null || !Nemo.Active){}
                        else
                        {
                         if (ParagonPercentageOnTheRight)
@@ -216,10 +226,38 @@ namespace Turbo.Plugins.Resu
                 
                        }
                        
-                  
+                if (IsZDPS(player)) ZDPSDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+
             
               };
              
+        }
+        
+        private bool IsZDPS(IPlayer player)
+        {
+         int Points = 0;
+         
+         var IllusoryBoots = player.Powers.GetBuff(318761);
+         if (IllusoryBoots == null || !IllusoryBoots.Active) {} else {Points++;}
+         
+         var LeoricsCrown = player.Powers.GetBuff(442353);
+         if (LeoricsCrown == null || !LeoricsCrown.Active) {} else {Points++;}
+         
+         var EfficaciousToxin = player.Powers.GetBuff(403461);
+         if (EfficaciousToxin == null || !EfficaciousToxin.Active) {} else {Points++;}
+         
+         var OculusRing = player.Powers.GetBuff(402461);
+         if (OculusRing == null || !OculusRing.Active) {} else {Points++;}
+         
+         var ZodiacRing = player.Powers.GetBuff(402459);
+         if (ZodiacRing == null || !ZodiacRing.Active) {} else {Points++;}
+         
+         if (player.Damage.TotalDamage < 500000D) Points++;
+         
+         if (player.Defense.EhpMax > 80000000f) Points++;
+        
+        if (Points >= 4) {return true;} else {return false;}
+         
         }
     }
 }
