@@ -301,7 +301,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (UpUp)
             {
-                LabelFont.DrawText(layout, mapx - layout.Metrics.Width / 2, mapy + RadiusOffset - (layout.Metrics.Height)*2);
+                LabelFont.DrawText(layout, mapx - layout.Metrics.Width / 2, mapy + RadiusOffset - (layout.Metrics.Height)*1.7f);
             }
             else if (Down)
             {
