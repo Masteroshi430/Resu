@@ -13,6 +13,7 @@ Turbo.Plugins.Resu
 - Purple line between me and KeyWarden (from Xenthalon's AdvancedMarkerPlugin)
 - Yellow line between me and Quest (Bounties) (from Xenthalon's AdvancedMarkerPlugin)
 - Green line between me and Banner (with nearest player's name for teleporting + countdown + banners now stay 30s instead of 10s)
+- White line between me and Pools of reflection (optional, disabled by default).
 Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
 ```C#
 // AriadnesThreadPlugin Customization
@@ -20,6 +21,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             { 
                
 	    plugin.ThreadBetweenPlayers = true; // Set to false to disable the thread between players.
+	    plugin.Pools = false; // Set to true to enable pools of reflection.
             plugin.BannerTimeSeconds = 30; // Number of seconds you want each player's banner to stay.
             
             });  
