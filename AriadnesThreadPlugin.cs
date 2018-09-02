@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 29/08/2018 22:21
+// Ariadne's Thread plugin for TurboHUD version 02/09/2018 09:20
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -33,6 +33,7 @@ namespace Turbo.Plugins.Resu
         public int StrengthBuff3 { get; set; }
         public IBrush WhiteBrush { get; set; }
         public WorldDecoratorCollection QuestDecorator { get; set; }
+        public WorldDecoratorCollection PoolDecorator { get; set; }
         public WorldDecoratorCollection KeywardenDecorator { get; set; }
         public WorldDecoratorCollection BossDecorator { get; set; }
         public WorldDecoratorCollection BannerDecorator { get; set; }
@@ -40,6 +41,7 @@ namespace Turbo.Plugins.Resu
         private Dictionary<IWorldCoordinate, string> BannersAreas;
         public int BannerTimeSeconds { get; set; }
         public bool ThreadBetweenPlayers { get; set; }
+        public bool Pools { get; set; }
                 
         public AriadnesThreadPlugin()
         {
@@ -48,6 +50,7 @@ namespace Turbo.Plugins.Resu
             BannersAreas = new Dictionary<IWorldCoordinate,string>();
             BannerTimeSeconds = 30;
             ThreadBetweenPlayers = true;
+            Pools = false;
         }
 
         
@@ -143,6 +146,29 @@ namespace Turbo.Plugins.Resu
                     ShapePainter = new LineFromMeShapePainter(Hud)
                 }
           );
+          
+         PoolDecorator = new WorldDecoratorCollection
+          (
+                new MapShapeDecorator(Hud)
+                {
+                    Brush = Hud.Render.CreateBrush(192, 255, 255, 255, -1),
+                    ShadowBrush = Hud.Render.CreateBrush(96, 0, 0, 0, 1),
+                    Radius = 10.0f,
+                    ShapePainter = new CircleShapePainter(Hud),
+                },
+                new MapLabelDecorator(Hud)
+                {
+                    LabelFont = Hud.Render.CreateFont("tahoma", 6f, 200,  255, 255, 255, false, false, 128, 0, 0, 0, true),
+                    RadiusOffset = 10,
+                    Up = true,
+                },
+                new MapShapeDecorator(Hud)
+                {
+                    Brush = Hud.Render.CreateBrush(192, 255, 255, 255, -1),
+                    ShapePainter = new LineFromMeShapePainter(Hud)
+                }
+          );
+          
           
          BannerDecorator = new WorldDecoratorCollection(
                 new GroundLabelDecorator(Hud)
@@ -258,6 +284,18 @@ namespace Turbo.Plugins.Resu
            NameOther1 = ""; Other1 = Hud.Game.Me.FloorCoordinate; AreaOther1 = ""; StrengthBuff1 = 0;
            return;
           }
+          
+          
+         // Pools of reflection 
+         if (Pools)
+          {
+           var PoolsOfReflection = Hud.Game.Shrines.Where(x => !x.IsDisabled && !x.IsOperated && x.Type == ShrineType.PoolOfReflection );
+             foreach (var PoolOfReflection in PoolsOfReflection)
+            {
+             PoolDecorator.Paint(layer, null, PoolOfReflection.FloorCoordinate, PoolOfReflection.SnoActor.NameLocalized);
+            }
+          }
+          
          
          // Strengh in numbers buff indicator
          int StrengthBuff = StrengthBuff1 + StrengthBuff2 + StrengthBuff3;
