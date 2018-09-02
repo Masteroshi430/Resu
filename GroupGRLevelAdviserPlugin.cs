@@ -36,9 +36,10 @@ namespace Turbo.Plugins.Resu
          
          GRLevelDecorator = new TopLabelDecorator(Hud)
           {
-           TextFont = Hud.Render.CreateFont("arial", 7, 220, 198, 174, 49, true, false, 255, 0, 0, 0, true),
+           TextFont = Hud.Render.CreateFont("consolas", 7, 220, 198, 174, 49, true, false, 255, 0, 0, 0, true),
+           ExpandedHintFont = Hud.Render.CreateFont("consolas", 8, 220, 198, 174, 49, false, false, false),
            TextFunc = () => "",
-           HintFunc = () => (Hud.Game.NumberOfPlayersInGame == 1) ? Hud.Game.Me.HeroName + "'s highest GR level : " + Hud.Game.Me.HighestHeroSoloRiftLevel : Party + Environment.NewLine + "Greater Rift level advised for" + Environment.NewLine + "this " + Hud.Game.NumberOfPlayersInGame + " players group : " + GRLevelText
+           HintFunc = () => (Hud.Game.NumberOfPlayersInGame == 1) ? Hud.Game.Me.HeroName + "'s highest GR level : " + Hud.Game.Me.HighestHeroSoloRiftLevel : Party + Environment.NewLine + "Greater Rift level advised for" + Environment.NewLine + "this " + Hud.Game.NumberOfPlayersInGame + " player group : " + GRLevelText, 
           };
 
          ObeliskClose = new WorldDecoratorCollection( 
@@ -62,13 +63,16 @@ namespace Turbo.Plugins.Resu
          {
             int maxGRlevel = 0;
             int PlayerInTownCount = 0;
-            Party = "";
+            Party = string.Empty;
             foreach (var player in Hud.Game.Players)
                   {
                    maxGRlevel +=  player.HighestHeroSoloRiftLevel;
                    if (player.IsInTown) PlayerInTownCount++;
+                   string Battletag = player.BattleTagAbovePortrait.PadRight(16);
                    string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();
-                   Party = Party + player.BattleTagAbovePortrait + " " +  ZClass + " " + player.HighestHeroSoloRiftLevel + Environment.NewLine;
+                   ZClass = ZClass.PadRight(17);
+                   string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
+                   Party = Party + Battletag +  ZClass + HighestSolo + Environment.NewLine;
                   }
                   
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
