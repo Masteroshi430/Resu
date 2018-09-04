@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 04/09/2018 08:18
+// Group GR Level Adviser Plugin for TurboHUD version 04/09/2018 16:21
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -20,10 +20,12 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection TalkToUrshiDecorator { get; set; }
         public bool GardianIsDead { get; set; }
         public bool TalkedToUrshi { get; set; }
+        public bool RedCircle { get; set; }
         
         public GroupGRLevelAdviserPlugin()
         {
             Enabled = true;
+            RedCircle = true;
         }
 
         
@@ -169,7 +171,7 @@ namespace Turbo.Plugins.Resu
             }
             );
            
-          if ((Hud.Game.Me.InGreaterRift || Hud.Game.SpecialArea == SpecialArea.Rift || Hud.Game.SpecialArea == SpecialArea.ChallengeRift) && Hud.Game.RiftPercentage < 100)
+          if ((Hud.Game.Me.InGreaterRift || Hud.Game.SpecialArea == SpecialArea.Rift || Hud.Game.SpecialArea == SpecialArea.ChallengeRift) && Hud.Game.RiftPercentage < 100 && RedCircle)
            {
             var monsters = Hud.Game.AliveMonsters.OrderByDescending(x => x.SnoMonster.RiftProgression);
             foreach (var monster in monsters)
@@ -202,6 +204,7 @@ namespace Turbo.Plugins.Resu
                   }
            }
            
+           // Talked to Urshi part
            bool UrshiPanel = Hud.Render.GetUiElement("Root.NormalLayer.vendor_dialog_mainPage.riftReward_dialog.LayoutRoot.gemUpgradePane.items_list._content").Visible;
            if (UrshiPanel) TalkedToUrshi = true;
            if (Hud.Game.Me.IsInTown) TalkedToUrshi = false;
