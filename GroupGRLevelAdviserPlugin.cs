@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 30/08/2018 17:09
+// Group GR Level Adviser Plugin for TurboHUD version 04/09/2018 08:18
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -234,6 +234,9 @@ namespace Turbo.Plugins.Resu
          if (player.Damage.TotalDamage < 500000D) Points++;
          
          if (player.Defense.EhpMax > 80000000f) Points++;
+         
+         var ConventionRing = player.Powers.GetBuff(430674);
+         if (ConventionRing == null || !ConventionRing.Active) {} else {Points--;}
         
         if (Points >= 4) {return true;} else {return false;}
          

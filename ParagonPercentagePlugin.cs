@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 31/08/2018 00:11
+// Paragon Percentage Plugin for TurboHUD Version 04/09/2018 08:18
 
 using System;
 using System.Globalization;
@@ -255,6 +255,9 @@ namespace Turbo.Plugins.Resu
          if (player.Damage.TotalDamage < 500000D) Points++;
          
          if (player.Defense.EhpMax > 80000000f) Points++;
+         
+         var ConventionRing = player.Powers.GetBuff(430674);
+         if (ConventionRing == null || !ConventionRing.Active) {} else {Points--;}
         
         if (Points >= 4) {return true;} else {return false;}
          
