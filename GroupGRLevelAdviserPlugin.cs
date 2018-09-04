@@ -237,6 +237,9 @@ namespace Turbo.Plugins.Resu
          
          var ConventionRing = player.Powers.GetBuff(430674);
          if (ConventionRing == null || !ConventionRing.Active) {} else {Points--;}
+         
+         var Stricken = player.Powers.GetBuff(428348);
+         if (Stricken == null || !Stricken.Active) {} else {Points--;}
         
         if (Points >= 4) {return true;} else {return false;}
          
