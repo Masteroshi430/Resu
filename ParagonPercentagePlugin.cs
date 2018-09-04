@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 04/09/2018 08:18
+// Paragon Percentage Plugin for TurboHUD Version 04/09/2018 16:32
 
 using System;
 using System.Globalization;
@@ -13,6 +13,7 @@ namespace Turbo.Plugins.Resu
     {
         public bool ShowGreaterRiftMaxLevel { get; set; }
         public bool ParagonPercentageOnTheRight { get; set; }
+        public bool DisplayParagonPercentage { get; set; }
         public string ParagonPercentage { get; set; }
         
         public TopLabelDecorator ParagonPercentageDecorator { get; set; }
@@ -40,6 +41,7 @@ namespace Turbo.Plugins.Resu
             ShowGreaterRiftMaxLevel = true;
             ParagonPercentageOnTheRight = true;
             ParagonPercentage = "0";
+            DisplayParagonPercentage = true;
             
             var experiencePlugin = Hud.GetPlugin<TopExperienceStatistics>();
             
@@ -49,7 +51,7 @@ namespace Turbo.Plugins.Resu
                 BackgroundTextureOpacity1 = 0.8f,
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 7, 250, 255, 255, 255, false, false, true),
 
-                TextFunc = () => ParagonPercentage,  
+                TextFunc = () => ParagonPercentage,
 
                 HintFunc = () => "Paragon level " + (Hud.Game.Me.CurrentLevelParagon + 1) + " in " + experiencePlugin.TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false) +  Environment.NewLine + "EXP/h : " + ValueToString(Hud.Game.CurrentHeroToday.GainedExperiencePerHourPlay, ValueFormat.ShortNumber),
             };
@@ -127,11 +129,11 @@ namespace Turbo.Plugins.Resu
             
             
             
-            if (ParagonPercentageOnTheRight)
+            if (ParagonPercentageOnTheRight & DisplayParagonPercentage)
             {   
             ParagonPercentageDecorator.Paint(uiRect.Left + uiRect.Width * 0.71f, uiRect.Top + uiRect.Height * 0.79f, uiRect.Width * 0.48f, uiRect.Height * 0.14f, HorizontalAlign.Center);
              }
-            else 
+            else if (DisplayParagonPercentage) 
             {   
             ParagonPercentageDecorator.Paint(uiRect.Left + uiRect.Width * -0.18f, uiRect.Top + uiRect.Height * 0.79f, uiRect.Width * 0.48f, uiRect.Height * 0.14f, HorizontalAlign.Center);
              }; 
