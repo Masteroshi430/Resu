@@ -387,19 +387,20 @@ namespace Turbo.Plugins.Resu
                string EnchantSentence = string.Empty;
                string EnchantPlural = "s";
                if (EnchantCount == 1) EnchantPlural = string.Empty;
-               else if (EnchantCount == 0 && MysticSentence == 1) MysticSentence = 2;           
+               else if (EnchantCount == 0 && MysticSentence == 1) MysticSentence = 2;
                else EnchantSentence = "- I can enchant at least " + EnchantCount + " time" + EnchantPlural + " one of your gear items.";
                
                long TransmogCount = (int)(Hud.Game.Me.Materials.Gold/50000);
                string TransmogPlural = "s";
                if (TransmogCount == 1) TransmogPlural = string.Empty;
-               string TransmogSentence = "- You can have " + TransmogCount + " of the most expensive" + Environment.NewLine + "  transmog" + TransmogPlural + " with your gold.";            
-
+               else if (TransmogCount == 0 && MysticSentence == 3) MysticSentence = 4;
+               else string TransmogSentence = "- You can have " + TransmogCount + " of the most expensive" + Environment.NewLine + "  transmog" + TransmogPlural + " with your gold.";            
                
                long DyeCount = (int)(Hud.Game.Me.Materials.Gold/5040);
                string DyePlural = "s";
                if (DyeCount == 1) DyePlural = string.Empty;
-               string DyeSentence = "- ...And you can dye " + DyeCount + " item" + TransmogPlural + " with your gold.";            
+               else if (DyeCount == 0 && MysticSentence == 4) MysticSentence = 0;
+               else string DyeSentence = "- ...And you can dye " + DyeCount + " item" + TransmogPlural + " with your gold.";
 
                
                switch (MysticSentence)
