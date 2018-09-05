@@ -290,21 +290,14 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
 ```C#
-// Display % on the left for Paragon Percentage Plugin
+// Settings for Paragon Percentage Plugin
                Hud.RunOnPlugin<Resu.ParagonPercentagePlugin>(plugin => 
             { 
-                plugin.ParagonPercentageOnTheRight = false; 
+                plugin.ParagonPercentageOnTheRight = false; // set to true to display % on the left 
+		plugin.ShowGreaterRiftMaxLevel = false; // set to true to disable GR level display
+		plugin.DisplayParagonPercentage = true; // set to false to disable paragon percentage display
             });  
-// End of Display % on the left for Paragon Percentage Plugin
-      
-      
-// Disable GR level display for Paragon Percentage Plugin
-Hud.RunOnPlugin<Resu.ParagonPercentagePlugin>(plugin => 
-            { 
-                plugin.ShowGreaterRiftMaxLevel = false; 
-            }); 
-// End of Disable GR level display for Paragon Percentage Plugin
-
+// End of settings for Paragon Percentage Plugin
 
  // Disable Top Experience Statistics
                            Hud.TogglePlugin<TopExperienceStatistics>(false); 
