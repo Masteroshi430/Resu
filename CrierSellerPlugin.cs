@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crier Seller Plugin for TurboHUD version 24/08/2018 22:58
+// Crier Seller Plugin for TurboHUD version 05/09/2018 07:38
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -73,45 +73,51 @@ namespace Turbo.Plugins.Resu
            
            Dictionary<string, long> GemsCount = new Dictionary<string, long>();
            
-           var GemsStash = Hud.Inventory.ItemsInStash.Where(x => x.SnoItem.MainGroupCode == "gems" && x.Quantity != 0);
+           var GemsStash = Hud.Inventory.ItemsInStash.Where(x => x.SnoItem.MainGroupCode == "gems");
            foreach (var Gem in GemsStash)
            {
             if (Gem == null) continue;
             if (Gem.SnoItem == null) continue;
             if (Gem.SnoItem.NameEnglish == null) continue;
             
-            
-                        
+           
             string GemNameStash = Gem.SnoItem.NameEnglish;
             long GemQuantityStash = Gem.Quantity;
             
             if (!GemsCount.ContainsKey(GemNameStash)) GemsCount.Add(GemNameStash,GemQuantityStash);
             else 
                 {
-                 long DictQuantity = 0;    
-                 GemsCount.TryGetValue(GemNameStash, out DictQuantity);   
-                 GemsCount[GemNameStash] = DictQuantity + GemQuantityStash;    
+                 long DictQuantity = 0;
+                 if (GemsCount.TryGetValue(GemNameStash, out DictQuantity))
+                  {
+                   GemsCount.TryGetValue(GemNameStash, out DictQuantity);
+                   GemsCount[GemNameStash] = DictQuantity + GemQuantityStash;
+                  }
                 } 
            }
            
-           var GemsInventory = Hud.Inventory.ItemsInInventory.Where(x => x.SnoItem.MainGroupCode == "gems" && x.Quantity != 0);
+          var GemsInventory = Hud.Inventory.ItemsInInventory.Where(x => x.SnoItem.MainGroupCode == "gems");
            foreach (var Gem in GemsInventory)
            {
             if (Gem == null) continue;
             if (Gem.SnoItem == null) continue;
             if (Gem.SnoItem.NameEnglish == null) continue;
-                        
+            
             string GemNameInventory = Gem.SnoItem.NameEnglish;
             long GemQuantityInventory = Gem.Quantity;
             
             if (!GemsCount.ContainsKey(GemNameInventory)) GemsCount.Add(GemNameInventory,GemQuantityInventory);
             else 
                 {
-                 long DictQuantity2 = 0;    
-                 GemsCount.TryGetValue(GemNameInventory, out DictQuantity2);  
-                 GemsCount[GemNameInventory] = DictQuantity2 + GemQuantityInventory;    
+                 long DictQuantity2 = 0;
+                 if (GemsCount.TryGetValue(GemNameInventory, out DictQuantity2))
+                  {
+                   GemsCount.TryGetValue(GemNameInventory, out DictQuantity2);
+                   GemsCount[GemNameInventory] = DictQuantity2 + GemQuantityInventory;
+                  }
                 } 
            }
+           
            
            long Khanduran = Hud.Game.Me.Materials.KhanduranRune;
            long Caldeum = Hud.Game.Me.Materials.CaldeumNightShade;
@@ -353,14 +359,20 @@ namespace Turbo.Plugins.Resu
                    break;
                   }
                if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);                  
-              }
+             }
               else if (Seller.SnoActor.Sno == 56948) // Mystik
               {
-               long ImperialRubies = GemsCount["Imperial Ruby"];
-               long ImperialTopaz = GemsCount["Imperial Topaz"];
-               long ImperialEmerald = GemsCount["Imperial Emerald"];
-               long ImperialDiamond = GemsCount["Imperial Diamond"];
-               long ImperialAmethyst = GemsCount["Imperial Amethyst"];
+               long ImperialRubies = 0;
+               if (GemsCount.TryGetValue("Imperial Ruby", out ImperialRubies)) ImperialRubies = GemsCount["Imperial Ruby"];
+               long ImperialTopaz = 0;
+               if (GemsCount.TryGetValue("Imperial Topaz", out ImperialTopaz)) ImperialTopaz = GemsCount["Imperial Topaz"];
+               long ImperialEmerald = 0;
+               if (GemsCount.TryGetValue("Imperial Emerald", out ImperialEmerald)) ImperialEmerald = GemsCount["Imperial Emerald"];
+               long ImperialDiamond = 0;
+               if (GemsCount.TryGetValue("Imperial Diamond", out ImperialDiamond)) ImperialDiamond = GemsCount["Imperial Diamond"];
+               long ImperialAmethyst = 0;
+               if (GemsCount.TryGetValue("Imperial Amethyst", out ImperialAmethyst)) ImperialAmethyst = GemsCount["Imperial Amethyst"];
+
                
                long EnchantTrinketsCount = Math.Min((int)(ArcaneDust/5),Math.Min((int)(VeiledCrystal/15),Math.Min(ForgottenSoul,Math.Min(DeathsBreath,Math.Min(ImperialRubies,Math.Min(ImperialTopaz,Math.Min(ImperialEmerald,Math.Min(ImperialDiamond,ImperialAmethyst))))))));
                long EnchantCount = Math.Min((int)(ArcaneDust/5),Math.Min((int)(VeiledCrystal/15),Math.Min(ForgottenSoul,DeathsBreath)));
