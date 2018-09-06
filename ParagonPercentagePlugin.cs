@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 04/09/2018 16:32
+// Paragon Percentage Plugin for TurboHUD Version 06/09/2018 11:27
 
 using System;
 using System.Globalization;
@@ -255,6 +255,7 @@ namespace Turbo.Plugins.Resu
          if (ZodiacRing == null || !ZodiacRing.Active) {} else {Points++;}
          
          if (player.Damage.TotalDamage < 500000D) Points++;
+         if (player.Damage.TotalDamage > 1500000D) Points--;
          
          if (player.Defense.EhpMax > 80000000f) Points++;
          
