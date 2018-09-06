@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Deluxe Shrine labels plugin for TurboHUD version 13/08/2018 08:19
+// Deluxe Shrine labels plugin for TurboHUD version 06/09/2018 15:06
 // Psycho's Shrine labels plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -21,6 +21,7 @@ namespace Turbo.Plugins.Resu
         public bool ShowHealingWells { get; set;}
         public bool ShowPoolOfReflection { get; set;}
         public bool ShowAllWhenHealthIsUnder40 { get; set;}
+        public WorldDecoratorCollection LeaveMessageDecorator { get; set; }
 
         public DeluxeShrineLabelsPlugin()
         {
@@ -69,6 +70,13 @@ namespace Turbo.Plugins.Resu
             }
             PossibleRiftPylonDecorators = CreateMapDecorators();
             PossibleRiftPylonName = string.Empty;
+            
+          LeaveMessageDecorator = new WorldDecoratorCollection(
+          new GroundLabelDecorator(Hud)
+          {
+           BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+           TextFont = Hud.Render.CreateFont("tahoma", 16, 255, 255, 255, 255, true, true, true),
+          });
         }
 
         public void Customize()
@@ -78,8 +86,8 @@ namespace Turbo.Plugins.Resu
 
         public void PaintWorld(WorldLayer layer)
         {
-            string NemesisMessage = "";
-            string MyNemesisMessage = "";
+            string NemesisMessage = string.Empty;
+            string MyNemesisMessage = string.Empty;
             int MyNemesisCount = 0;
             foreach (var player in Hud.Game.Players.OrderBy(p => p.PortraitIndex))
             {
@@ -91,15 +99,15 @@ namespace Turbo.Plugins.Resu
                  if (player.IsMe) MyNemesisCount++;
                  else
                   {
-                   if (NemesisMessage == "") NemesisMessage += Environment.NewLine + player.BattleTagAbovePortrait;
-                   else NemesisMessage += " or " + player.BattleTagAbovePortrait;
+                   if (NemesisMessage == string.Empty) NemesisMessage += Environment.NewLine + player.BattleTagAbovePortrait;
+                   else NemesisMessage += Environment.NewLine + " or " + player.BattleTagAbovePortrait;
                   }
                 }
             }
             
-            if (MyNemesisCount == 1) MyNemesisMessage = " or HIT ME!";
-            if (NemesisMessage != "") NemesisMessage = Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine + "\uD83D\uDEC7 Leave for \uD83D\uDEC7" + NemesisMessage + MyNemesisMessage;
-            if (MyNemesisCount == 1 && NemesisMessage == "") NemesisMessage = Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine + "HIT ME!";
+            
+            if (NemesisMessage != string.Empty) NemesisMessage = "Leave for" + NemesisMessage;
+            if (MyNemesisCount == 1) NemesisMessage = "HIT ME!";
             
             var shrines = Hud.Game.Shrines.Where(x => !x.IsDisabled && !x.IsOperated);
             foreach (var shrine in shrines)
@@ -109,7 +117,7 @@ namespace Turbo.Plugins.Resu
 
                 if (shrine.Type == ShrineType.HealingWell && ShowHealingWells == false) continue;
                 if (shrine.Type == ShrineType.PoolOfReflection && ShowPoolOfReflection == false) continue;
-                if (shrine.Type == ShrineType.HealingWell && ShowHealingWells == true || shrine.Type == ShrineType.PoolOfReflection && ShowPoolOfReflection == true) NemesisMessage ="";
+                if (shrine.Type == ShrineType.HealingWell && ShowHealingWells == true || shrine.Type == ShrineType.PoolOfReflection && ShowPoolOfReflection == true) NemesisMessage =string.Empty;
                 
                 var shrineName = (ShrineCustomNames[shrine.Type] != string.Empty) ? ShrineCustomNames[shrine.Type] : shrine.SnoActor.NameLocalized;
                 ShrineDecorators[shrine.Type].Paint(layer, shrine, shrine.FloorCoordinate, shrineName);
@@ -119,50 +127,51 @@ namespace Turbo.Plugins.Resu
                 switch (shrine.Type)
                 {
                  case ShrineType.BlessedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine + "-25% damage recieved"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine + "-25% damage recieved";
                       break;
                  case ShrineType.EnlightenedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+25% EXP gain"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% EXP gain";
                       break;
                  case ShrineType.FortuneShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+25% magic & gold find"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% magic & gold find";
                       break;
                  case ShrineType.FrenziedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+25% attack speed"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% attack speed";
                       break;
                  case ShrineType.EmpoweredShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+100% resource gain" + Environment.NewLine + "-50% cooldown time"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+100% resource gain" + Environment.NewLine + "-50% cooldown time";
                       break;
                  case ShrineType.FleetingShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+25% movement speed" + Environment.NewLine + "+20yd pickup radius"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% movement speed" + Environment.NewLine + "+20yd pickup radius";
                       break;
                  case ShrineType.PowerPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+400% damage dealt" + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+400% damage dealt";
                       break;
                  case ShrineType.ConduitPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "\u26A1 HIGH VOLTAGE \u26A1" + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "\u26A1 HIGH VOLTAGE \u26A1";
                       break;
                  case ShrineType.ChannelingPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "-75% cooldown"  + Environment.NewLine + "No resource cost"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "-75% cooldown"  + Environment.NewLine + "No resource cost";
                       break;
                  case ShrineType.ShieldPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "60s of invulnerability" + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "60s of invulnerability";
                       break;
                  case ShrineType.SpeedPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+30% attack speed" + Environment.NewLine + "+80% movement speed"  + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+30% attack speed" + Environment.NewLine + "+80% movement speed";
                       break;
                  case ShrineType.PoolOfReflection:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "+25% EXP gain";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% EXP gain"; NemesisMessage = string.Empty;
                       break;
                  case ShrineType.BanditShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "GOBLINS!" + NemesisMessage;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "GOBLINS!";
                       break;
                  case ShrineType.HealingWell:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "━━━━━━━━━━━━━━" + Environment.NewLine  + "restores life";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "restores life"; NemesisMessage = string.Empty;
                       break;
                 }
                 
                 ShrineShortDecorators[shrine.Type].Paint(layer, shrine, shrine.FloorCoordinate, ShrineNameShort);
+                if(shrine.FloorCoordinate.Offset(0, 0, 10).IsOnScreen()) LeaveMessageDecorator.Paint(layer, null, shrine.FloorCoordinate.Offset(0, 0, 10), NemesisMessage);
             }
 
             var riftPylonSpawnPoints = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 428690);
