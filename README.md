@@ -216,10 +216,10 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of CraftersDelightPlugin Customization
 ```
-#### [CustomLifeWarningPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CustomLifeWarningPlugin.cs) - Turns the screen progressively to transparent orange when life percentage goes under the set limit. Default is 50%. Displays health globes on ground & minimap when health percentage is below an user selected value (33 by default).
+#### [CustomLifeWarningPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CustomLifeWarningPlugin.cs) - Turns the screen progressively to transparent orange when life percentage goes under the set limit. Default is 50%. Displays health globes on ground & minimap when health percentage is below an user selected value (40 by default). Absorb shield indicator on life globe.
 Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) is now MANDATORY to use this plugin.
 
-![alt text](READMEpics/life.png)
+![alt text](READMEpics/life.png) ![alt text](READMEpics/absorbshield.png)
 
 Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
 ```C#
@@ -229,7 +229,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
                     // Sets the life % limit under which you want the warning
                      plugin.lifePercentage = 50;
                     // Sets the life % limit under which you want to see health globes on ground & minimap
-		    plugin.lifePercentageToDisplayGlobes = 33;
+		    plugin.lifePercentageToDisplayGlobes = 40;
             });  
 // End of Settings for Custom Life Warning Plugin
 ```
