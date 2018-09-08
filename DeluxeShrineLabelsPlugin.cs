@@ -127,46 +127,46 @@ namespace Turbo.Plugins.Resu
                 switch (shrine.Type)
                 {
                  case ShrineType.BlessedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine + "-25% damage recieved";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine + "-25% damage recieved";
                       break;
                  case ShrineType.EnlightenedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% EXP gain";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+25% EXP gain";
                       break;
                  case ShrineType.FortuneShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% magic & gold find";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+25% magic & gold find";
                       break;
                  case ShrineType.FrenziedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% attack speed";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+25% attack speed";
                       break;
                  case ShrineType.EmpoweredShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+100% resource gain" + Environment.NewLine + "-50% cooldown time";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+100% resource gain" + Environment.NewLine + "-50% cooldown time";
                       break;
                  case ShrineType.FleetingShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% movement speed" + Environment.NewLine + "+20yd pickup radius";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+25% movement speed" + Environment.NewLine + "+20yd pickup radius";
                       break;
                  case ShrineType.PowerPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+400% damage dealt";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+400% damage dealt";
                       break;
                  case ShrineType.ConduitPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "\u26A1 HIGH VOLTAGE \u26A1";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "\u26A1 HIGH VOLTAGE \u26A1";
                       break;
                  case ShrineType.ChannelingPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "-75% cooldown"  + Environment.NewLine + "No resource cost";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "-75% cooldown"  + Environment.NewLine + "No resource cost";
                       break;
                  case ShrineType.ShieldPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "60s of invulnerability";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "60s of invulnerability";
                       break;
                  case ShrineType.SpeedPylon:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+30% attack speed" + Environment.NewLine + "+80% movement speed";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+30% attack speed" + Environment.NewLine + "+80% movement speed";
                       break;
                  case ShrineType.PoolOfReflection:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "+25% EXP gain"; NemesisMessage = string.Empty;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "+25% EXP gain"; NemesisMessage = string.Empty;
                       break;
                  case ShrineType.BanditShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "GOBLINS!";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "GOBLINS!";
                       break;
                  case ShrineType.HealingWell:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368" + Environment.NewLine  + "restores life"; NemesisMessage = string.Empty;
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368" + Environment.NewLine  + "restores life"; NemesisMessage = string.Empty;
                       break;
                 }
                 
