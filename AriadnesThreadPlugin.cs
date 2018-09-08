@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 02/09/2018 09:20
+// Ariadne's Thread plugin for TurboHUD version 08/09/2018 15:42
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -63,16 +63,16 @@ namespace Turbo.Plugins.Resu
          RealOther1 = Hud.Window.CreateWorldCoordinate(381.154f, 551.850f, 33.3f);
          RealOther2 = Hud.Window.CreateWorldCoordinate(381.154f, 551.850f, 33.3f);
          RealOther3 = Hud.Window.CreateWorldCoordinate(381.154f, 551.850f, 33.3f);
-         NameOther1 = "";
-         NameOther2 = "";
-         NameOther3 = "";
-         AreaOther1 = ""; 
-         AreaOther2 = "";
-         AreaOther3 = "";
+         NameOther1 = string.Empty;
+         NameOther2 = string.Empty;
+         NameOther3 = string.Empty;
+         AreaOther1 = string.Empty; 
+         AreaOther2 = string.Empty;
+         AreaOther3 = string.Empty;
          StrengthBuff1 = 0;
          StrengthBuff2 = 0;
          StrengthBuff3 = 0;
-         StrengthBuffText = "";
+         StrengthBuffText = string.Empty;
          WhiteBrush = Hud.Render.CreateBrush(125, 255, 255, 255, 1, SharpDX.Direct2D1.DashStyle.Dash, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Triangle);
          
          StrengthBuffDecorator = new TopLabelDecorator(Hud)
@@ -216,7 +216,7 @@ namespace Turbo.Plugins.Resu
                if (Actor.IsDisabled || Actor.IsOperated) continue;
                
                uint ThatQuest = 0;
-               string Name = "";
+               string Name = string.Empty;
                switch (Actor.SnoActor.Sno)
                {
                 case 432770: Name = "Royal Cocoon"; ThatQuest = 432784; break;
@@ -234,7 +234,7 @@ namespace Turbo.Plugins.Resu
                 case 433124: Name = "Bone Cage"; ThatQuest = 433099; break;
                 case 433402: Name = "Hell Portal"; ThatQuest = 433422; break;
                 case 432331: Name = "Captured Iron Wolf"; ThatQuest = 432334; break;
-                default:  Name = "";  break;
+                default:  Name = string.Empty;  break;
                }
                 var quest = Hud.Game.Bounties.FirstOrDefault(x => x.SnoQuest.Sno == ThatQuest);
                 if ((quest != null) && quest.State != QuestState.completed)
@@ -279,9 +279,9 @@ namespace Turbo.Plugins.Resu
          
          if (Hud.Game.NumberOfPlayersInGame == 1) 
           {
-           NameOther3 = ""; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = ""; StrengthBuff3 = 0;
-           NameOther2 = ""; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = ""; StrengthBuff2 = 0;
-           NameOther1 = ""; Other1 = Hud.Game.Me.FloorCoordinate; AreaOther1 = ""; StrengthBuff1 = 0;
+           NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0;
+           NameOther2 = string.Empty; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = string.Empty; StrengthBuff2 = 0;
+           NameOther1 = string.Empty; Other1 = Hud.Game.Me.FloorCoordinate; AreaOther1 = string.Empty; StrengthBuff1 = 0;
            return;
           }
           
@@ -322,7 +322,7 @@ namespace Turbo.Plugins.Resu
             else if (player.PortraitIndex == 1)
              { 
                NameOther1 = player.BattleTagAbovePortrait; RealOther1 = player.FloorCoordinate; AreaOther1 = player.SnoArea.NameEnglish;
-               if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = ""; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = ""; StrengthBuff3 = 0; NameOther2 = ""; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = ""; StrengthBuff2 = 0; 
+               if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0; NameOther2 = string.Empty; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = string.Empty; StrengthBuff2 = 0; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other1 = player.FloorCoordinate;  
@@ -338,7 +338,7 @@ namespace Turbo.Plugins.Resu
             else if (player.PortraitIndex == 2)
              { 
                NameOther2 = player.BattleTagAbovePortrait; RealOther2 = player.FloorCoordinate; AreaOther2 = player.SnoArea.NameEnglish;
-               if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = ""; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = ""; StrengthBuff3 = 0; 
+               if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other2 = player.FloorCoordinate; 
@@ -420,8 +420,8 @@ namespace Turbo.Plugins.Resu
               DistMe = Hud.Game.Me.FloorCoordinate.XYDistanceTo(BanCoord);
               ZDistMe = Hud.Game.Me.FloorCoordinate.ZDiffTo(BanCoord);
            
-              string NearestPlayer = "";
-              string BannerArea = "";
+              string NearestPlayer = string.Empty;
+              string BannerArea = string.Empty;
               
               if (!BannersAreas.ContainsKey(BanCoord))
                {   
@@ -438,7 +438,7 @@ namespace Turbo.Plugins.Resu
                 else {NearestPlayer = "banner";}
                }
 
-               string RealBannerArea = "";
+               string RealBannerArea = string.Empty;
                if (!BannersAreas.ContainsKey(BanCoord)) BannersAreas.Add(BanCoord, BannerArea);
                else
                   {
@@ -447,13 +447,13 @@ namespace Turbo.Plugins.Resu
               bool SameArea = false;
               if (Hud.Game.Me.SnoArea.NameEnglish == RealBannerArea) SameArea = true; else SameArea = false;
               BannerDecorator.ToggleDecorators<MapShapeDecorator>(SameArea);
-              BannerDecorator.ToggleDecorators<MapShapeDecorator>(!Hud.Game.Me.IsInTown);
+              // BannerDecorator.ToggleDecorators<MapShapeDecorator>(!Hud.Game.Me.IsInTown);
               
               if (NearestPlayer == "banner near ") NearestPlayer = "banner";
               if (RealBannerArea.Contains("[TEMP]")) RealBannerArea = RealBannerArea.Replace("[TEMP]",string.Empty).Trim();
               if (RealBannerArea.Contains("Loot Run")) RealBannerArea = RealBannerArea.Replace("Loot Run", "Rift").Trim();
               
-              if (NearestPlayer != null && RealBannerArea != "")
+              if (NearestPlayer != null && RealBannerArea != string.Empty)
                { 
                  if (SameArea) BannerDecorator.Paint(layer, null, BanCoord, NearestPlayer + Countdown);
                  else if (NearestPlayer != "banner")
