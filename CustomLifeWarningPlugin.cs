@@ -1,6 +1,6 @@
 ﻿//css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Custom Life Warning Plugin for TurboHUD Version 08/09/2018 14:26
+// Custom Life Warning Plugin for TurboHUD Version 08/09/2018 23:08
 // The health globes part was stolen from Xewl's HealthGlobePlugin
 
 using System;
@@ -20,6 +20,7 @@ namespace Turbo.Plugins.Resu
         public int maxY { get; set; }
         public TopLabelDecorator CustomLifeWarningDecorator { get; set; }
         public TopLabelDecorator ShieldDecorator { get; set; }
+        public TopLabelDecorator InfiniteShieldDecorator { get; set; }
         public WorldDecoratorCollection HealthGlobeDecorator { get; set; }
         public float opacity { get; set; }
         public IBrush ShieldBrush { get; set; }
@@ -68,7 +69,7 @@ namespace Turbo.Plugins.Resu
 
             ShieldDecorator = new TopLabelDecorator(Hud)
             {
-                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 160, 160, 215, true, false, 255, 100, 0, 0, true),
+                TextFont = Hud.Render.CreateFont("tahoma", 12, 255, 160, 160, 215, true, false, 255, 100, 0, 0, true),
                 TextFunc = () => "\u25CF",
             };
 
@@ -77,6 +78,13 @@ namespace Turbo.Plugins.Resu
                 BackgroundBrush = Hud.Render.CreateBrush(25, 255, 165, 0, 0),
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 7, 250, 255, 255, 255, false, false, true), // it doesn't work without that line
             };
+            
+            InfiniteShieldDecorator = new TopLabelDecorator(Hud)
+            {
+                TextFont = Hud.Render.CreateFont("tahoma", 12, 255, 160, 160, 215, true, false, 255, 100, 0, 0, true),
+                TextFunc = () => "∞",
+            };
+            
         }
 
         public void PaintTopInGame(ClipState clipState)
@@ -108,12 +116,16 @@ namespace Turbo.Plugins.Resu
 
             var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_progressBar_healthBall").Rectangle;
             var CircleCenter = Hud.Window.CreateScreenCoordinate(uiRect.Left + (uiRect.Width / 2.15f), uiRect.Bottom - (uiRect.Height / 1.41f));
-            float CircleRadius = 59f;
+            float CircleRadius = 55f;
 
             //ShieldBrush.DrawEllipse(uiRect.Left + (uiRect.Width/2), uiRect.Bottom - (uiRect.Height/2), 60, 60); // test circle
             //ShieldDecorator.Paint(CircleCenter.X, CircleCenter.Y, 50f, 50f, HorizontalAlign.Left); // center
 
             int ShieldPer19 = (int)Math.Round((Hud.Game.Me.Defense.CurShield / Hud.Game.Me.Defense.HealthMax) * 19);
+            
+             var ShieldPylon = Hud.Game.Me.Powers.GetBuff(266254);
+             if (ShieldPylon == null || !ShieldPylon.Active) {} 
+             else {ShieldPer19 = 19; InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);}
 
             for (int i = 1; i <= ShieldPer19 && i < _steps.Count; i++)
             {
