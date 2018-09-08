@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Craft Count Plugin for TurboHUD Version 19/08/2018 23:06
+// Craft Count Plugin for TurboHUD Version 08/09/2018 16:22
 
 using System;
 using System.Globalization;
@@ -16,7 +16,7 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator CraftCountDecorator { get; set; }
         public TopLabelDecorator BountiesDecorator { get; set; }
         public TopLabelDecorator RiftCompletionDecorator { get; set; }
-        public int opacity { get; set; }
+        public float opacity { get; set; }
         public float itemOpacity { get; set; }
         public long craftCount { get; set; }
         public long deathsBreathCount { get; set; }
@@ -79,7 +79,7 @@ namespace Turbo.Plugins.Resu
         public override void Load(IController hud)
         {
             base.Load(hud);
-            opacity = 0;
+            opacity = 0f;
             itemOpacity = 0;
             craftCount = 0;
             prevDeathsBreathCount = 0;
@@ -125,28 +125,29 @@ namespace Turbo.Plugins.Resu
             prevBountiesCompletion = 0;
             BountiesLeft = 0; 
             prevRiftPercentage = 0;
-        }
-
-       public void PaintTopInGame(ClipState clipState)
-        {
+            
              CraftCountDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 10, opacity, 255, 255, 255, true, true, opacity/8, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 10, 200, 255, 255, 255, true, true, 25, 0, 0, 0, true),
                  TextFunc = () => craftCount.ToString("N0") + " owneth", 
             };
             
              BountiesDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 10, opacity, 255, 255, 255, true, true, opacity/8, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 10, 200, 255, 255, 255, true, true, 25, 0, 0, 0, true),
                  TextFunc = () => (BountiesLeft == 0) ? "Bounties completed!" : (BountiesLeft == 1) ? BountiesLeft.ToString("N0") + " bounty left!" : BountiesLeft.ToString("N0") + " bounties left", 
             };
             
              RiftCompletionDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 10, opacity, 255, 255, 255, true, true, opacity/8, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 10, 200, 255, 255, 255, true, true, 25, 0, 0, 0, true),
                  TextFunc = () => (Hud.Game.RiftPercentage >= 100) ? "Boss fight!" : "Rift: " + Hud.Game.RiftPercentage.ToString("F1", CultureInfo.InvariantCulture) + "%", 
             };
+            
+        }
 
+       public void PaintTopInGame(ClipState clipState)
+        {
                 deathsBreathCount = Hud.Game.Me.Materials.DeathsBreath;
                 reusablePartsCount = Hud.Game.Me.Materials.ReusableParts;
                 arcaneDustCount = Hud.Game.Me.Materials.ArcaneDust;
@@ -226,10 +227,14 @@ namespace Turbo.Plugins.Resu
                prevHeartOfFrightCount = heartOfFrightCount;
                prevBountiesCompletion = BountiesCompletion;
               }
+              
+              CraftCountDecorator.TextFont.Opacity = opacity;
+              BountiesDecorator.TextFont.Opacity = opacity;
+              RiftCompletionDecorator.TextFont.Opacity = opacity;
              
             if (deathsBreathCount > prevDeathsBreathCount || deathsBreathCount < prevDeathsBreathCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevDeathsBreathCount = deathsBreathCount;} 
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevDeathsBreathCount = deathsBreathCount;} 
              
             itemSno = 2087837753;
             var DeathsBreath = Hud.Inventory.GetSnoItem(itemSno);
@@ -242,7 +247,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (reusablePartsCount > prevReusablePartsCount || reusablePartsCount < prevReusablePartsCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevReusablePartsCount = reusablePartsCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevReusablePartsCount = reusablePartsCount;}
              
             itemSno = 3931359676;
             var ReusableParts = Hud.Inventory.GetSnoItem(itemSno);
@@ -255,7 +260,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (arcaneDustCount > prevArcaneDustCount || arcaneDustCount < prevArcaneDustCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevArcaneDustCount = arcaneDustCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevArcaneDustCount = arcaneDustCount;}
              
             itemSno = 2709165134;
             var ArcaneDust = Hud.Inventory.GetSnoItem(itemSno);
@@ -268,7 +273,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (veiledCrystalCount > prevVeiledCrystalCount || veiledCrystalCount < prevVeiledCrystalCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevVeiledCrystalCount = veiledCrystalCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevVeiledCrystalCount = veiledCrystalCount;}
              
             itemSno = 3689019703;
             var VeiledCrystal = Hud.Inventory.GetSnoItem(itemSno);
@@ -281,7 +286,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (forgottenSoulCount > prevForgottenSoulCount || forgottenSoulCount < prevForgottenSoulCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevForgottenSoulCount = forgottenSoulCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevForgottenSoulCount = forgottenSoulCount;}
              
             itemSno = 2073430088;
             var ForgottenSoul = Hud.Inventory.GetSnoItem(itemSno);
@@ -294,7 +299,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (bloodShardCount > prevBloodShardCount || bloodShardCount < prevBloodShardCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevBloodShardCount = bloodShardCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevBloodShardCount = bloodShardCount;}
              
             itemSno = 2603730171;
             var BloodShard = Hud.Inventory.GetSnoItem(itemSno);
@@ -307,7 +312,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (grkCount > prevGrkCount || grkCount < prevGrkCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevGrkCount = grkCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevGrkCount = grkCount;}
              
             itemSno = 2835237830;
             var grk = Hud.Inventory.GetSnoItem(itemSno);
@@ -320,7 +325,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (bovineBardicheCount > prevBovineBardicheCount || bovineBardicheCount < prevBovineBardicheCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevBovineBardicheCount = bovineBardicheCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevBovineBardicheCount = bovineBardicheCount;}
              
             itemSno = 2346057823;
             var bovineBardiche = Hud.Inventory.GetSnoItem(itemSno);
@@ -333,7 +338,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (puzzleRingCount > prevPuzzleRingCount || puzzleRingCount < prevPuzzleRingCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevPuzzleRingCount = puzzleRingCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevPuzzleRingCount = puzzleRingCount;}
              
             itemSno = 3106130529;
             var puzzleRing = Hud.Inventory.GetSnoItem(itemSno);
@@ -346,7 +351,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (khanduranRuneCount > prevKhanduranRuneCount || khanduranRuneCount < prevKhanduranRuneCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevKhanduranRuneCount = khanduranRuneCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevKhanduranRuneCount = khanduranRuneCount;}
              
             itemSno = 1948629088;
             var khanduranRune = Hud.Inventory.GetSnoItem(itemSno);
@@ -359,7 +364,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (caldeumNightShadeCount > prevCaldeumNightShadeCount || caldeumNightShadeCount < prevCaldeumNightShadeCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevCaldeumNightShadeCount = caldeumNightShadeCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevCaldeumNightShadeCount = caldeumNightShadeCount;}
              
             itemSno = 1948629089;
             var caldeumNightShade = Hud.Inventory.GetSnoItem(itemSno);
@@ -372,7 +377,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (arreatWarTapestryCount > prevArreatWarTapestryCount || arreatWarTapestryCount < prevArreatWarTapestryCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevArreatWarTapestryCount = arreatWarTapestryCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevArreatWarTapestryCount = arreatWarTapestryCount;}
              
             itemSno = 1948629090;
             var arreatWarTapestry = Hud.Inventory.GetSnoItem(itemSno);
@@ -385,7 +390,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (corruptedAngelFleshCount > prevCorruptedAngelFleshCount || corruptedAngelFleshCount < prevCorruptedAngelFleshCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevCorruptedAngelFleshCount = corruptedAngelFleshCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevCorruptedAngelFleshCount = corruptedAngelFleshCount;}
              
             itemSno = 1948629091;
             var corruptedAngelFlesh = Hud.Inventory.GetSnoItem(itemSno);
@@ -398,7 +403,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (westmarchHolyWaterCount > prevWestmarchHolyWaterCount || westmarchHolyWaterCount < prevWestmarchHolyWaterCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevWestmarchHolyWaterCount = westmarchHolyWaterCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevWestmarchHolyWaterCount = westmarchHolyWaterCount;}
              
             itemSno = 1948629092;
             var westmarchHolyWater = Hud.Inventory.GetSnoItem(itemSno);
@@ -411,7 +416,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (leoricsRegretCount > prevLeoricsRegretCount || leoricsRegretCount < prevLeoricsRegretCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevLeoricsRegretCount = leoricsRegretCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevLeoricsRegretCount = leoricsRegretCount;}
              
             itemSno = 1102953247;
             var leoricsRegret = Hud.Inventory.GetSnoItem(itemSno);
@@ -424,7 +429,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (idolOfTerrorCount > prevIdolOfTerrorCount || idolOfTerrorCount < prevIdolOfTerrorCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevIdolOfTerrorCount = idolOfTerrorCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevIdolOfTerrorCount = idolOfTerrorCount;}
              
             itemSno = 2670343450;
             var idolOfTerror = Hud.Inventory.GetSnoItem(itemSno);
@@ -437,7 +442,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (vialOfPutridnessCount > prevVialOfPutridnessCount || vialOfPutridnessCount < prevVialOfPutridnessCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevVialOfPutridnessCount = vialOfPutridnessCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevVialOfPutridnessCount = vialOfPutridnessCount;}
              
             itemSno = 2029265596;
             var vialOfPutridness = Hud.Inventory.GetSnoItem(itemSno);
@@ -450,7 +455,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (heartOfFrightCount > prevHeartOfFrightCount || heartOfFrightCount < prevHeartOfFrightCount)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevHeartOfFrightCount = heartOfFrightCount;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevHeartOfFrightCount = heartOfFrightCount;}
              
             itemSno = 3336787100;
             var heartOfFright = Hud.Inventory.GetSnoItem(itemSno);
@@ -463,7 +468,7 @@ namespace Turbo.Plugins.Resu
             }
             else if (BountiesCompletion > prevBountiesCompletion || BountiesCompletion < prevBountiesCompletion)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;}   else {prevBountiesCompletion = BountiesCompletion;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);}   else {prevBountiesCompletion = BountiesCompletion;}
              
             itemSno = 0;
             var texture = Hud.Texture.GetTexture(2854193535); 
@@ -474,7 +479,7 @@ namespace Turbo.Plugins.Resu
             }
             else if ((Hud.Game.RiftPercentage >= 23 && Hud.Game.RiftPercentage <= 27 || Hud.Game.RiftPercentage >= 48 && Hud.Game.RiftPercentage <= 52 || Hud.Game.RiftPercentage >= 73 && Hud.Game.RiftPercentage <= 77 || Hud.Game.RiftPercentage >= 90 && Hud.Game.RiftPercentage < 100) && prevRiftPercentage != Hud.Game.RiftPercentage)
             {
-            if (opacity < 200) {opacity += 2; itemOpacity += 0.010f; craftCountY = craftCountY - opacity/2;} else {prevRiftPercentage = Hud.Game.RiftPercentage;}
+            if (opacity < 1.0f) {opacity += 0.01f; itemOpacity += 0.01f; craftCountY = (int)(craftCountY - opacity*100);} else {prevRiftPercentage = Hud.Game.RiftPercentage;}
              
             itemSno = uint.MaxValue;
             var texture = Hud.Texture.GetTexture(3153276977); 
@@ -485,9 +490,9 @@ namespace Turbo.Plugins.Resu
             }
             else
             {   
-            if (opacity != 0) 
+            if (opacity >= 0f) 
                {
-                opacity -= 2;
+                opacity -= 0.010f;
                 itemOpacity -= 0.010f;
                 ISnoItem Fadeout = null;
                 ITexture texture = null;
