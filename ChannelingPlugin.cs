@@ -67,7 +67,7 @@ namespace Turbo.Plugins.Resu
                     resource = Hud.Game.Me.Stats.ResourcePctArcane;
                     break;
             }               
-            if (!Hud.Sound.IsIngameSoundEnabled) return;                      
+            if (!Hud.Sound.IsIngameSoundEnabled) return;
             if (resource >= ResourceMax && isOn == true)
                {
                  if (Hud.Game.Me.IsDead || Hud.Game.IsInTown){ isOn = false; }
