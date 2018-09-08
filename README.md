@@ -122,8 +122,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
                 //Enable Pool of reflection Example
                 plugin.ShowPoolOfReflection = true;
 
-                // Disable displaying Healing Wells & Pools of reflection when health is under 1/3
-		plugin.ShowAllWhenHealthIsUnderOneThird = false;
+                // Disable displaying Healing Wells & Pools of reflection when health is under 40%
+		plugin.ShowAllWhenHealthIsUnder40 = false;
 		
                 //Change Pylon Short Name Example
                 plugin.ShrineCustomNamesShort[ShrineType.BanditShrine] = "**BANDIT**";
