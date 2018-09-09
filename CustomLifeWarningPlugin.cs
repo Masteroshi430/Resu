@@ -34,7 +34,7 @@ namespace Turbo.Plugins.Resu
             lifePercentageToDisplayGlobes = 40;
 
             _steps = new List<float>();
-            for (var i = 210f; i <= 360f; i += 15f)
+            for (var i = 195f; i <= 360f; i += 15f) // 210
             {
                 _steps.Add(i);
             }
@@ -69,7 +69,7 @@ namespace Turbo.Plugins.Resu
 
             ShieldDecorator = new TopLabelDecorator(Hud)
             {
-                TextFont = Hud.Render.CreateFont("tahoma", 12, 255, 160, 160, 215, true, false, 255, 100, 0, 0, true),
+                TextFont = Hud.Render.CreateFont("tahoma", 12, 200, 160, 160, 215, true, false, 255, 100, 0, 0, true),
                 TextFunc = () => "\u25CF",
             };
 
@@ -125,7 +125,7 @@ namespace Turbo.Plugins.Resu
             
              var ShieldPylon = Hud.Game.Me.Powers.GetBuff(266254);
              if (ShieldPylon == null || !ShieldPylon.Active) {} 
-             else {ShieldPer19 = 19; InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);}
+             else {ShieldPer19 = 19; if (Hud.Game.Me.Defense.CurShield == 0f) InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);}
 
             for (int i = 1; i <= ShieldPer19 && i < _steps.Count; i++)
             {
