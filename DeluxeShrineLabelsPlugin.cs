@@ -127,7 +127,7 @@ namespace Turbo.Plugins.Resu
                 switch (shrine.Type)
                 {
                  case ShrineType.BlessedShrine:
-                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368\u1368\u1368\u1368" + Environment.NewLine + "-25% damage recieved";
+                      ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368\u1368\u1368\u1368" + Environment.NewLine + "-25% damage received";
                       break;
                  case ShrineType.EnlightenedShrine:
                       ShrineNameShort = ShrineNameShort + Environment.NewLine + "\u1368\u1368\u1368\u1368\u1368\u1368" + Environment.NewLine  + "+25% EXP gain";
