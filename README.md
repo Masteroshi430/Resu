@@ -42,6 +42,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of BattleTagAboveBannerPlugin Customization
 ```
+------
 #### [ChannelingPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ChannelingPlugin.cs) - Plays a sound when resource is back to full, another when down to the set limit (customizable). :
 Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/tree/master/sounds) and place them in TurboHUD's /sounds/ directory to have the notification sound.
 
