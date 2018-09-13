@@ -158,7 +158,9 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 - Bounties completed / total bounties
 - Rift completion %
 
-![alt text](READMEpics/Craftcount.png) ...Above player when total amount changes.
+![alt text](READMEpics/Craftcount.png) 
+...Above player when total amount changes.
+
 ------
 #### [CraftersDelightPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CraftersDelightPlugin.cs) - Shows on mini map :
 Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/tree/master/sounds) and place them in TurboHUD's /sounds/ directory to have notification sounds on Ancient & Primal drops, Horadric cache drop, same item as equipped drop.
