@@ -277,11 +277,13 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 #### [ImmortalKingsCallPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ImmortalKingsCallPlugin.cs) - Shows when Immortal King's Call's +1500 damage buff is active and how many seconds are left.
 ![alt text](READMEpics/immortal.png)
 ------
+
 #### [NextHeroPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/NextHeroPlugin.cs) - If you like switch often to play with the hero that have the less hours of playing, that plugin will display the next hero to play with and the time gap between the two heroes when you are in town.
 Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 ![alt text](READMEpics/nexthero.png)
 ------
+
 #### [ItemPerfectionPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ItemPerfectionPlugin.cs) - displays :
 - Check mark	: % item perfection
 - Crossed swords :	% item offense orientation
@@ -292,6 +294,7 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 ![alt text](READMEpics/itemperf.png)
 ------
+
 #### [ParagonPercentagePlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ParagonPercentagePlugin.cs) - Shows EXP percentage with two decimal right to portrait paragon level (a bit more precise than the top stats 2 decimals paragon level) with EXP/h & time to next paragon level in the hint and replaces portrait level 70 (only if reached) by each player's highest Greater Rift level with Class, Sheet DPS, EHP and Nemesis Bracers [N] & Unity [U] indicator in the hint.
 - Support for Z class (ZDPS, Sup). 
 ![alt text](READMEpics/Portrait.png)
@@ -312,13 +315,16 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
  // End of Disable Top Experience Statistics
 ```
 ------
+
 #### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs) - Indicates Ancient & Primal Ancient drop probability.
 ![alt text](READMEpics/pa.png)
 ![alt text](READMEpics/papa.png)
 ------
+
 #### [TimeEverywherePlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/TimeEverywherePlugin.cs) - The default clock is hidden when your inventory is open which means you can't read it when spending time with the mystic, the jeweller and the blacksmith. You have 10mn left before going to school/work but can't see the time while you try to roll that good stat for your item? This plugin is for you, it displays time in your inventory when it's open.
 ![alt text](READMEpics/time.png)
 ------
+
 #### [UrshisGiftPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/UrshisGiftPlugin.cs) - Adds GR level for n% chance of upgrade on the bottom-right of your legendary gems in your stash and your inventory, maxed Gems are labelled "max", hint in itemhovered menu.The default setting is 100% chance for all 3 consecutive attempts.
 ```diff
 -  Press F3 to update data after a GRift.
@@ -339,6 +345,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 // End of Settings for UrshisGift Plugin
 ```
 ------
+
 #### [DiadrasFirstGemPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DiadrasFirstGemPlugin.cs) - Shows stacks & the percentage of damage increased by the legendary gem under each monster when you have Bane of the Stricken equipped. There's also a cooldown indicator. 
 Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) is now MANDATORY to use this plugin.
 
@@ -357,6 +364,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 // End of Settings for Diadra's First Gem Plugin
 ```
 ------
+
 #### [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) - This plugin allows you to disable a plugin by :
 - Hero is Softcore
 - Hero is Hardcore
@@ -385,6 +393,7 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 // End of Settings for Hot Enabler/Disabler Plugin
 ```
 ------
+
 #### [OtherPlayersHeadsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/OtherPlayersHeadsPlugin.cs) - Other players' heroes' face on minimap (helps identifying hero class at a glance) & optional followers diplay (on by default).
 - Support for Z class (ZDPS, Sup). 
 Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
