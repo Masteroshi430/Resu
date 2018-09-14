@@ -16,7 +16,9 @@ Turbo.Plugins.Resu
 - Green line between me and Banner (with nearest player's name for teleporting + countdown + banners now stay 30s instead of 10s)
 - White line between me and Pools of reflection (optional, disabled by default).
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // AriadnesThreadPlugin Customization
                Hud.RunOnPlugin<Resu.AriadnesThreadPlugin>(plugin => 
@@ -29,9 +31,13 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of AriadnesThreadPlugin Customization
 ```
+</details></p>
+
 ------
 #### [BattleTagAboveBannerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/BattleTagAboveBannerPlugin.cs) - Adds other players' battletags above banners when they aren't in town. ![alt text](READMEpics/Banner.png)
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // BattleTagAboveBannerPlugin Customization
                Hud.RunOnPlugin<Resu.BattleTagAboveBannerPlugin>(plugin => 
@@ -42,13 +48,17 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of BattleTagAboveBannerPlugin Customization
 ```
+</details></p>
+
 ------
 #### [ChannelingPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ChannelingPlugin.cs) - Plays a sound when resource is back to full, another when down to the set limit (customizable). :
 Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/tree/master/sounds) and place them in TurboHUD's /sounds/ directory to have the notification sound.
 
 Note 2 : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) is now MANDATORY to use this plugin.
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // ChannelingPlugin Customization
                Hud.RunOnPlugin<Resu.ChannelingPlugin>(plugin => 
@@ -60,6 +70,9 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of ChannelingPlugin Customization
 ```
+
+</details></p>
+
 ------
 #### [CloudofBatsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CloudofBatsPlugin.cs) - Draws the Cloud of Bats range circle when hero is in combat.
 ------
@@ -79,7 +92,9 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 
 ![alt text](READMEpics/Bloodsprings.png) ![alt text](READMEpics/demonic.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // DangerPlugin Customization
                Hud.RunOnPlugin<Resu.DangerPlugin>(plugin => 
@@ -104,6 +119,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of DangerPlugin Customization
 ```
+</details></p>
+
 ------
 #### [DeluxeShrineLabelsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeShrineLabelsPlugin.cs) It's Psycho's ShrineLabelsPlugin with new features :
 - "Leave for" message if you haven't nemesis and some other players have.
@@ -113,7 +130,9 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 
 ![alt text](READMEpics/pylon.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // DeluxeShrineLabelsPlugin Customization
                Hud.RunOnPlugin<Resu.DeluxeShrineLabelsPlugin>(plugin =>      
@@ -143,6 +162,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             }); 
 // End of DeluxeShrineLabelsPlugin Customization
 ```
+</details></p>
+
 ------
 #### [CraftCountPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CraftCountPlugin.cs) - Displays total amount of :
 - Death's breath
@@ -192,7 +213,9 @@ Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/D
 
 Advice: For better experience with this plugin, turn off "Always Show Items Labels On Drop" in the Diablo 3 Gameplay options.
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // CraftersDelightPlugin Customization
                Hud.RunOnPlugin<Resu.CraftersDelightPlugin>(plugin => 
@@ -221,13 +244,17 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of CraftersDelightPlugin Customization
 ```
+</details></p>
+
 ------
 #### [CustomLifeWarningPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CustomLifeWarningPlugin.cs) - Turns the screen progressively to transparent orange when life percentage goes under the set limit. Default is 50%. Displays health globes on ground & minimap when health percentage is below an user selected value (40 by default). Absorb shield indicator on life globe.
 Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) is now MANDATORY to use this plugin.
 
 ![alt text](READMEpics/life.png) ![alt text](READMEpics/absorbshield.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Custom Life Warning Plugin
                Hud.RunOnPlugin<Resu.CustomLifeWarningPlugin>(plugin => 
@@ -239,6 +266,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of Settings for Custom Life Warning Plugin
 ```
+</details></p>
+
 ------
 #### [GroupGRLevelAdviserPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/GroupGRLevelAdviserPlugin.cs) 
 - Displays an advised group GRift level when rift dialogue is open.
@@ -249,7 +278,9 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 
 ![alt text](READMEpics/gr.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Group GR Level Adviser Plugin
                Hud.RunOnPlugin<Resu.GroupGRLevelAdviserPlugin>(plugin => 
@@ -259,13 +290,17 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of Settings for Group GR Level Adviser Plugin
 ```
+</details></p>
+
 ------
 #### [HuntersVengeancePlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HuntersVengeancePlugin.cs) - Shows 1 circle around your player when you have Zei's stone of vengeance equipped and are fighting, it also displays the percentage of damage increased by the legendary gem under each monster (calculated from gem level and distance from your player), the circle and a visor appears on the minimap to help you to aim at distant monsters.
 Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) is now MANDATORY to use this plugin.
 
 ![alt text](READMEpics/zei.png) ![alt text](READMEpics/zeiminimap.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Hunter's Vengeance Plugin
                Hud.RunOnPlugin<Resu.HuntersVengeancePlugin>(plugin => 
@@ -276,6 +311,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of Settings for Hunter's Vengeance Plugin
 ```
+</details></p>
+
 ------
 #### [ImmortalKingsCallPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ImmortalKingsCallPlugin.cs) - Shows when Immortal King's Call's +1500 damage buff is active and how many seconds are left.
 ![alt text](READMEpics/immortal.png)
@@ -302,7 +339,9 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 - Support for Z class (ZDPS, Sup). 
 ![alt text](READMEpics/Portrait.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Paragon Percentage Plugin
                Hud.RunOnPlugin<Resu.ParagonPercentagePlugin>(plugin => 
@@ -317,6 +356,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
                            Hud.TogglePlugin<TopExperienceStatistics>(false); 
  // End of Disable Top Experience Statistics
 ```
+</details></p>
+
 ------
 
 #### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs) - Indicates Ancient & Primal Ancient drop probability.
@@ -334,7 +375,9 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 ```
 ![alt text](READMEpics/urshi.png) ![alt text](READMEpics/urshimin.png)
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for UrshisGift Plugin
                Hud.RunOnPlugin<Resu.UrshisGiftPlugin>(plugin => 
@@ -347,6 +390,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of Settings for UrshisGift Plugin
 ```
+</details></p>
+
 ------
 
 #### [DiadrasFirstGemPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DiadrasFirstGemPlugin.cs) - Shows stacks & the percentage of damage increased by the legendary gem under each monster when you have Bane of the Stricken equipped. There's also a cooldown indicator. 
@@ -354,7 +399,9 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 
 ![alt text](READMEpics/Stricken.png) 
 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Diadra's First Gem Plugin
                Hud.RunOnPlugin<Resu.DiadrasFirstGemPlugin>(plugin => 
@@ -366,6 +413,8 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of Settings for Diadra's First Gem Plugin
 ```
+</details></p>
+
 ------
 
 #### [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/HotEnablerDisablerPlugin.cs) - This plugin allows you to disable a plugin by :
@@ -382,7 +431,9 @@ var hedPlugin = Hud.GetPlugin<HotEnablerDisablerPlugin>();
 bool GoOn = hedPlugin.CanIRun(Hud.Game.Me,this.GetType().Name); 
 if (!GoOn) return;
 ```
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Hot Enabler/Disabler Plugin
 // One line per plugin, case sensitive 
@@ -395,11 +446,16 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
 		});	
 // End of Settings for Hot Enabler/Disabler Plugin
 ```
+</details></p>
+
 ------
 
 #### [OtherPlayersHeadsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/OtherPlayersHeadsPlugin.cs) - Other players' heroes' face on minimap (helps identifying hero class at a glance) & optional followers diplay (on by default).
 - Support for Z class (ZDPS, Sup). 
-Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs) :
+
+<p><details>
+<summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
+	
 ```C#
 // Settings for Other Player's Heads Plugin
                Hud.RunOnPlugin<Resu.OtherPlayersHeadsPlugin>(plugin => 
@@ -408,3 +464,4 @@ Customization (paste this in the Customization part of User/PluginEnablerOrDisab
             });  
 // End of Settings for Other Player's Heads Plugin
 ```
+</details></p>
