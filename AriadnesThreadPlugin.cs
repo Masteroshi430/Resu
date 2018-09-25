@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 08/09/2018 15:42
+// Ariadne's Thread plugin for TurboHUD version 25/09/2018 08:11
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -11,7 +11,7 @@ using System.Linq;
 namespace Turbo.Plugins.Resu
 {
 
-    public class AriadnesThreadPlugin : BasePlugin, IInGameWorldPainter, ICustomizer
+    public class AriadnesThreadPlugin : BasePlugin, IInGameWorldPainter, ICustomizer, INewAreaHandler, IInGameTopPainter
     {
         public TopLabelDecorator StrengthBuffDecorator { get; set; }
         public string StrengthBuffText{ get; set; }
@@ -37,11 +37,15 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection KeywardenDecorator { get; set; }
         public WorldDecoratorCollection BossDecorator { get; set; }
         public WorldDecoratorCollection BannerDecorator { get; set; }
+        public TopLabelDecorator DistanceDecorator { get; set; }
         private Dictionary<IWorldCoordinate, long> BannersList;
         private Dictionary<IWorldCoordinate, string> BannersAreas;
         public int BannerTimeSeconds { get; set; }
         public bool ThreadBetweenPlayers { get; set; }
         public bool Pools { get; set; }
+        public int DistYards { get; set; }
+        public bool MetricSystem { get; set; }
+        public string DistString { get; set; }
                 
         public AriadnesThreadPlugin()
         {
@@ -51,6 +55,7 @@ namespace Turbo.Plugins.Resu
             BannerTimeSeconds = 30;
             ThreadBetweenPlayers = true;
             Pools = false;
+            MetricSystem = false;
         }
 
         
@@ -73,6 +78,7 @@ namespace Turbo.Plugins.Resu
          StrengthBuff2 = 0;
          StrengthBuff3 = 0;
          StrengthBuffText = string.Empty;
+         DistString = string.Empty;
          WhiteBrush = Hud.Render.CreateBrush(125, 255, 255, 255, 1, SharpDX.Direct2D1.DashStyle.Dash, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Triangle);
          
          StrengthBuffDecorator = new TopLabelDecorator(Hud)
@@ -196,6 +202,12 @@ namespace Turbo.Plugins.Resu
                     ShapePainter = new LineFromMeShapePainter(Hud)
                 }
                 );
+                
+         DistanceDecorator = new TopLabelDecorator(Hud)
+         {
+              TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 9, 255, 222, 203, 120, false, false, 100, 0, 0, 0, true), 
+              TextFunc = () => DistString,
+         };
           
         }
         
@@ -261,6 +273,7 @@ namespace Turbo.Plugins.Resu
             if (marker.SnoQuest != null && FirstQuestMarker)
              {
               QuestDecorator.Paint(layer, null, marker.FloorCoordinate, marker.Name); FirstQuestMarker = false;
+              DistYards = (int)(marker.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate));
              }
             else if (marker.SnoActor != null)
              {
@@ -469,6 +482,30 @@ namespace Turbo.Plugins.Resu
           }
           
 
+        }
+        
+        public void PaintTopInGame(ClipState clipState)
+        {
+         if (DistYards < 50) return;
+         if (Hud.Render.UiHidden) return;
+         if (clipState != ClipState.BeforeClip) return;
+         
+         var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.minimap_dialog_backgroundScreen.minimap_dialog_pve.minimap_pve_main").Rectangle;
+         
+         if (MetricSystem) 
+          {
+           var Meters = (int)(DistYards*1.0936);
+           if (Meters >= 1000) DistString = Math.Round((float)Meters/1000,1) + " km";
+           else DistString = Meters + " m";
+          }
+         else 
+          {
+           if (DistYards >= 1760) DistString = Math.Round((float)DistYards/1760,1) + " mi";
+           else DistString = DistYards + " yd";
+          }
+         
+         
+         DistanceDecorator.Paint(uiRect.Right - 40f, uiRect.Bottom + 10f , 50f, 50f, HorizontalAlign.Left);
         }
         
         public void OnNewArea(bool newGame, ISnoArea area)
