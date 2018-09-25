@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Next Hero Plugin for TurboHUD Version 03/08/2018 17:33
+// Next Hero Plugin for TurboHUD Version 25/09/2019 06:36
 
 using System;
 using System.Globalization;
@@ -22,7 +22,7 @@ namespace Turbo.Plugins.Resu
         public NextHeroPlugin()
         {
             Enabled = true;
-            NextHeroText = "";
+            NextHeroText = string.Empty;
             
         }
         
@@ -32,28 +32,27 @@ namespace Turbo.Plugins.Resu
             _watch = Hud.Time.CreateWatch();
             maxX = Hud.Window.Size.Width; 
             maxY = Hud.Window.Size.Height;
-        
-        }
-
-       
-       public void PaintTopInGame(ClipState clipState)
-        {
-                
             
-             NextHeroDecorator = new TopLabelDecorator(Hud)
+            NextHeroDecorator = new TopLabelDecorator(Hud)
             {
                 
                  TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 9, 225, 255, 255, 255, false, false, 100, 0, 0, 0, true), 
                  TextFunc = () => NextHeroText,
   
             };
-            
+        
+        }
+
+       
+       public void PaintTopInGame(ClipState clipState)
+        {
+
              if (Hud.Render.UiHidden) return;
              if (clipState != ClipState.BeforeClip) return;
              var uiInv = Hud.Inventory.InventoryMainUiElement; 
              if (uiInv.Visible) return;
              if (!Hud.Game.IsInTown) return;            
-             NextHeroText = "";   
+             NextHeroText = string.Empty;
                 
                 
                  var PosY = (maxY/4)*3-80;     
