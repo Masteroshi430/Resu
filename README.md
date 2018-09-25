@@ -15,6 +15,7 @@ Turbo.Plugins.Resu
 - Yellow line between me and Quest (Bounties) (from Xenthalon's AdvancedMarkerPlugin)
 - Green line between me and Banner (with nearest player's name for teleporting + countdown + banners now stay 30s instead of 10s)
 - White line between me and Pools of reflection (optional, disabled by default).
+- Bounty distance in yards or (optional) meters. 
 
 <p><details>
 <summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
@@ -27,7 +28,7 @@ Turbo.Plugins.Resu
 	    plugin.ThreadBetweenPlayers = true; // Set to false to disable the thread between players.
 	    plugin.Pools = false; // Set to true to enable pools of reflection.
             plugin.BannerTimeSeconds = 30; // Number of seconds you want each player's banner to stay.
-            
+            plugin.MetricSystem = false; // Set to true to use metric system for bounty distance.
             });  
 // End of AriadnesThreadPlugin Customization
 ```
