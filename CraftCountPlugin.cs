@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Craft Count Plugin for TurboHUD Version 08/09/2018 16:22
+// Craft Count Plugin for TurboHUD Version 25/09/2018 06:51
 
 using System;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Turbo.Plugins.Resu
 {
-    public class CraftCountPlugin : BasePlugin, IInGameTopPainter, ICustomizer
+    public class CraftCountPlugin : BasePlugin, IInGameTopPainter, ICustomizer, INewAreaHandler
     {
         
         
