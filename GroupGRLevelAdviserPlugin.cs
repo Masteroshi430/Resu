@@ -208,7 +208,6 @@ namespace Turbo.Plugins.Resu
            bool UrshiPanel = Hud.Render.GetUiElement("Root.NormalLayer.vendor_dialog_mainPage.riftReward_dialog.LayoutRoot.gemUpgradePane.items_list._content").Visible;
            if (UrshiPanel) TalkedToUrshi = true;
            if (Hud.Game.Me.IsInTown) TalkedToUrshi = false;
-           
           if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && GardianIsDead && Hud.Game.Me.AnimationState == AcdAnimationState.CastingPortal && !TalkedToUrshi)
            {
             TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
