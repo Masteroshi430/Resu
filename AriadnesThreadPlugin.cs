@@ -215,6 +215,7 @@ namespace Turbo.Plugins.Resu
         
          public void PaintWorld(WorldLayer layer)
         {
+              DistYards = 0;
               bool FirstQuestMarker = true;
               var Actors = Hud.Game.Actors.Where(a => a.SnoActor.Sno == 432770 || a.SnoActor.Sno == 430733 || a.SnoActor.Sno == 432885 || a.SnoActor.Sno == 433051 ||
               a.SnoActor.Sno == 432259 || a.SnoActor.Sno == 433246 || a.SnoActor.Sno == 433385 || a.SnoActor.Sno == 433295 || a.SnoActor.Sno == 433316 || 
@@ -505,7 +506,7 @@ namespace Turbo.Plugins.Resu
           }
          
          
-         DistanceDecorator.Paint(uiRect.Right - 40f, uiRect.Bottom + 10f , 50f, 50f, HorizontalAlign.Left);
+         DistanceDecorator.Paint(uiRect.Right - 30f, uiRect.Bottom + 10f , 50f, 50f, HorizontalAlign.Left);
         }
         
         public void OnNewArea(bool newGame, ISnoArea area)
