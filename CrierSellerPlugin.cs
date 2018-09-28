@@ -53,7 +53,7 @@ namespace Turbo.Plugins.Resu
            if (Hud.Inventory.InventoryMainUiElement.Visible) return;
            var Sellers = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 361241 || x.SnoActor.Sno == 56949 || x.SnoActor.Sno == 56948 || x.SnoActor.Sno == 56947 || x.SnoActor.Sno == 429005);
            string SellerMessage = string.Empty;
-           int Seconds = (int)(Hud.Game.CurrentRealTimeMilliseconds/1000);
+           int Seconds = Hud.Time.Now.Second;
            
            
            if (Seconds % 5 == 0 && PrevSeconds != Seconds)
