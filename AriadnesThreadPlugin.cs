@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 25/09/2018 08:11
+// Ariadne's Thread plugin for TurboHUD version 28/09/2018 21:59
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -22,6 +22,8 @@ namespace Turbo.Plugins.Resu
         public IWorldCoordinate RealOther1 { get; set; }
         public IWorldCoordinate RealOther2 { get; set; }
         public IWorldCoordinate RealOther3 { get; set; }
+        public IWorldCoordinate OldPos { get; set; }
+        public IWorldCoordinate NewPos { get; set; }
         public string AreaOther1 { get; set; }
         public string AreaOther2 { get; set; }
         public string AreaOther3 { get; set; }
@@ -38,20 +40,26 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection BossDecorator { get; set; }
         public WorldDecoratorCollection BannerDecorator { get; set; }
         public TopLabelDecorator DistanceDecorator { get; set; }
-        private Dictionary<IWorldCoordinate, long> BannersList;
-        private Dictionary<IWorldCoordinate, string> BannersAreas;
+        public TopLabelDecorator SpeedDecorator { get; set; }
+        private Dictionary<IWorldCoordinate,long> BannersList;
+        private Dictionary<IWorldCoordinate,string> BannersAreas;
+        private Dictionary<double,IWorldCoordinate> SpeedPos;
         public int BannerTimeSeconds { get; set; }
         public bool ThreadBetweenPlayers { get; set; }
         public bool Pools { get; set; }
         public int DistYards { get; set; }
         public bool MetricSystem { get; set; }
         public string DistString { get; set; }
+        public string Speed { get; set; }
+        public float DistanceFromLastSecond { get; set; }
+        public float SpeedCooler { get; set; }
                 
         public AriadnesThreadPlugin()
         {
             Enabled = true;
             BannersList = new Dictionary<IWorldCoordinate,long>();
             BannersAreas = new Dictionary<IWorldCoordinate,string>();
+            SpeedPos = new Dictionary<double,IWorldCoordinate>();
             BannerTimeSeconds = 30;
             ThreadBetweenPlayers = true;
             Pools = false;
@@ -79,6 +87,11 @@ namespace Turbo.Plugins.Resu
          StrengthBuff3 = 0;
          StrengthBuffText = string.Empty;
          DistString = string.Empty;
+         Speed = string.Empty;
+         OldPos = Hud.Window.CreateWorldCoordinate(381.154f, 551.850f, 33.3f);
+         NewPos = Hud.Window.CreateWorldCoordinate(381.154f, 551.850f, 33.3f);
+         DistanceFromLastSecond = 0;
+         SpeedCooler = 0;
          WhiteBrush = Hud.Render.CreateBrush(125, 255, 255, 255, 1, SharpDX.Direct2D1.DashStyle.Dash, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Triangle);
          
          StrengthBuffDecorator = new TopLabelDecorator(Hud)
@@ -207,6 +220,12 @@ namespace Turbo.Plugins.Resu
          {
               TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 9, 255, 222, 203, 120, false, false, 100, 0, 0, 0, true), 
               TextFunc = () => DistString,
+         };
+         
+         SpeedDecorator = new TopLabelDecorator(Hud)
+         {
+              TextFont = Hud.Render.CreateFont("Microsoft Sans Serif", 9, 255, 222, 203, 120, false, false, 100, 0, 0, 0, true), 
+              TextFunc = () => Speed,
          };
           
         }
@@ -339,7 +358,7 @@ namespace Turbo.Plugins.Resu
                if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0; NameOther2 = string.Empty; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = string.Empty; StrengthBuff2 = 0; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
-                 Other1 = player.FloorCoordinate;  
+                 Other1 = player.FloorCoordinate;
                  if (player.NormalizedXyDistanceToMe <= 186 && !player.IsDead) StrengthBuff1 = 10; else StrengthBuff1 = 0;
                 }
                 else
@@ -355,7 +374,7 @@ namespace Turbo.Plugins.Resu
                if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
-                 Other2 = player.FloorCoordinate; 
+                 Other2 = player.FloorCoordinate;
                  if (player.NormalizedXyDistanceToMe <= 186 && !player.IsDead) StrengthBuff2 = 10; else StrengthBuff2 = 0;
                 }
                 else
@@ -369,7 +388,7 @@ namespace Turbo.Plugins.Resu
                NameOther3 = player.BattleTagAbovePortrait; RealOther3 = player.FloorCoordinate; AreaOther3 = player.SnoArea.NameEnglish;
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
-                 Other3 = player.FloorCoordinate; 
+                 Other3 = player.FloorCoordinate;
                  if (player.NormalizedXyDistanceToMe <= 186 && !player.IsDead) StrengthBuff3 = 10; else StrengthBuff3 = 0;
                 }
                 else
@@ -487,27 +506,58 @@ namespace Turbo.Plugins.Resu
         
         public void PaintTopInGame(ClipState clipState)
         {
-         if (DistYards < 50) return;
+
          if (Hud.Render.UiHidden) return;
          if (clipState != ClipState.BeforeClip) return;
          
          var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.minimap_dialog_backgroundScreen.minimap_dialog_pve.minimap_pve_main").Rectangle;
          
-         if (MetricSystem) 
+         NewPos =  Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate);
+         double DatSecond = Math.Truncate((double)(Hud.Game.CurrentRealTimeMilliseconds/1000));
+         
+         if (!SpeedPos.ContainsKey(DatSecond)) SpeedPos.Add(DatSecond,NewPos);
+         
+         int DictCount = SpeedPos.Count;
+         
+         if (DictCount >= 2)
           {
+           var NextToLast = SpeedPos.OrderByDescending(b => b.Key).Skip(1).First();
+           OldPos = NextToLast.Value;
+          }
+         if (DictCount >= 3)
+          {
+           var First = SpeedPos.OrderBy(b => b.Key).First();
+           SpeedPos.Remove(First.Key);
+          }
+
+         DistanceFromLastSecond = OldPos.XYDistanceTo(Hud.Game.Me.FloorCoordinate);
+
+         if (DistanceFromLastSecond > SpeedCooler) SpeedCooler = SpeedCooler + (float)((DistanceFromLastSecond - SpeedCooler) / (DistanceFromLastSecond + 1));
+         else if (DistanceFromLastSecond < SpeedCooler) SpeedCooler = SpeedCooler - (float)((SpeedCooler - DistanceFromLastSecond) / (DistanceFromLastSecond + 1));
+         
+         
+         double mph = Math.Round(SpeedCooler*0.49);
+         double kmh = Math.Round(SpeedCooler*0.30);
+         
+         if (MetricSystem)
+          {
+           Speed = kmh + " km/h";
            var Meters = (int)(DistYards*1.0936);
            if (Meters >= 1000) DistString = Math.Round((float)Meters/1000,1) + " km";
            else DistString = Meters + " m";
           }
          else 
           {
+           Speed = mph + " mph"; 
            if (DistYards >= 1760) DistString = Math.Round((float)DistYards/1760,1) + " mi";
            else DistString = DistYards + " yd";
           }
          
          
-         DistanceDecorator.Paint(uiRect.Right - 30f, uiRect.Bottom + 10f , 50f, 50f, HorizontalAlign.Left);
-        }
+         if (DistYards > 49) DistanceDecorator.Paint(uiRect.Right - 30f, uiRect.Bottom + 10f , 50f, 50f, HorizontalAlign.Left);
+         
+         if (mph > 0) SpeedDecorator.Paint(uiRect.Left, uiRect.Bottom - 35f, 50f, 50f, HorizontalAlign.Left);
+         }
         
         public void OnNewArea(bool newGame, ISnoArea area)
         {
