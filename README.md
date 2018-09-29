@@ -5,7 +5,8 @@ Turbo.Plugins.Resu
 
 ```
 ------
-#### [AriadnesThreadPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/AriadnesThreadPlugin.cs) 
+#### [AriadnesThreadPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/AriadnesThreadPlugin.cs)
+![](READMEpics/Ariadnes1.gif) ![](READMEpics/Ariadnes2.gif)
 - Two players in the same area/map : Draws a thread between you and the other player on the minimap. 
 - Three players in the same area/map : Draws a triangle formed by you and the two other players on the minimap.
 - Four players in the same area/map : Draws a triangle formed by the three other players on the minimap.
@@ -15,7 +16,8 @@ Turbo.Plugins.Resu
 - Yellow line between me and Quest (Bounties) (from Xenthalon's AdvancedMarkerPlugin)
 - Green line between me and Banner (with nearest player's name for teleporting + countdown + banners now stay 30s instead of 10s)
 - White line between me and Pools of reflection (optional, disabled by default).
-- Bounty distance in yards or (optional) meters. 
+- Bounty distance in yards or (optional) meters.
+- Speed in mph or km/h.
 
 <p><details>
 <summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
