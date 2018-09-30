@@ -88,7 +88,9 @@ Note 2 : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/h
 
 ------
 
-#### [CrierSellerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CrierSellerPlugin.cs) - The Blacksmith, Mystic, Jeweller, Kadala & Kulle give useful (or not) infos when the hero approaches.
+#### [CrierSellerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CrierSellerPlugin.cs) 
+![](READMEpics/Kadala.gif)
+- The Blacksmith, Mystic, Jeweller, Kadala & Kulle give useful (or not) infos when the hero approaches.
 
 ------
 
