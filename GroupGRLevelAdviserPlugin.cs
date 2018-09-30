@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 06/09/2018 11:27
+// Group GR Level Adviser Plugin for TurboHUD version 30/09/2018 12:09
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -65,10 +65,15 @@ namespace Turbo.Plugins.Resu
          {
             int maxGRlevel = 0;
             int PlayerInTownCount = 0;
+            int NonZPlayerCount = 0;
             Party = string.Empty;
             foreach (var player in Hud.Game.Players)
                   {
-                   maxGRlevel +=  player.HighestHeroSoloRiftLevel;
+                   if (!IsZDPS(player)) 
+                    {
+                     maxGRlevel +=  player.HighestHeroSoloRiftLevel;
+                     NonZPlayerCount++;
+                    }
                    if (player.IsInTown) PlayerInTownCount++;
                    string Battletag = player.BattleTagAbovePortrait.PadRight(16);
                    string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();
@@ -79,7 +84,7 @@ namespace Turbo.Plugins.Resu
                   
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
              {
-              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / Hud.Game.NumberOfPlayersInGame + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
+              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / NonZPlayerCount + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
               GRLevelText = GRAverage.ToString();
               var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
               GRLevelDecorator.Paint(uiRect.Left, uiRect.Top, uiRect.Width, uiRect.Height, HorizontalAlign.Right);
