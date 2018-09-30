@@ -38,7 +38,9 @@ Turbo.Plugins.Resu
 
 ------
 
-#### [BattleTagAboveBannerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/BattleTagAboveBannerPlugin.cs) - Adds other players' battletags above banners when they aren't in town. ![](READMEpics/Battletag.gif)
+#### [BattleTagAboveBannerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/BattleTagAboveBannerPlugin.cs)
+![](READMEpics/Battletag.gif)
+- Adds other players' battletags above banners when they aren't in town.
 <p><details>
 <summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
 	
