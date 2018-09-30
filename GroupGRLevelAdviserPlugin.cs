@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 30/09/2018 12:09
+// Group GR Level Adviser Plugin for TurboHUD version 30/09/2018 15:44
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -76,7 +76,7 @@ namespace Turbo.Plugins.Resu
                     }
                    if (player.IsInTown) PlayerInTownCount++;
                    string Battletag = player.BattleTagAbovePortrait.PadRight(16);
-                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();
+                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : (player.Offense.SheetDps >= 3000000f) ? "D " + player.HeroClassDefinition.HeroClass : player.HeroClassDefinition.HeroClass.ToString();  
                    ZClass = ZClass.PadRight(17);
                    string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
                    Party = Party + Battletag +  ZClass + HighestSolo + Environment.NewLine;
@@ -84,6 +84,7 @@ namespace Turbo.Plugins.Resu
                   
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
              {
+              if (NonZPlayerCount == 0) NonZPlayerCount = 1;
               int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / NonZPlayerCount + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
               GRLevelText = GRAverage.ToString();
               var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
@@ -238,8 +239,8 @@ namespace Turbo.Plugins.Resu
          var ZodiacRing = player.Powers.GetBuff(402459);
          if (ZodiacRing == null || !ZodiacRing.Active) {} else {Points++;}
          
-         if (player.Damage.TotalDamage < 500000D) Points++;
-         if (player.Damage.TotalDamage > 1500000D) Points--;
+         if (player.Offense.SheetDps < 500000f) Points++;
+         if (player.Offense.SheetDps > 1500000f) Points--;
          
          if (player.Defense.EhpMax > 80000000f) Points++;
          
