@@ -476,7 +476,7 @@ if (!GoOn) return;
 
 #### [OtherPlayersHeadsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/OtherPlayersHeadsPlugin.cs) 
 ![](READMEpics/Heads1.gif) ![](READMEpics/Heads2.gif)
-- Other players' heroes' face on minimap (helps identifying hero class at a glance) & optional followers diplay (on by default).
+- Other players' heroes' face on minimap (helps identifying hero class at a glance) & optional followers display (on by default).
 - Support for Z class (ZDPS, Sup). 
 
 <p><details>
