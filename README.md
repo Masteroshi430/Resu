@@ -139,12 +139,12 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 
 ------
 
-#### [DeluxeShrineLabelsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeShrineLabelsPlugin.cs) It's Psycho's ShrineLabelsPlugin with new features :
+#### [DeluxeShrineLabelsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeShrineLabelsPlugin.cs) 
+![alt text](READMEpics/Deluxe.png)
+It's Psycho's ShrineLabelsPlugin with new features :
 - "Leave for" message if you haven't nemesis and some other players have.
 - "HIT ME!" message if you have nemesis equipped.
 - Auto displays Healing Wells & Pools of reflection when health is under 1/3 (toggleable, on by default)
-
-![alt text](READMEpics/pylon.png)
 
 <p><details>
 <summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
