@@ -385,9 +385,9 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 ------
 
-#### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs) - Indicates Ancient & Primal Ancient drop probability.
-![alt text](READMEpics/pa.png)
-![alt text](READMEpics/papa.png)
+#### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs)
+![alt text](READMEpics/pa.png) ![alt text](READMEpics/PAPA.gif)
+- Indicates Ancient & Primal Ancient drop probability.
 
 ------
 
