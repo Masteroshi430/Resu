@@ -183,7 +183,7 @@ It's Psycho's ShrineLabelsPlugin with new features :
 ------
 
 #### [CraftCountPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CraftCountPlugin.cs) 
-![alt text](READMEpics/Bounties.png) 
+![alt text](READMEpics/Bounties.gif) 
 Displays total amount of :
 - Death's breath
 - Veiled Crystal 
