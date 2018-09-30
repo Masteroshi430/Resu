@@ -360,7 +360,7 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 #### [ParagonPercentagePlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/ParagonPercentagePlugin.cs) 
 ![alt text](READMEpics/Parag1.png) ![alt text](READMEpics/Parag2.png) ![alt text](READMEpics/Parag3.png)
-- Shows EXP percentage with two decimal right to portrait paragon level (a bit more precise than the top stats 2 decimals paragon level) with EXP/h & time to next paragon level in the hint and replaces portrait level 70 (only if reached) by each player's highest Greater Rift level with Class, Sheet DPS, EHP and Nemesis Bracers [N] & Unity [U] indicator in the hint.
+- Shows EXP percentage with two decimal right to portrait paragon level (a bit more precise than the top stats 2 decimals paragon level) with EXP/h & time to next paragon level in the hint and replaces portrait level 70 (only if reached) by each hero's highest Greater Rift level with Class, Sheet DPS, EHP and Nemesis Bracers [N] & Unity [U] indicator in the hint.
 - Support for Z class (ZDPS, Sup). 
 
 
@@ -385,9 +385,9 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 ------
 
-#### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs) - Indicates Ancient & Primal Ancient drop probability.
-![alt text](READMEpics/pa.png)
-![alt text](READMEpics/papa.png)
+#### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs)
+![alt text](READMEpics/pa.png) ![alt text](READMEpics/PAPA.gif)
+- Indicates Ancient & Primal Ancient drop probability.
 
 ------
 
