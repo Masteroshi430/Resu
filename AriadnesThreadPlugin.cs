@@ -271,7 +271,8 @@ namespace Turbo.Plugins.Resu
                 var quest = Hud.Game.Bounties.FirstOrDefault(x => x.SnoQuest.Sno == ThatQuest);
                 if ((quest != null) && quest.State != QuestState.completed)
                  {
-                  QuestDecorator.Paint(layer, null, Actor.FloorCoordinate, Name); FirstQuestMarker = false;
+                  QuestDecorator.Paint(layer, null, Actor.FloorCoordinate, Name); 
+                  FirstQuestMarker = false;
                  }
               }
          
