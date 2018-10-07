@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 30/09/2018 15:44
+// Group GR Level Adviser Plugin for TurboHUD version 07/10/2018 23:40
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -9,13 +9,19 @@ using System.Linq;
 namespace Turbo.Plugins.Resu
 {
 
-    public class GroupGRLevelAdviserPlugin : BasePlugin, IInGameWorldPainter
+    public class GroupGRLevelAdviserPlugin : BasePlugin, IInGameWorldPainter, IInGameTopPainter
     {
         public TopLabelDecorator GRLevelDecorator { get; set; }
+        public TopLabelDecorator BattletagsDecorator { get; set; }
+        public TopLabelDecorator ZClassesDecorator { get; set; }
+        public TopLabelDecorator HighestSolosDecorator { get; set; }
         public WorldDecoratorCollection ObeliskClose { get; set; }
         public string GRLevelText { get; set; }
-        public string Party { get; set; }
+        public string Battletags { get; set; }
+        public string ZClasses { get; set; }
+        public string HighestSolos { get; set; }
         public float CircleSize { get; set; }
+        public int PlayerInTownCount { get; set; }
         public WorldDecoratorCollection CircleDecorator { get; set; }
         public WorldDecoratorCollection TalkToUrshiDecorator { get; set; }
         public bool GardianIsDead { get; set; }
@@ -33,18 +39,36 @@ namespace Turbo.Plugins.Resu
         {
          base.Load(hud);
          
-         GRLevelText = "";
+         GRLevelText = string.Empty;
          CircleSize = 10;
          
          GRLevelDecorator = new TopLabelDecorator(Hud)
           {
-           TextFont = Hud.Render.CreateFont("consolas", 7, 220, 198, 174, 49, true, false, 255, 0, 0, 0, true),
-           ExpandedHintFont = Hud.Render.CreateFont("consolas", 8, 220, 198, 174, 49, false, false, false),
-           TextFunc = () => "",
-           HintFunc = () => (Hud.Game.NumberOfPlayersInGame == 1) ? Hud.Game.Me.HeroName + "'s highest GR level : " + Hud.Game.Me.HighestHeroSoloRiftLevel : Party + Environment.NewLine + "Greater Rift level advised for" + Environment.NewLine + "this " + Hud.Game.NumberOfPlayersInGame + " player group : " + GRLevelText, 
+           BackgroundBrush = Hud.Render.CreateBrush(150, 0, 0, 0, 0),
+           BorderBrush = Hud.Render.CreateBrush(250, 0, 0, 0, 2),
+           TextFont = Hud.Render.CreateFont("consolas", 8, 220, 255, 255, 255, true, false, 255, 0, 0, 0, true),
+           TextFunc = () => "Greater Rift level advised for this" + Environment.NewLine + Hud.Game.NumberOfPlayersInGame + " player group     >   " + GRLevelText + "   <",
           };
-
-         ObeliskClose = new WorldDecoratorCollection( 
+          
+         BattletagsDecorator = new TopLabelDecorator(Hud)
+          {
+           TextFont = Hud.Render.CreateFont("consolas", 8, 220, 255, 255, 255, true, false, 255, 0, 0, 0, true),
+           TextFunc = () => Battletags,
+          };
+          
+         ZClassesDecorator = new TopLabelDecorator(Hud)
+          {
+           TextFont = Hud.Render.CreateFont("consolas", 8, 220, 0, 253, 0, true, false, 255, 0, 0, 0, true),
+           TextFunc = () => ZClasses,
+          };
+          
+         HighestSolosDecorator = new TopLabelDecorator(Hud)
+          {
+           TextFont = Hud.Render.CreateFont("consolas", 8, 220, 255, 255, 255, true, false, 255, 0, 0, 0, true),
+           TextFunc = () => HighestSolos,
+          };
+          
+          ObeliskClose = new WorldDecoratorCollection( 
           new GroundLabelDecorator(Hud)
           {
            BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
@@ -63,34 +87,6 @@ namespace Turbo.Plugins.Resu
         
          public void PaintWorld(WorldLayer layer)
          {
-            int maxGRlevel = 0;
-            int PlayerInTownCount = 0;
-            int NonZPlayerCount = 0;
-            Party = string.Empty;
-            foreach (var player in Hud.Game.Players)
-                  {
-                   if (!IsZDPS(player)) 
-                    {
-                     maxGRlevel +=  player.HighestHeroSoloRiftLevel;
-                     NonZPlayerCount++;
-                    }
-                   if (player.IsInTown) PlayerInTownCount++;
-                   string Battletag = player.BattleTagAbovePortrait.PadRight(16);
-                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : (player.Offense.SheetDps >= 3000000f) ? "D " + player.HeroClassDefinition.HeroClass : player.HeroClassDefinition.HeroClass.ToString();  
-                   ZClass = ZClass.PadRight(17);
-                   string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
-                   Party = Party + Battletag +  ZClass + HighestSolo + Environment.NewLine;
-                  }
-                  
-            if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
-             {
-              if (NonZPlayerCount == 0) NonZPlayerCount = 1;
-              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / NonZPlayerCount + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
-              GRLevelText = GRAverage.ToString();
-              var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
-              GRLevelDecorator.Paint(uiRect.Left, uiRect.Top, uiRect.Width, uiRect.Height, HorizontalAlign.Right);
-             }
-             
              // Talking Obelisk part
              string ObeliskMessage = "";
              int TenSeconds = ((int)(Hud.Game.CurrentRealTimeMilliseconds/10000)) % 10;
@@ -214,10 +210,66 @@ namespace Turbo.Plugins.Resu
            bool UrshiPanel = Hud.Render.GetUiElement("Root.NormalLayer.vendor_dialog_mainPage.riftReward_dialog.LayoutRoot.gemUpgradePane.items_list._content").Visible;
            if (UrshiPanel) TalkedToUrshi = true;
            if (Hud.Game.Me.IsInTown) TalkedToUrshi = false;
-          if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && GardianIsDead && Hud.Game.Me.AnimationState == AcdAnimationState.CastingPortal && !TalkedToUrshi)
+          if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && GardianIsDead && Hud.Game.Me.AnimationState == AcdAnimationState.CastingPortal && !TalkedToUrshi && Hud.Game.SpecialArea == SpecialArea.GreaterRift )
            {
             TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
            }
+        }
+        
+        
+        public void PaintTopInGame(ClipState clipState)
+        {
+            int maxGRlevel = 0;
+            PlayerInTownCount = 0;
+            int NonZPlayerCount = 0;
+            Battletags = string.Empty;
+            ZClasses = string.Empty;
+            HighestSolos = string.Empty;
+            
+            foreach (var player in Hud.Game.Players)
+                  {
+                   if (!IsZDPS(player)) 
+                    {
+                     maxGRlevel +=  player.HighestHeroSoloRiftLevel;
+                     NonZPlayerCount++;
+                    }
+                   if (player.IsInTown) PlayerInTownCount++;
+                   string Battletag = player.BattleTagAbovePortrait.PadRight(16);
+                   
+                   string DPSRank = string.Empty;
+                   if (player.Offense.SheetDps >= 3000000f && player.Offense.SheetDps < 4000000f ) DPSRank = "\u2605 ";
+                   else if (player.Offense.SheetDps >= 4000000f && player.Offense.SheetDps < 5000000f ) DPSRank = "\u2605\u2605 ";
+                   else if (player.Offense.SheetDps >= 5000000f && player.Offense.SheetDps < 6000000f ) DPSRank = "\u2605\u2605\u2605 ";
+                   else if (player.Offense.SheetDps >= 6000000f) DPSRank = "\u2605\u2605\u2605\u2605 ";
+                   
+                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : DPSRank + player.HeroClassDefinition.HeroClass;  
+                   ZClass = ZClass.PadRight(20);
+                   string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
+                   Battletags = (Battletags.Length == 0) ? Battletag : Battletags + Environment.NewLine + Battletag ;
+                   ZClasses = (ZClasses.Length == 0) ? ZClass : ZClasses + Environment.NewLine + ZClass;
+                   HighestSolos = (HighestSolos.Length == 0) ? HighestSolo : HighestSolos + Environment.NewLine + HighestSolo ;
+                  }
+                  
+            if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
+             {
+              if (NonZPlayerCount == 0) NonZPlayerCount = 1;
+              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / NonZPlayerCount + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
+              GRLevelText = GRAverage.ToString();
+              var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
+              if (Hud.Window.CursorY >= uiRect.Top && Hud.Window.CursorY <= (uiRect.Top + uiRect.Height) && Hud.Window.CursorX >= uiRect.Left && Hud.Window.CursorX <= (uiRect.Left + uiRect.Width)) 
+               {
+                float WeirdMathMagic = 2.8f;
+                if (Hud.Game.NumberOfPlayersInGame == 4) WeirdMathMagic = 2.7f;
+                else if (Hud.Game.NumberOfPlayersInGame == 3) WeirdMathMagic = 2.766f;
+                else if (Hud.Game.NumberOfPlayersInGame == 2) WeirdMathMagic = 2.833f;
+                else if (Hud.Game.NumberOfPlayersInGame == 1) WeirdMathMagic = 2.9f;
+                BattletagsDecorator.Paint((int)(uiRect.Right/4), (int)(uiRect.Bottom/WeirdMathMagic), 50, 50, HorizontalAlign.Left);
+                ZClassesDecorator.Paint((int)(uiRect.Right/2.1), (int)(uiRect.Bottom/WeirdMathMagic), 50, 50, HorizontalAlign.Left);
+                HighestSolosDecorator.Paint((int)(uiRect.Right/1.38), (int)(uiRect.Bottom/WeirdMathMagic), 50, 50, HorizontalAlign.Left);
+                if (Hud.Game.NumberOfPlayersInGame != 1) GRLevelDecorator.Paint((int)(uiRect.Right/4), (int)(uiRect.Bottom/2.15), 230, 38, HorizontalAlign.Left);
+               }
+              
+             }
         }
         
         private bool IsZDPS(IPlayer player)
