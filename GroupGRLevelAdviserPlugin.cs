@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 07/10/2018 23:40
+// Group GR Level Adviser Plugin for TurboHUD version 08/10/2018 09:23
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -234,16 +234,15 @@ namespace Turbo.Plugins.Resu
                      NonZPlayerCount++;
                     }
                    if (player.IsInTown) PlayerInTownCount++;
-                   string Battletag = player.BattleTagAbovePortrait.PadRight(16);
+                   string Battletag = player.BattleTagAbovePortrait;
                    
-                   string DPSRank = string.Empty;
-                   if (player.Offense.SheetDps >= 3000000f && player.Offense.SheetDps < 4000000f ) DPSRank = "\u2605 ";
-                   else if (player.Offense.SheetDps >= 4000000f && player.Offense.SheetDps < 5000000f ) DPSRank = "\u2605\u2605 ";
-                   else if (player.Offense.SheetDps >= 5000000f && player.Offense.SheetDps < 6000000f ) DPSRank = "\u2605\u2605\u2605 ";
-                   else if (player.Offense.SheetDps >= 6000000f) DPSRank = "\u2605\u2605\u2605\u2605 ";
+                   string DPS = string.Empty;
+                   if (player.Offense.SheetDps >= 3000000f) DPS = ValueToString((long)player.Offense.SheetDps, ValueFormat.LongNumber);
+                   int WhiteSpaceNumber = 12 - player.HeroClassDefinition.HeroClass.ToString().Length;
+                   string WhiteSpaces = new String(' ', WhiteSpaceNumber);
                    
-                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : DPSRank + player.HeroClassDefinition.HeroClass;  
-                   ZClass = ZClass.PadRight(20);
+                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass + WhiteSpaces + DPS;  
+                   ZClass = ZClass;
                    string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
                    Battletags = (Battletags.Length == 0) ? Battletag : Battletags + Environment.NewLine + Battletag ;
                    ZClasses = (ZClasses.Length == 0) ? ZClass : ZClasses + Environment.NewLine + ZClass;
