@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Channeling Plugin for TurboHUD Version 15/08/2018 21:56
+// Channeling Plugin for TurboHUD Version 09/10/2018 19:21
 
 using System;
 using System.Globalization;
@@ -66,8 +66,9 @@ namespace Turbo.Plugins.Resu
                 case HeroClass.Wizard:
                     resource = Hud.Game.Me.Stats.ResourcePctArcane;
                     break;
-            }               
+            }
             if (!Hud.Sound.IsIngameSoundEnabled) return;
+            
             if (resource >= ResourceMax && isOn == true)
                {
                  if (Hud.Game.Me.IsDead || Hud.Game.IsInTown){ isOn = false; }
@@ -86,36 +87,31 @@ namespace Turbo.Plugins.Resu
                               { 
                               } 
                          });  
-                        
-                           isOn = false;    
+                           isOn = false;
                          }
+                 else isOn = false;
                }
             else if (resource <= ResourceMin && isOn == false)
                     {
-                      if    (Hud.Game.Me.IsDead || Hud.Game.IsInTown){ isOn = true; }
+                      if (Hud.Game.Me.IsDead || Hud.Game.IsInTown){ }
                       else if (LowNotification)
-                              {  
+                              {
                                 var lowSound = Hud.Sound.LoadSoundPlayer("Resource-Low-By-Resu.wav");
-            
                                 ThreadPool.QueueUserWorkItem(state =>
                                 {
-                                 try 
-                                    { 
-                                     lowSound.PlaySync(); 
-                                    } 
-                                 catch (Exception) 
-                                   { 
-                                   } 
+                                 try
+                                    {
+                                     lowSound.PlaySync();
+                                    }
+                                 catch (Exception)
+                                   {
+                                   }
                                   
-                                }); 
-                        
-                                isOn = true;    
-                              } 
-    
+                                });
+                                isOn = true;
+                              }
+                      else isOn = true;
                     }
-            
-                    
-
         }
     }
 }
