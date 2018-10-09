@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Hunter's Vengeance Plugin for TurboHUD Version 14/12/2017 15:05
+// Hunter's Vengeance Plugin for TurboHUD Version 09/10/2018 22:52
 
 using System;
 using System.Collections.Generic;
@@ -37,7 +37,7 @@ namespace Turbo.Plugins.Resu
         {
             base.Load(hud);
                          
-            TextFont = Hud.Render.CreateFont("tahoma", 12, 100, 252, 126, 0, true, false, true);
+            TextFont = Hud.Render.CreateFont("tahoma", 12, 150, 252, 126, 0, true, false, 150, 0, 0, 0, false); // 100
             OutlineBrush = Hud.Render.CreateBrush(30, 252, 126, 0, 3); 
             Fader = new StandardFader(hud, this);
             midX = Hud.Window.Size.Width/2; 
@@ -106,8 +106,10 @@ namespace Turbo.Plugins.Resu
 
             OutlineBrush.DrawWorldEllipse(50, -1, Hud.Game.Me.FloorCoordinate);
             
-            
-             var monsters = Hud.Game.AliveMonsters.Where(monster => monster.Attackable);
+             var Smonster = Hud.Game.SelectedMonster2 ?? Hud.Game.SelectedMonster1;
+             if ((Smonster == null)) return;
+             
+             var monsters = Hud.Game.AliveMonsters.Where(monster => monster.Attackable && monster == Smonster);
                 foreach (var monster in monsters)
                 {
                     if (ElitesOnlyNumbers && !monster.IsElite) continue;
