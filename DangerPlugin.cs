@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 07/10/2018 10:19
+// Danger Plugin for TurboHUD Version 10/10/2018 07:49
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -102,7 +102,7 @@ namespace Turbo.Plugins.Resu
                 new GroundLabelDecorator(Hud)
                 {
                     BackgroundBrush = Hud.Render.CreateBrush(160, 0, 0, 0, 0),
-                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 79, 170, 245, true, false, false),                    
+                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 79, 170, 245, true, false, false),
                 }
                 );
                 
@@ -1307,6 +1307,11 @@ namespace Turbo.Plugins.Resu
                               case "1627.000, 784.000, 0.1":
                               worldCoord1 = Hud.Window.CreateWorldCoordinate(1662.510f, 794.012f, 0.1f);
                               worldCoord2 = Hud.Window.CreateWorldCoordinate(1661.674f, 778.172f, 0.1f);
+                              break;
+                              
+                              case "474.945, 1170.731, 0.1":
+                              worldCoord1 = Hud.Window.CreateWorldCoordinate(507.679f, 1190.924f, 0.1f);
+                              worldCoord2 = Hud.Window.CreateWorldCoordinate(501.005f, 1200.877f, 0.1f);
                               break;
                               
                               default:
