@@ -99,10 +99,6 @@ namespace Turbo.Plugins.Resu
            if (!Hud.Game.Me.InCombat) goto MiniMapCircle;
             }
             
-            
-           
-           
-           
 
             OutlineBrush.DrawWorldEllipse(50, -1, Hud.Game.Me.FloorCoordinate);
             
