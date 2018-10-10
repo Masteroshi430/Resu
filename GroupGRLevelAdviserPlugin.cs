@@ -241,8 +241,7 @@ namespace Turbo.Plugins.Resu
                    int WhiteSpaceNumber = 12 - player.HeroClassDefinition.HeroClass.ToString().Length;
                    string WhiteSpaces = new String(' ', WhiteSpaceNumber);
                    
-                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass + WhiteSpaces + DPS;  
-                   ZClass = ZClass;
+                   string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass + WhiteSpaces + DPS;
                    string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
                    Battletags = (Battletags.Length == 0) ? Battletag : Battletags + Environment.NewLine + Battletag ;
                    ZClasses = (ZClasses.Length == 0) ? ZClass : ZClasses + Environment.NewLine + ZClass;
