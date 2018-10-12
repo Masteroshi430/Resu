@@ -498,3 +498,9 @@ if (!GoOn) return;
 // End of Settings for Other Player's Heads Plugin
 ```
 </details></p>
+
+------
+
+#### [UnscathedMonsterShowerPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/UnscathedMonsterShowerPlugin.cs)
+![](READMEpics/monstereyes.png)
+- Displays red eyes for unscathed monsters to help to see them in the dark or aim from afar.
