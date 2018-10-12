@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 08/10/2018 09:23
+// Group GR Level Adviser Plugin for TurboHUD version 12/10/2018 14:26
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -243,6 +243,7 @@ namespace Turbo.Plugins.Resu
                    
                    string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass + WhiteSpaces + DPS;
                    string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
+                   if (player.SnoArea.Sno != Hud.Game.Me.SnoArea.Sno && player.HighestHeroSoloRiftLevel == 0) HighestSolo = "???".PadLeft(3);
                    Battletags = (Battletags.Length == 0) ? Battletag : Battletags + Environment.NewLine + Battletag ;
                    ZClasses = (ZClasses.Length == 0) ? ZClass : ZClasses + Environment.NewLine + ZClass;
                    HighestSolos = (HighestSolos.Length == 0) ? HighestSolo : HighestSolos + Environment.NewLine + HighestSolo ;
