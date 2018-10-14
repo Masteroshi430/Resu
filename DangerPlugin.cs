@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 14/10/2018 11:05
+// Danger Plugin for TurboHUD Version 14/10/2018 12:05
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -1404,6 +1404,7 @@ namespace Turbo.Plugins.Resu
                 if ((actor.SnoActor.Sno == 108869 || actor.SnoActor.Sno == 3865)&& actor.NormalizedXyDistanceToMe <= 12 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().PlaguedDecorator.ToggleDecorators<GroundCircleDecorator>(false);
                 if (actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().MoltenDecorator.ToggleDecorators<GroundCircleDecorator>(false);
                 if (actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().GhomDecorator.ToggleDecorators<GroundCircleDecorator>(false);
+                if (actor.SnoActor.Sno == 349774 && actor.NormalizedXyDistanceToMe <= 14 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().FrozenPulseDecorator.ToggleDecorators<GroundCircleDecorator>(false);
             }
         }
     }
