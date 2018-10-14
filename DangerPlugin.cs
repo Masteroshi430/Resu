@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 14/10/2018 12:05
+// Danger Plugin for TurboHUD Version 14/10/2018 19:33
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -91,7 +91,6 @@ namespace Turbo.Plugins.Resu
           PrevHealth = 100f;
           PrevSecond = 0;
           RunForYourLife = false;
-            
                 BloodSpringsDecoratorSmall = new WorldDecoratorCollection(
                 new MapShapeDecorator(Hud)
                 {
@@ -232,20 +231,20 @@ namespace Turbo.Plugins.Resu
                     BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                     TextFont = Hud.Render.CreateFont("tahoma", 20, 128, 255, 60, 255, true, false, false),
                     OffsetY = -200f,
-                                        
+                    
                 },
                 new GroundLabelDecorator(Hud) 
                 {
                     BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                     TextFont = Hud.Render.CreateFont("tahoma", 20, 128, 255, 60, 255, true, false, false),
                     
-                    OffsetX = -200f,                    
+                    OffsetX = -200f,
                 },
                 new GroundLabelDecorator(Hud) 
                 {
                     BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                     TextFont = Hud.Render.CreateFont("tahoma", 20, 128, 255, 60, 255, true, false, false),
-                    OffsetX = 200f,                    
+                    OffsetX = 200f,
                 }
                 
                 );
@@ -1333,6 +1332,16 @@ namespace Turbo.Plugins.Resu
                               case "474.945, 1170.731, 0.1":
                               worldCoord1 = Hud.Window.CreateWorldCoordinate(507.679f, 1190.924f, 0.1f);
                               worldCoord2 = Hud.Window.CreateWorldCoordinate(501.005f, 1200.877f, 0.1f);
+                              break;
+                              
+                              case "1302.503, 1288.000, -20.0":
+                              worldCoord1 = Hud.Window.CreateWorldCoordinate(1260.444f, 1305.028f, -17.6f);
+                              worldCoord2 = Hud.Window.CreateWorldCoordinate(1257.252f, 1289.873f, -19.9f);
+                              break;
+                              
+                              case "1231.000, 2543.000, 10.0":
+                              worldCoord1 = Hud.Window.CreateWorldCoordinate(1268.364f, 2531.598f, -9.9f);
+                              worldCoord2 = Hud.Window.CreateWorldCoordinate(1266.420f, 2544.175f, -9.9f);
                               break;
                               
                               default:
