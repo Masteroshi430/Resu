@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 12/10/2018 14:15
+// Danger Plugin for TurboHUD Version 14/10/2018 11:05
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -304,8 +304,6 @@ namespace Turbo.Plugins.Resu
 
             if ((PrevHealth - Health) >= (Health/10)) RunForYourLife = true;
             else RunForYourLife = false;
-
-
              
             var danger = Hud.Game.Actors.Where(x => dangerIds.Contains(x.SnoActor.Sno));
             foreach (var actor in danger)
@@ -1399,7 +1397,13 @@ namespace Turbo.Plugins.Resu
                      if (actor.SnoActor.Sno == 118596 || actor.SnoActor.Sno == 117921 || actor.SnoActor.Sno == 117906 || actor.SnoActor.Sno == 150825 || actor.SnoActor.Sno == 468082) DemonMineDecorator.Paint(layer, actor, actor.FloorCoordinate, null);
                    }
                 if (actor.SnoActor.Sno == 343539 && actor.NormalizedXyDistanceToMe <= 10 && Orbiter || actor.SnoActor.Sno == 164827 && actor.NormalizedXyDistanceToMe <= 12 && BloodStar) OrbiterDecorator.Paint(layer, actor, actor.FloorCoordinate, null);
-    
+                
+                // toggles default EliteMonsterSkillPlugin decorators if you step on it and damage is null or not life threatening
+                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().DesecratorDecorator.ToggleDecorators<GroundCircleDecorator>(false);
+                if (actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().ThunderstormDecorator.ToggleDecorators<GroundCircleDecorator>(false);
+                if ((actor.SnoActor.Sno == 108869 || actor.SnoActor.Sno == 3865)&& actor.NormalizedXyDistanceToMe <= 12 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().PlaguedDecorator.ToggleDecorators<GroundCircleDecorator>(false);
+                if (actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().MoltenDecorator.ToggleDecorators<GroundCircleDecorator>(false);
+                if (actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().GhomDecorator.ToggleDecorators<GroundCircleDecorator>(false);
             }
         }
     }
