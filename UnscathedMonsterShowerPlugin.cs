@@ -36,7 +36,7 @@ namespace Turbo.Plugins.Resu
         public void PaintWorld(WorldLayer layer)
         {
          double MyMaxWeaponRange = 130D;
-         var UnscathedMonsters = Hud.Game.AliveMonsters.Where(x => x.MaxHealth == x.CurHealth && x.Rarity == ActorRarity.Normal && !x.Untargetable && !x.Invisible && !DangerousMonsters.Contains(x.SnoActor.NameEnglish) &&x.NormalizedXyDistanceToMe < MyMaxWeaponRange);
+         var UnscathedMonsters = Hud.Game.AliveMonsters.Where(x => x.MaxHealth == x.CurHealth && x.Rarity == ActorRarity.Normal && !x.Untargetable && !x.Invisible && !DangerousMonsters.Contains(x.SnoActor.NameEnglish) && x.NormalizedXyDistanceToMe < MyMaxWeaponRange);
          foreach (var UnscathedMonster in UnscathedMonsters)
          {
           if ((UnscathedMonster.AcdId + (Hud.Time.Now.Millisecond/2)) % 40 == 0){}
