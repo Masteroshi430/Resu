@@ -1,6 +1,6 @@
 ﻿//css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Custom Life Warning Plugin for TurboHUD Version 08/09/2018 23:08
+// Custom Life Warning Plugin for TurboHUD Version 14/10/2018 20:57
 // The health globes part was stolen from Xewl's HealthGlobePlugin
 
 using System;
@@ -123,14 +123,17 @@ namespace Turbo.Plugins.Resu
 
             int ShieldPer19 = (int)Math.Round((Hud.Game.Me.Defense.CurShield / Hud.Game.Me.Defense.HealthMax) * 19);
             
+            var glowTexture = Hud.Texture.GetTexture(1981524232);
+            
              var ShieldPylon = Hud.Game.Me.Powers.GetBuff(266254);
              if (ShieldPylon == null || !ShieldPylon.Active) {} 
              else {ShieldPer19 = 19; if (Hud.Game.Me.Defense.CurShield == 0f) InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);}
-
+            
             for (int i = 1; i <= ShieldPer19 && i < _steps.Count; i++)
             {
                 float Angle = _steps[i];
                 var PointOne = PointOnCircle(CircleRadius, Angle, CircleCenter.X, CircleCenter.Y);
+                glowTexture.Draw(PointOne.Item1-15, PointOne.Item2, 50f, 50f, opacityMultiplier: 0.5f);
                 ShieldDecorator.Paint(PointOne.Item1, PointOne.Item2, 50f, 50f, HorizontalAlign.Left);
             }
         }
