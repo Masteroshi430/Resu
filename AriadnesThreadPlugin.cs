@@ -293,8 +293,9 @@ namespace Turbo.Plugins.Resu
 
             if (marker.SnoQuest != null && FirstQuestMarker)
              {
-              QuestDecorator.Paint(layer, null, marker.FloorCoordinate, marker.Name); FirstQuestMarker = false;
               DistYards = (int)(marker.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate));
+              QuestDecorator.Paint(layer, null, marker.FloorCoordinate, marker.Name); 
+              FirstQuestMarker = false;
              }
             else if (marker.SnoActor != null)
              {
@@ -313,9 +314,9 @@ namespace Turbo.Plugins.Resu
          
          if (Hud.Game.NumberOfPlayersInGame == 1) 
           {
-           NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0;
-           NameOther2 = string.Empty; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = string.Empty; StrengthBuff2 = 0;
-           NameOther1 = string.Empty; Other1 = Hud.Game.Me.FloorCoordinate; AreaOther1 = string.Empty; StrengthBuff1 = 0;
+           NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; StrengthBuff3 = 0;
+           NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty; StrengthBuff2 = 0;
+           NameOther1 = string.Empty; Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther1 = string.Empty; StrengthBuff1 = 0;
            return;
           }
           
@@ -356,7 +357,7 @@ namespace Turbo.Plugins.Resu
             else if (player.PortraitIndex == 1)
              { 
                NameOther1 = player.BattleTagAbovePortrait; RealOther1 = player.FloorCoordinate; AreaOther1 = player.SnoArea.NameEnglish;
-               if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0; NameOther2 = string.Empty; Other2 = Hud.Game.Me.FloorCoordinate; AreaOther2 = string.Empty; StrengthBuff2 = 0; 
+               if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; StrengthBuff3 = 0; NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty; StrengthBuff2 = 0; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other1 = player.FloorCoordinate;
@@ -365,14 +366,14 @@ namespace Turbo.Plugins.Resu
                 else
                 {
                     
-                 Other1 = Hud.Game.Me.FloorCoordinate; StrengthBuff1 = 0;
+                 Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff1 = 0;
                 }
              }
            
             else if (player.PortraitIndex == 2)
              { 
                NameOther2 = player.BattleTagAbovePortrait; RealOther2 = player.FloorCoordinate; AreaOther2 = player.SnoArea.NameEnglish;
-               if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Game.Me.FloorCoordinate; AreaOther3 = string.Empty; StrengthBuff3 = 0; 
+               if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; StrengthBuff3 = 0; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other2 = player.FloorCoordinate;
@@ -380,7 +381,7 @@ namespace Turbo.Plugins.Resu
                 }
                 else
                 {
-                 Other2 = Hud.Game.Me.FloorCoordinate; StrengthBuff2 = 0;
+                 Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff2 = 0;
                 }
              }
            
@@ -394,7 +395,7 @@ namespace Turbo.Plugins.Resu
                 }
                 else
                 {
-                 Other3 = Hud.Game.Me.FloorCoordinate; StrengthBuff3 = 0;
+                 Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff3 = 0;
                 }
              }
            }
