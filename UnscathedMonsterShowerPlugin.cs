@@ -27,7 +27,7 @@ namespace Turbo.Plugins.Resu
             UnscathedMonsterDecorator = new WorldDecoratorCollection(
             new GroundLabelDecorator(Hud)
             {
-                TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 0, 0, true, false, 0, 255, 255, 0, false)
+                TextFont = Hud.Render.CreateFont("Segoe UI Symbol", 6, 255, 255, 0, 0, true, false, 0, 255, 255, 0, false)
             }
             );
             
