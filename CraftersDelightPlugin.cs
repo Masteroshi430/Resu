@@ -189,7 +189,7 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(3248726989, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3248762926, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3248798863, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
-                AddDecorator(3249661351, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);             
+                AddDecorator(3249661351, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3249697288, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3249733225, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3249769162, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
@@ -202,7 +202,7 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(3250847272, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3250883209, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3250919146, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
-                        
+                
             }
             
             init_mapping = true; 
@@ -504,7 +504,6 @@ namespace Turbo.Plugins.Resu
             
             
             }
-            
             
         }
         
