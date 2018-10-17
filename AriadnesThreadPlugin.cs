@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 28/09/2018 21:59
+// Ariadne's Thread plugin for TurboHUD version 18/10/2018 00:02
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -446,7 +446,8 @@ namespace Turbo.Plugins.Resu
               
               
               var onScreen = BanCoord.IsOnScreen();
-              BannerDecorator.ToggleDecorators<GroundLabelDecorator>(!onScreen);
+              if (onScreen) BannerDecorator.ToggleDecorators<GroundLabelDecorator>(false);
+              else BannerDecorator.ToggleDecorators<GroundLabelDecorator>(true);
               
               
               if (RealOther1 != null && Hud.Game.NumberOfPlayersInGame >= 2) {DistOther1 = RealOther1.XYDistanceTo(BanCoord); ZDistOther1 = RealOther1.ZDiffTo(BanCoord);} else {DistOther1 = float.MaxValue; ZDistOther1 = float.MaxValue;} 
@@ -480,9 +481,9 @@ namespace Turbo.Plugins.Resu
                    RealBannerArea = BannersAreas[BanCoord];
                   }
               bool SameArea = false;
-              if (Hud.Game.Me.SnoArea.NameEnglish == RealBannerArea) SameArea = true; else SameArea = false;
-              BannerDecorator.ToggleDecorators<MapShapeDecorator>(SameArea);
-              // BannerDecorator.ToggleDecorators<MapShapeDecorator>(!Hud.Game.Me.IsInTown);
+              if (Hud.Game.Me.SnoArea.NameEnglish == RealBannerArea) {SameArea = true;} else {SameArea = false;}
+              if (!SameArea || Hud.Game.Me.IsInTown) BannerDecorator.ToggleDecorators<MapShapeDecorator>(false);
+              else if (SameArea) BannerDecorator.ToggleDecorators<MapShapeDecorator>(true);
               
               if (NearestPlayer == "banner near ") NearestPlayer = "banner";
               if (RealBannerArea.Contains("[TEMP]")) RealBannerArea = RealBannerArea.Replace("[TEMP]",string.Empty).Trim();
