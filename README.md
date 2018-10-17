@@ -153,13 +153,13 @@ It's Psycho's ShrineLabelsPlugin with new features :
 // DeluxeShrineLabelsPlugin Customization
                Hud.RunOnPlugin<Resu.DeluxeShrineLabelsPlugin>(plugin =>      
           {
-                //Enable Healing Well Example
+                //Enable permanent Healing Well display
                 plugin.ShowHealingWells = true;
 
-                //Enable Pool of reflection Example
+                //Enable permanent Pool of reflection display
                 plugin.ShowPoolOfReflection = true;
 
-                // Disable displaying Healing Wells & Pools of reflection when health is under 40%
+                // Disable displaying Healing Wells & Pools of reflection only when health is under 40%
 		plugin.ShowAllWhenHealthIsUnder40 = false;
 		
                 //Change Pylon Short Name Example
