@@ -184,6 +184,7 @@ It's Psycho's ShrineLabelsPlugin with new features :
 
 #### [DeluxeInventoryFreeSpacePlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeInventoryFreeSpacePlugin.cs) 
 ![alt text](READMEpics/inventory.png)
+
 It's the default InventoryFreeSpacePlugin with new features :
 - Space left in inventory for 2 slot items.
 
