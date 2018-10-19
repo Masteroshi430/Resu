@@ -491,12 +491,12 @@ namespace Turbo.Plugins.Resu
               
               if (NearestPlayer != null && RealBannerArea != string.Empty)
                { 
-                 if (SameArea) BannerDecorator.Paint(layer, null, BanCoord, NearestPlayer + Countdown);
+                 if (SameArea) {BannerDecorator.Paint(layer, null, BanCoord, NearestPlayer + Countdown);}
                  else if (NearestPlayer != "banner")
                   {
                     BannerDecorator.Paint(layer, null, BanCoord, NearestPlayer + " in " +  RealBannerArea + Environment.NewLine + "teleport!" + Countdown);
                   }
-                 else  
+                 else
                   {
                     BannerDecorator.Paint(layer, null, BanCoord, NearestPlayer + " in " +  RealBannerArea + Countdown);
                   }
