@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Deluxe Inventory Free Space plugin for TurboHUD version 19/10/2018 22:01
+// Deluxe Inventory Free Space plugin for TurboHUD version 21/10/2018 00:00
 // It's the default Inventory Free Space plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -25,7 +25,8 @@ namespace Turbo.Plugins.Resu
         public int freeSpaceTwo { get; set; }
         public Dictionary<string,string> InventorySlots;
         public bool InventoryOpen { get; set; }
-        
+        public int CachesCount { get; set; }
+        public int CachesLoopCount { get; set; }
         public TopLabelDecorator test { get; set; }
 
         public DeluxeInventoryFreeSpacePlugin()
@@ -141,7 +142,10 @@ namespace Turbo.Plugins.Resu
               SquareSide = Rect.Width;
              }
             
-            if (SquareSide == 0f || ContainerRect == null) freeSpaceTwo = freeSpace/2;
+            if (SquareSide == 0f || ContainerRect == null) 
+             {
+              freeSpaceTwo = freeSpace/2;
+             }
             else if (clipState != ClipState.Inventory) InventoryOpen = false;
             else if (clipState == ClipState.Inventory)
              {
@@ -179,7 +183,7 @@ namespace Turbo.Plugins.Resu
                       }
                      else
                       {
-                       if ( Math.Abs(ItemRect.Top - DatSquareTop) < 4 && Math.Abs(ItemRect.Left - DatSquareLeft) < 4) //populate 2 inventory slots
+                       if (Math.Abs(ItemRect.Top - DatSquareTop) < 4 && Math.Abs(ItemRect.Left - DatSquareLeft) < 4) //populate 2 inventory slots
                         {
                          string DatKey = "C" + c + "R" + r;
                          InventorySlots[DatKey] = Item.SnoItem.Sno.ToString() + Item.CreatedAtInGameTick.ToString(); //Item.ItemUniqueId;
@@ -193,9 +197,10 @@ namespace Turbo.Plugins.Resu
              }
              
              
+             
             if (SquareSide != 0f && ContainerRect != null) // calculate the freespacetwo value
              {
-              int TwoSlotsCount = 0;
+              var TwoSlotsCount = 0;
               for (int c = 0; c < 10; c++) // 10 columns
                  {
                    for (int r = 0; r < 6; r++) // 6 rows
@@ -216,8 +221,49 @@ namespace Turbo.Plugins.Resu
                  }
                  
                 freeSpaceTwo = TwoSlotsCount;
-             }
+                
+                //  Horadric Cache Workaround
+                if (clipState != ClipState.Inventory)
+                 {
+                  CachesLoopCount = 0;
+                  var HoradricCaches = Hud.Inventory.ItemsInInventory.Where(x => x.SnoItem.MainGroupCode == "horadriccache" );
+                  foreach (var item in HoradricCaches)
+                   {
+                    CachesLoopCount++;
+                   }
+                 
+                  CachesLoopCount = Math.Abs(CachesLoopCount);
+                 
+                  if (CachesLoopCount > CachesCount)
+                   {
+                    int HoradricCachesToAdd = CachesLoopCount - CachesCount;
+                    for (int h = 0; h < HoradricCachesToAdd; h++)
+                     {   
+                       for (int r = 0; r < 5; r++) // 5 rows (we don't need the last one)
+                        {
+                          for (int c = 0; c < 10; c++) // 10 columns
+                           {
+                            string DatKey = "C" + c + "R" + r;
+                            string DatValue = InventorySlots[DatKey];
+                            string DatKeyTwo = "C" + c + "R" + (r+1);
+                            string DatValueTwo = InventorySlots[DatKeyTwo];
+                            if (DatValue == string.Empty && DatValueTwo == string.Empty)
+                             {
+                              InventorySlots[DatKey] = "HoradricWorkaroundFromHell";
+                              InventorySlots[DatKeyTwo] = "HoradricWorkaroundFromHell";
+                              goto OuterFromHell;
+                             }
+                           }
+                        }
+                       OuterFromHell:;
+                     }
+                   }
+                  
+                 }
 
+             }
+             CachesCount = CachesLoopCount;
+             
             var decorator = freeSpace < 2 ? RedDecorator : freeSpace < 20 ? YellowDecorator : GreenDecorator;
             var decoratorTwo = freeSpaceTwo < 2 ? RedDecoratorTwo : freeSpaceTwo < 10 ? YellowDecoratorTwo : GreenDecoratorTwo;
             
@@ -246,7 +292,7 @@ namespace Turbo.Plugins.Resu
          if (!InventoryOpen)
          {
            string ItemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();
-           if (item.SnoItem.MainGroupCode == "horadriccache" || item.SnoItem.MainGroupCode == "helm" || item.SnoItem.MainGroupCode == "chestarmor" ||
+           if (item.SnoItem.MainGroupCode == "helm" || item.SnoItem.MainGroupCode == "chestarmor" ||
                item.SnoItem.MainGroupCode == "gloves" || item.SnoItem.MainGroupCode == "boots" || item.SnoItem.MainGroupCode == "shoulders" ||
                item.SnoItem.MainGroupCode == "pants" || item.SnoItem.MainGroupCode == "bracers" ||item.SnoItem.MainGroupCode == "crusadershield" ||
                item.SnoItem.MainGroupCode == "quiver" || item.SnoItem.MainGroupCode == "source" ||item.SnoItem.MainGroupCode == "mojo" ||
@@ -260,7 +306,6 @@ namespace Turbo.Plugins.Resu
                      string DatKey = "C" + c + "R" + r;
                      string DatValue = InventorySlots[DatKey];
                      string DatKeyTwo = "C" + c + "R" + (r+1);
-                     string whateverTwo = string.Empty;
                      string DatValueTwo = InventorySlots[DatKeyTwo];
                      if (DatValue == string.Empty && DatValueTwo == string.Empty)
                       {
@@ -271,7 +316,7 @@ namespace Turbo.Plugins.Resu
                     }
                  }
             }
-           else // 1 slot item
+           else if (item.SnoItem.MainGroupCode != "horadriccache")// 1 slot item
             {
              for (int c = 0; c < 10; c++) // 10 columns
                  {
@@ -287,8 +332,7 @@ namespace Turbo.Plugins.Resu
                     }
                  }
             }
-            Outer:
-            ;
+            Outer:;
          }
         }
     }
