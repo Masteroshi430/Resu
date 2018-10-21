@@ -187,6 +187,9 @@ It's Psycho's ShrineLabelsPlugin with new features :
 
 It's the default InventoryFreeSpacePlugin with new features :
 - Space left in inventory for 2 slot items.
+```diff
+-  Open inventory once to get the value instead of the question mark.
+```
 
 ------
 
