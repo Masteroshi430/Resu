@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Deluxe Inventory Free Space plugin for TurboHUD version 21/10/2018 00:00
+// Deluxe Inventory Free Space plugin for TurboHUD version 21/10/2018 12:10
 // It's the default Inventory Free Space plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -27,7 +27,7 @@ namespace Turbo.Plugins.Resu
         public bool InventoryOpen { get; set; }
         public int CachesCount { get; set; }
         public int CachesLoopCount { get; set; }
-        public TopLabelDecorator test { get; set; }
+        public string HeroName { get; set; }
 
         public DeluxeInventoryFreeSpacePlugin()
         {
@@ -37,6 +37,8 @@ namespace Turbo.Plugins.Resu
         public override void Load(IController hud)
         {
             base.Load(hud);
+            
+            HeroName = string.Empty;
             
             InventorySlots = new Dictionary<string,string>
             {
@@ -114,7 +116,7 @@ namespace Turbo.Plugins.Resu
                 BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
                 BackgroundTextureOpacity1 = 1.0f,
                 BackgroundTextureOpacity2 = 1.0f,
-                TextFunc = () => "\u25AE" + freeSpaceTwo.ToString("D", CultureInfo.InvariantCulture),
+                TextFunc = () => freeSpaceTwo == int.MaxValue ? "\u25AE ?" : "\u25AE" + freeSpaceTwo.ToString("D", CultureInfo.InvariantCulture),
                 HintFunc = () => "free space in inventory for two slot items",
             };
             
@@ -126,6 +128,16 @@ namespace Turbo.Plugins.Resu
             // if (clipState != ClipState.BeforeClip) return;
             if ((Hud.Game.MapMode == MapMode.WaypointMap) || (Hud.Game.MapMode == MapMode.ActMap) || (Hud.Game.MapMode == MapMode.Map)) return;
 
+             if (HeroName != Hud.Game.Me.HeroName)
+              {
+               HeroName = Hud.Game.Me.HeroName;
+               freeSpaceTwo = int.MaxValue;
+               foreach (var key in InventorySlots.Keys.ToList()) // empty dictionary values
+                {
+                 InventorySlots[key] = string.Empty;
+                }
+              }
+              
             var uiRect = Hud.Render.InGameBottomHudUiElement.Rectangle;
             var freeSpace = Hud.Game.Me.InventorySpaceTotal - Hud.Game.InventorySpaceUsed;
             
@@ -134,7 +146,7 @@ namespace Turbo.Plugins.Resu
             var ItemCheck = Hud.Game.Items.FirstOrDefault(i => i.Location == ItemLocation.Inventory);
             if (ItemCheck == null)
              {
-              freeSpaceTwo = 30;
+              freeSpaceTwo = int.MaxValue;
              }
             else
              {
@@ -144,7 +156,7 @@ namespace Turbo.Plugins.Resu
             
             if (SquareSide == 0f || ContainerRect == null) 
              {
-              freeSpaceTwo = freeSpace/2;
+              freeSpaceTwo = int.MaxValue;
              }
             else if (clipState != ClipState.Inventory) InventoryOpen = false;
             else if (clipState == ClipState.Inventory)
@@ -280,9 +292,14 @@ namespace Turbo.Plugins.Resu
         {
             if (newGame)
              {
-              foreach (var key in InventorySlots.Keys.ToList()) // empty dictionary values 
+              if (HeroName != Hud.Game.Me.HeroName)
               {
-               InventorySlots[key] = string.Empty;
+               HeroName = Hud.Game.Me.HeroName;
+               freeSpaceTwo = int.MaxValue;
+               foreach (var key in InventorySlots.Keys.ToList()) // empty dictionary values
+                {
+                 InventorySlots[key] = string.Empty;
+                }
               }
              }
         }
