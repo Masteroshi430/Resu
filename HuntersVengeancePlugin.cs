@@ -135,7 +135,7 @@ namespace Turbo.Plugins.Resu
             var cursorScreenCoord = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
             var visorWorldCoord = cursorScreenCoord.ToWorldCoordinate();
             MiniMapVisorDecorator.Paint(layer, null, visorWorldCoord, null);
-                        
+           
         }
 
         public IEnumerable<ITransparent> GetTransparents()
