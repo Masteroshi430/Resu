@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 14/10/2018 19:33
+// Danger Plugin for TurboHUD Version 28/10/2018 02:13
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -51,6 +51,7 @@ namespace Turbo.Plugins.Resu
         public float PrevHealth { get; set; }
         public int PrevSecond { get; set; }
         public bool RunForYourLife { get; set; }
+        public bool Danger { get; set; }
         
         
         public static HashSet<uint> dangerIds = new HashSet<uint>() { 174900, 185391, 332922, 332923, 332924, 322194, 84608, 341512, 108869, 3865, 219702, 221225, 340319, 95868, 93837, 5212, 159369, 118596, 4104, 4105, 4106, 4803, 343539, 164827, 312942, 337030, 353256, 349564, 117921, 117906, 150825, 468082, 430430};
@@ -1385,7 +1386,12 @@ namespace Turbo.Plugins.Resu
                 if (actor.SnoActor.Sno == 332924 && BloodSprings) BloodSpringsDecoratorSmall.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
                 if (!Hud.Game.Me.IsDead)
                 {
-                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && Desecrator && RunForYourLife || actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && Thunderstorm  && RunForYourLife || actor.SnoActor.Sno == 108869 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 3865 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && Molten  && RunForYourLife || actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && GasCloud && RunForYourLife || actor.SnoActor.Sno == 159369 && actor.NormalizedXyDistanceToMe <= 20 && MorluSpellcasterMeteorPending || actor.SnoActor.Sno >= 4104 && actor.SnoActor.Sno <= 4106 && actor.NormalizedXyDistanceToMe <= 5 && PoisonDeath  && RunForYourLife || actor.SnoActor.Sno == 4803 && actor.NormalizedXyDistanceToMe <= 13f && MoltenExplosion) MoveWarningDecorator.Paint(layer, actor, actor.FloorCoordinate, "Moveth!");
+                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && Desecrator && RunForYourLife || actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && Thunderstorm  && RunForYourLife || actor.SnoActor.Sno == 108869 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 3865 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && Molten  && RunForYourLife || actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && GasCloud && RunForYourLife || actor.SnoActor.Sno == 159369 && actor.NormalizedXyDistanceToMe <= 20 && MorluSpellcasterMeteorPending || actor.SnoActor.Sno >= 4104 && actor.SnoActor.Sno <= 4106 && actor.NormalizedXyDistanceToMe <= 5 && PoisonDeath  && RunForYourLife || actor.SnoActor.Sno == 4803 && actor.NormalizedXyDistanceToMe <= 13f && MoltenExplosion)
+                 {
+                  MoveWarningDecorator.Paint(layer, actor, actor.FloorCoordinate, "Moveth!");
+                  Danger = false;
+                 }
+                else Danger = true;
                 }
                 if (ArcaneEnchanted) 
                    {
@@ -1415,6 +1421,7 @@ namespace Turbo.Plugins.Resu
                 if (actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().GhomDecorator.ToggleDecorators<GroundCircleDecorator>(false);
                 if (actor.SnoActor.Sno == 349774 && actor.NormalizedXyDistanceToMe <= 14 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().FrozenPulseDecorator.ToggleDecorators<GroundCircleDecorator>(false);
             }
+            if (RunForYourLife && Danger && !Hud.Game.Me.IsDead) MoveWarningDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Danger!");
         }
     }
 }
