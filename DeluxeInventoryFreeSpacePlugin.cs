@@ -128,7 +128,7 @@ namespace Turbo.Plugins.Resu
             // if (clipState != ClipState.BeforeClip) return;
             if ((Hud.Game.MapMode == MapMode.WaypointMap) || (Hud.Game.MapMode == MapMode.ActMap) || (Hud.Game.MapMode == MapMode.Map)) return;
 
-             if (HeroName != Hud.Game.Me.HeroName)
+             if (HeroName != Hud.Game.Me.HeroName && Hud.Game.IsInTown && Hud.Game.Me.HeroName != null)
               {
                HeroName = Hud.Game.Me.HeroName;
                freeSpaceTwo = int.MaxValue;
