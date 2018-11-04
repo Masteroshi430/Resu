@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 18/10/2018 00:02
+// Ariadne's Thread plugin for TurboHUD version 04/11/2018 17:43
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -170,20 +170,20 @@ namespace Turbo.Plugins.Resu
           (
                 new MapShapeDecorator(Hud)
                 {
-                    Brush = Hud.Render.CreateBrush(192, 255, 255, 255, -1),
-                    ShadowBrush = Hud.Render.CreateBrush(96, 0, 0, 0, 1),
+                    Brush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
+                    ShadowBrush = Hud.Render.CreateBrush(255, 0, 0, 0, 1),
                     Radius = 10.0f,
                     ShapePainter = new CircleShapePainter(Hud),
                 },
                 new MapLabelDecorator(Hud)
                 {
-                    LabelFont = Hud.Render.CreateFont("tahoma", 6f, 200,  255, 255, 255, false, false, 128, 0, 0, 0, true),
+                    LabelFont = Hud.Render.CreateFont("tahoma", 6f, 255, 255, 255, 255, false, false, 255, 0, 0, 0, true),
                     RadiusOffset = 10,
                     Up = true,
                 },
                 new MapShapeDecorator(Hud)
                 {
-                    Brush = Hud.Render.CreateBrush(192, 255, 255, 255, -1),
+                    Brush = Hud.Render.CreateBrush(255, 255, 255, 255, -1),
                     ShapePainter = new LineFromMeShapePainter(Hud)
                 }
           );
@@ -324,7 +324,9 @@ namespace Turbo.Plugins.Resu
          // Pools of reflection 
          if (Pools)
           {
-           var PoolsOfReflection = Hud.Game.Shrines.Where(x => !x.IsDisabled && !x.IsOperated && x.Type == ShrineType.PoolOfReflection );
+            var PoolsOfReflection = Hud.Game.Shrines.Where(p => !p.IsDisabled && !p.IsOperated && p.Type == ShrineType.PoolOfReflection);
+            //var PoolsOfReflection = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Sno == 373463);
+           
              foreach (var PoolOfReflection in PoolsOfReflection)
             {
              PoolDecorator.Paint(layer, null, PoolOfReflection.FloorCoordinate, PoolOfReflection.SnoActor.NameLocalized);
@@ -365,7 +367,6 @@ namespace Turbo.Plugins.Resu
                 }
                 else
                 {
-                    
                  Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff1 = 0;
                 }
              }
