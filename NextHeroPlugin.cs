@@ -49,12 +49,12 @@ namespace Turbo.Plugins.Resu
              if (clipState != ClipState.BeforeClip) return;
              var uiInv = Hud.Inventory.InventoryMainUiElement; 
              if (uiInv.Visible) return;
-             if (!Hud.Game.IsInTown) return;            
+             if (!Hud.Game.IsInTown) return;
              NextHeroText = string.Empty;
                 
                 
-                 var PosY = (maxY/4)*3-80;     
-                 var PosX = (maxX/8)*7-80;    
+                 var PosY = (maxY/4)*3-80;
+                 var PosX = (maxX/8)*7-80;
                  var timeInGame = _watch.ElapsedMilliseconds;
                  var Heroes = Hud.AccountHeroes.OrderBy(Hero => Hero.PlayedSeconds);
                  var TimePlayedMe = Hud.Game.Me.Hero.PlayedSeconds + (int)(timeInGame/1000); 
@@ -114,8 +114,8 @@ namespace Turbo.Plugins.Resu
                 if (Hero.Hardcore) HardcoreTexture.Draw(PosX-20, PosY+35, 22f, 28.444f, 0.59f);
                 NextHeroDecorator.Paint(PosX, PosY, 50f, 50f, HorizontalAlign.Left);
                 
-             }           
-                         
+             }
+              
     
         }
         
