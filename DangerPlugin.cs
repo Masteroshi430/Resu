@@ -11,7 +11,7 @@ using System.Globalization;
 
 namespace Turbo.Plugins.Resu
 {
-    public class DangerPlugin : BasePlugin, IInGameWorldPainter
+    public class DangerPlugin : BasePlugin, IInGameWorldPainter, ICustomizer
     {
         public WorldDecoratorCollection BloodSpringsDecoratorSmall { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorMedium { get; set; }
@@ -82,6 +82,11 @@ namespace Turbo.Plugins.Resu
             MoleMutantProjectile = true;
             IcePorcupineProjectile = true;
 
+        }
+        
+       public void Customize()
+        {
+            Hud.RunOnPlugin<StandardMonsterPlugin>(plugin => plugin.InvisibleDecorator.Decorators.Clear()); // turn off InvisibleDecorator on default StandardMonsterPlugin
         }
         
         public override void Load(IController hud)
@@ -1422,6 +1427,16 @@ namespace Turbo.Plugins.Resu
                 if (actor.SnoActor.Sno == 349774 && actor.NormalizedXyDistanceToMe <= 14 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().FrozenPulseDecorator.ToggleDecorators<GroundCircleDecorator>(false);
             }
             if (RunForYourLife && Danger && !Hud.Game.Me.IsDead) MoveWarningDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Danger! " + (int)Hud.Game.Me.Defense.HealthPct + "%");
+        
+            var invisibleMonsters = Hud.Game.AliveMonsters.Where(M => M.Invisible);
+            var invisibleTexture = Hud.Texture.GetTexture(3123731847);
+            
+            foreach (var invisibleMonster in invisibleMonsters)
+            {
+              var MonsterScreen = invisibleMonster.FloorCoordinate.ToScreenCoordinate();
+              invisibleTexture.Draw(MonsterScreen.X, MonsterScreen.Y, 150f, 75f, opacityMultiplier: 0.5f); // InvisibleDecorator.Paint(layer, invisibleMonster,invisibleMonster.FloorCoordinate, invisibleMonster.SnoMonster.Sno.ToString());
+            }
+        
         }
     }
 }
