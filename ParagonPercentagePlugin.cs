@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 30/09/2018 15:44
+// Paragon Percentage Plugin for TurboHUD Version 06/12/2018 11:41
 
 using System;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Turbo.Plugins.Resu
 {
-    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter
+    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, ICustomizer
     {
         public bool ShowGreaterRiftMaxLevel { get; set; }
         public bool ParagonPercentageOnTheRight { get; set; }
@@ -28,6 +28,7 @@ namespace Turbo.Plugins.Resu
         public string Class { get; set; }
         public string Nemesis { get; set; }
         public string Unity { get; set; }
+        public string TimeToNextParagon { get; set; } 
                 
         public ParagonPercentagePlugin()
         {
@@ -42,8 +43,8 @@ namespace Turbo.Plugins.Resu
             ParagonPercentageOnTheRight = true;
             ParagonPercentage = "0";
             DisplayParagonPercentage = true;
-            
-            var experiencePlugin = Hud.GetPlugin<TopExperienceStatistics>();
+            TimeToNextParagon = String.Empty;
+
             
             ParagonPercentageDecorator = new TopLabelDecorator(Hud)
             {
@@ -53,7 +54,7 @@ namespace Turbo.Plugins.Resu
 
                 TextFunc = () => ParagonPercentage,
 
-                HintFunc = () => "Paragon level " + (Hud.Game.Me.CurrentLevelParagon + 1) + " in " + experiencePlugin.TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false) +  Environment.NewLine + "EXP/h : " + ValueToString(Hud.Game.CurrentHeroToday.GainedExperiencePerHourPlay, ValueFormat.ShortNumber),
+                HintFunc = () => "Paragon level " + (Hud.Game.Me.CurrentLevelParagon + 1) + " in " + TimeToNextParagon +  Environment.NewLine + "EXP/h : " + ValueToString(Hud.Game.CurrentHeroToday.GainedExperiencePerHourPlay, ValueFormat.ShortNumber),
             };
 
             
@@ -114,7 +115,7 @@ namespace Turbo.Plugins.Resu
         {
             if (Hud.Render.UiHidden) return;
             if (clipState != ClipState.BeforeClip) return;
-
+            if (Hud.Game.Me.PortraitUiElement.Rectangle == null) return;
             var uiRect = Hud.Game.Me.PortraitUiElement.Rectangle;
             
             
@@ -122,7 +123,7 @@ namespace Turbo.Plugins.Resu
                    {
                      ParagonPercentage = string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", (Hud.Game.Me.CurrentLevelParagonFloat - Hud.Game.Me.CurrentLevelParagon) * 100);
                    }
-            else if (Hud.Game.Me.CurrentLevelNormal < 70)   
+            else if (Hud.Game.Me.CurrentLevelNormal < 70)
                    {
                      ParagonPercentage = string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", Convert.ToSingle(Hud.Game.Me.CurrentLevelNormal)/70*100); 
                    }
@@ -130,7 +131,7 @@ namespace Turbo.Plugins.Resu
             
             
             if (ParagonPercentageOnTheRight & DisplayParagonPercentage)
-            {   
+            {
             ParagonPercentageDecorator.Paint(uiRect.Left + uiRect.Width * 0.71f, uiRect.Top + uiRect.Height * 0.79f, uiRect.Width * 0.48f, uiRect.Height * 0.14f, HorizontalAlign.Center);
              }
             else if (DisplayParagonPercentage) 
@@ -139,12 +140,13 @@ namespace Turbo.Plugins.Resu
              }; 
 
              
-                 foreach (var player in Hud.Game.Players.OrderBy(p => p.PortraitIndex))
+              foreach (var player in Hud.Game.Players.OrderBy(p => p.PortraitIndex))
               {
                   if (player == null) continue;
+                  if (player.PortraitUiElement == null) continue;
+                  if (player.PortraitUiElement.Rectangle == null) continue;
                   var portrait = player.PortraitUiElement.Rectangle;
 
-                        
                   GRlevel = player.HighestHeroSoloRiftLevel; 
                   SheetDPS = player.Offense.SheetDps;
                   EHP = player.Defense.EhpCur;
@@ -268,6 +270,12 @@ namespace Turbo.Plugins.Resu
         
         if (Points >= 4) {return true;} else {return false;}
          
+        }
+        
+        public void Customize()
+        {
+         var experiencePlugin = Hud.GetPlugin<TopExperienceStatistics>();
+         TimeToNextParagon = experiencePlugin.TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false);
         }
     }
 }
