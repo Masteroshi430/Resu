@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 04/11/2018 17:43
+// Ariadne's Thread plugin for TurboHUD version 06/12/2018 23:17
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -402,11 +402,9 @@ namespace Turbo.Plugins.Resu
            }
           }
          
-         float Other1OnMapX, Other1OnMapY, Other2OnMapX, Other2OnMapY, Other3OnMapX, Other3OnMapY;
-         
-         Hud.Render.GetMinimapCoordinates(Other1.X, Other1.Y, out Other1OnMapX, out Other1OnMapY);
-         Hud.Render.GetMinimapCoordinates(Other2.X, Other2.Y, out Other2OnMapX, out Other2OnMapY);
-         Hud.Render.GetMinimapCoordinates(Other3.X, Other3.Y, out Other3OnMapX, out Other3OnMapY);
+         Hud.Render.GetMinimapCoordinates(Other1.X, Other1.Y, out float Other1OnMapX, out float Other1OnMapY);
+         Hud.Render.GetMinimapCoordinates(Other2.X, Other2.Y, out float Other2OnMapX, out float Other2OnMapY);
+         Hud.Render.GetMinimapCoordinates(Other3.X, Other3.Y, out float Other3OnMapX, out float Other3OnMapY);
          
          if (!Hud.Game.IsInTown && ThreadBetweenPlayers)
           {

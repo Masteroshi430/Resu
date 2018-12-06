@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 05/11/2018 13:29
+// Danger Plugin for TurboHUD Version 06/12/2018 23:15
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -1370,14 +1370,10 @@ namespace Turbo.Plugins.Resu
                      brush.DrawLine(ActorPos.X, ActorPos.Y, ScreenCoord2.X, ScreenCoord2.Y);
                      brush.DrawLine(ScreenCoord1.X, ScreenCoord1.Y, ScreenCoord2.X, ScreenCoord2.Y);
                      DemonicForgeDecorator.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
-                     
-                     float ActorOnMapX, ActorOnMapY;
-                     float worldCoord1OnMapX, worldCoord1OnMapY;
-                     float worldCoord2OnMapX, worldCoord2OnMapY;
-         
-                     Hud.Render.GetMinimapCoordinates(ActorPosToMap.X, ActorPosToMap.Y, out ActorOnMapX, out ActorOnMapY);
-                     Hud.Render.GetMinimapCoordinates(worldCoord1.X, worldCoord1.Y, out worldCoord1OnMapX, out worldCoord1OnMapY);
-                     Hud.Render.GetMinimapCoordinates(worldCoord2.X, worldCoord2.Y, out worldCoord2OnMapX, out worldCoord2OnMapY);
+
+                     Hud.Render.GetMinimapCoordinates(ActorPosToMap.X, ActorPosToMap.Y, out float ActorOnMapX, out float ActorOnMapY);
+                     Hud.Render.GetMinimapCoordinates(worldCoord1.X, worldCoord1.Y, out float worldCoord1OnMapX, out float worldCoord1OnMapY);
+                     Hud.Render.GetMinimapCoordinates(worldCoord2.X, worldCoord2.Y, out float worldCoord2OnMapX, out float worldCoord2OnMapY);
 
                      RedBrush.DrawLine(ActorOnMapX, ActorOnMapY, worldCoord1OnMapX, worldCoord1OnMapY);
                      RedBrush.DrawLine(ActorOnMapX, ActorOnMapY, worldCoord2OnMapX, worldCoord2OnMapY);

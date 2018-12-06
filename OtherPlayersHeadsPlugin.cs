@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Other Player's heads Plugin for TurboHUD Version 30/09/2018 15:44
+// Other Player's heads Plugin for TurboHUD Version 06/12/2018 23:22
 
 using System.Collections.Generic;
 using System.Linq;
@@ -190,12 +190,10 @@ namespace Turbo.Plugins.Resu
                  var Elites = Hud.Game.Monsters.Where(M => M.IsAlive && M.Rarity != ActorRarity.Normal && M.Rarity != ActorRarity.RareMinion && M.Rarity != ActorRarity.Hireling && M.FloorCoordinate.XYDistanceTo(player.FloorCoordinate) <= 25);
                  if (Elites.Count() > 0) PlayersHeadOpacity = 0.20f;
                  
-                 float textureX, textureY;
-                 Hud.Render.GetMinimapCoordinates(player.FloorCoordinate.X, player.FloorCoordinate.Y, out textureX, out textureY);
+                 Hud.Render.GetMinimapCoordinates(player.FloorCoordinate.X, player.FloorCoordinate.Y, out float textureX, out float textureY);
                  HeroTexture.Draw(textureX-11, textureY-11, 22.3f, 24.1f, PlayersHeadOpacity);
                 
-                WorldDecoratorCollection decorator;
-                if (!DecoratorByClass.TryGetValue(player.HeroClassDefinition.HeroClass, out decorator)) continue;
+                if (!DecoratorByClass.TryGetValue(player.HeroClassDefinition.HeroClass, out WorldDecoratorCollection decorator)) continue;
 
                 decorator.Paint(layer, null, player.FloorCoordinate.Offset(NameOffsetX, NameOffsetY, NameOffsetZ), player.BattleTagAbovePortrait);
                 if(IsZDPS(player)) ZDPSDecorator.Paint(layer, null, player.FloorCoordinate, "Z");
@@ -216,8 +214,7 @@ namespace Turbo.Plugins.Resu
                  var Elites = Hud.Game.Monsters.Where(M => M.IsAlive && M.Rarity != ActorRarity.Normal && M.Rarity != ActorRarity.RareMinion && M.Rarity != ActorRarity.Hireling && M.FloorCoordinate.XYDistanceTo(companion.FloorCoordinate) <= 25);
                  if (Elites.Count() > 0) CompanionsHeadOpacity = 0.20f;
                  
-                 float textureX, textureY;
-                 Hud.Render.GetMinimapCoordinates(companion.FloorCoordinate.X, companion.FloorCoordinate.Y, out textureX, out textureY);
+                 Hud.Render.GetMinimapCoordinates(companion.FloorCoordinate.X, companion.FloorCoordinate.Y, out float textureX, out float textureY);
                  CompTexture.Draw(textureX-11, textureY-11, 22.3f, 24.1f, CompanionsHeadOpacity);
                  
                  
@@ -298,8 +295,7 @@ namespace Turbo.Plugins.Resu
             if (LabelFont == null) return;
             if (string.IsNullOrEmpty(text)) return;
 
-            float mapx, mapy;
-            Hud.Render.GetMinimapCoordinates(coord.X, coord.Y, out mapx, out mapy);
+            Hud.Render.GetMinimapCoordinates(coord.X, coord.Y, out float mapx, out float mapy);
 
             var layout = LabelFont.GetTextLayout(text);
             if (Up)

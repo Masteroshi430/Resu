@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 19/08/2018 19:08
+// Crafter's Delight Plugin for TurboHUD Version 06/12/2018 23:18
  
 using System.Collections.Generic;
 using System.Linq;
@@ -426,8 +426,8 @@ namespace Turbo.Plugins.Resu
                     if (canKanaiCube)
                        {
                         var cubeTexture = Hud.Texture.KanaiCubeTexture;
-                        float mapX, mapY, radius;
-                        Hud.Render.GetMinimapCoordinates(item.FloorCoordinate.X, item.FloorCoordinate.Y, out mapX, out mapY);
+                        float radius;
+                        Hud.Render.GetMinimapCoordinates(item.FloorCoordinate.X, item.FloorCoordinate.Y, out float mapX, out float mapY);
                         var RadiusTransformator = new StandardPingRadiusTransformator(Hud, 500)
                         {
                         RadiusMinimumMultiplier = 0.8f,
