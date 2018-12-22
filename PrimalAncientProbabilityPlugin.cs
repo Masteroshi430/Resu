@@ -34,8 +34,8 @@ namespace Turbo.Plugins.Resu
         public override void Load(IController hud)
         {
             base.Load(hud);
-            ancientText = "";
-            primalText = "";
+            ancientText = String.Empty;
+            primalText = String.Empty;
             ancientMarker = 0;
             primalMarker = 0;
             legendaryCount = 0;
@@ -82,7 +82,7 @@ namespace Turbo.Plugins.Resu
                else 
                    {
                     long DropAncientToday = Hud.Tracker.CurrentAccountToday.DropAncient;
-                    if (DropAncientToday == 0) DropAncientToday = 1;                   
+                    if (DropAncientToday == 0) DropAncientToday = 1;
                     ancientMarker = (int)(Hud.Tracker.CurrentAccountToday.DropLegendary - (Hud.Tracker.CurrentAccountToday.DropLegendary/DropAncientToday));
                    }
                if (Hud.Tracker.CurrentAccountToday.DropPrimalAncient <= 1) primalMarker = 0;
