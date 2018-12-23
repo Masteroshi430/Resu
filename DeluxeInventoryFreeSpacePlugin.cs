@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Deluxe Inventory Free Space plugin for TurboHUD version 21/10/2018 12:10
+// Deluxe Inventory Free Space plugin for TurboHUD version 23/12/2018 14:21
 // It's the default Inventory Free Space plugin with new features 
 
 using Turbo.Plugins.Default;
