@@ -12,7 +12,7 @@ using System;
 namespace Turbo.Plugins.Resu
 {
 
-    public class DeluxeInventoryFreeSpacePlugin : BasePlugin, IInGameTopPainter, ICustomizer, INewAreaHandler, IItemPickedHandler
+    public class DeluxeInventoryFreeSpacePlugin : BasePlugin, IInGameTopPainter, ICustomizer, IItemPickedHandler
     {
 
         public TopLabelDecorator RedDecorator { get; set; }
@@ -28,6 +28,7 @@ namespace Turbo.Plugins.Resu
         public int CachesCount { get; set; }
         public int CachesLoopCount { get; set; }
         public string HeroName { get; set; }
+        public bool Go { get; set; }
 
         public DeluxeInventoryFreeSpacePlugin()
         {
@@ -127,19 +128,23 @@ namespace Turbo.Plugins.Resu
             if (Hud.Render.UiHidden) return;
             // if (clipState != ClipState.BeforeClip) return;
             if ((Hud.Game.MapMode == MapMode.WaypointMap) || (Hud.Game.MapMode == MapMode.ActMap) || (Hud.Game.MapMode == MapMode.Map)) return;
-
-             if (HeroName != Hud.Game.Me.HeroName && Hud.Game.IsInTown && Hud.Game.Me.HeroName != null)
+            
+              
+            var uiRect = Hud.Render.InGameBottomHudUiElement.Rectangle;
+            var freeSpace = Hud.Game.Me.InventorySpaceTotal - Hud.Game.InventorySpaceUsed;
+            
+            if (HeroName != Hud.Game.Me.HeroName)
               {
-               HeroName = Hud.Game.Me.HeroName;
                freeSpaceTwo = int.MaxValue;
                foreach (var key in InventorySlots.Keys.ToList()) // empty dictionary values
                 {
                  InventorySlots[key] = string.Empty;
                 }
+               HeroName = Hud.Game.Me.HeroName;
+               Go = false;
               }
-              
-            var uiRect = Hud.Render.InGameBottomHudUiElement.Rectangle;
-            var freeSpace = Hud.Game.Me.InventorySpaceTotal - Hud.Game.InventorySpaceUsed;
+            if (clipState == ClipState.Inventory) Go = true;
+            if (!Go) goto SwitchCharacter;
             
             var ContainerRect = Hud.Inventory.InventoryItemsUiElement.Rectangle;
 
@@ -158,7 +163,10 @@ namespace Turbo.Plugins.Resu
              {
               freeSpaceTwo = int.MaxValue;
              }
-            else if (clipState != ClipState.Inventory) InventoryOpen = false;
+            else if (clipState != ClipState.Inventory)
+             {
+              InventoryOpen = false;
+             }
             else if (clipState == ClipState.Inventory)
              {
               InventoryOpen = true;
@@ -207,8 +215,6 @@ namespace Turbo.Plugins.Resu
                  }
               }
              }
-             
-             
              
             if (SquareSide != 0f && ContainerRect != null) // calculate the freespacetwo value
              {
@@ -276,6 +282,7 @@ namespace Turbo.Plugins.Resu
              }
              CachesCount = CachesLoopCount;
              
+            SwitchCharacter:;
             var decorator = freeSpace < 2 ? RedDecorator : freeSpace < 20 ? YellowDecorator : GreenDecorator;
             var decoratorTwo = freeSpaceTwo < 2 ? RedDecoratorTwo : freeSpaceTwo < 10 ? YellowDecoratorTwo : GreenDecoratorTwo;
             
@@ -288,22 +295,6 @@ namespace Turbo.Plugins.Resu
             Hud.TogglePlugin<InventoryFreeSpacePlugin>(false);
         }
         
-        public void OnNewArea(bool newGame, ISnoArea area)
-        {
-            if (newGame)
-             {
-              if (HeroName != Hud.Game.Me.HeroName)
-              {
-               HeroName = Hud.Game.Me.HeroName;
-               freeSpaceTwo = int.MaxValue;
-               foreach (var key in InventorySlots.Keys.ToList()) // empty dictionary values
-                {
-                 InventorySlots[key] = string.Empty;
-                }
-              }
-             }
-        }
-
         public void OnItemPicked(IItem item)
         {
          if (!InventoryOpen)
