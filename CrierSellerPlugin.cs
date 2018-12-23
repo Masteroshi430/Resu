@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crier Seller Plugin for TurboHUD version 05/09/2018 07:38
+// Crier Seller Plugin for TurboHUD version 23/12/2018 10:59
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -521,38 +521,38 @@ namespace Turbo.Plugins.Resu
                string ConvertSentence = string.Empty;
                string ConvertPlural = "s";
                if (Convert == 1) ConvertPlural = string.Empty;
-               else if (Convert == 0 && KulleSentence == 5) KulleSentence = 0;           
+               else if (Convert == 0 && KulleSentence == 5) KulleSentence = 0;
                else ConvertSentence = "- You can convert a set item " + Convert + " time" + ConvertPlural + ".";
                
                string UpgradeSentence = string.Empty;
                string UpgradePlural = "s";
                if (Upgrade == 1) UpgradePlural = string.Empty;
-               else if (Upgrade == 0 && KulleSentence == 4) KulleSentence = 5;           
+               else if (Upgrade == 0 && KulleSentence == 4) KulleSentence = 5;
                else UpgradeSentence = "- You can upgrade " + Upgrade + " rare item" + UpgradePlural + "."; 
                 
                string ReforgeSentence = string.Empty;
                string ReforgePlural = "s";
                if (Reforge == 1) ReforgePlural = string.Empty;
-               else if (Reforge == 0 && KulleSentence == 3) KulleSentence = 4;           
+               else if (Reforge == 0 && KulleSentence == 3) KulleSentence = 4;
                else ReforgeSentence = "- You can reforge " + Reforge + " legendary item" + ReforgePlural + ".";  
                 
                string ExtractSentence = string.Empty;
                string ExtractPlural = "s";
                if (Extract == 1) ExtractPlural = string.Empty;
-               else if (Extract == 0 && KulleSentence == 2) KulleSentence = 3;           
+               else if (Extract == 0 && KulleSentence == 2) KulleSentence = 3;
                else ExtractSentence = "- You can extract " + Extract + " legendary power" + ExtractPlural + "."; 
                
                string GoblinSentence = string.Empty;
                string GoblinPlural = "s";
                if (puzzleRingCount == 1) GoblinPlural = string.Empty;
-               else if (puzzleRingCount == 0 && KulleSentence == 1) KulleSentence = 2;           
+               else if (puzzleRingCount == 0 && KulleSentence == 1) KulleSentence = 2;
                else GoblinSentence = "- You have " + puzzleRingCount + " ticket" + GoblinPlural + " to Greed's realm.";
 
                string BovineSentence = string.Empty;
                string BovinePlural = "s";
                if (bovineBardicheCount == 1) BovinePlural = string.Empty;
-               else if (bovineBardicheCount == 0 && KulleSentence == 0) KulleSentence = 1;           
-               else BovineSentence = "- I can help you access to a place that doesn't exist " + bovineBardicheCount + " time" + BovinePlural + ".";               
+               else if (bovineBardicheCount == 0 && KulleSentence == 0) KulleSentence = 1;
+               else BovineSentence = "- I can help you access to a place that doesn't exist " + bovineBardicheCount + " time" + BovinePlural + ".";
                
                
                switch (KulleSentence)
@@ -576,7 +576,8 @@ namespace Turbo.Plugins.Resu
                 SellerMessage = ConvertSentence;
                 break;
                } 
-               if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
+               if (Convert == 0 && Upgrade == 0 && Reforge == 0 && Extract == 0 && puzzleRingCount == 0 && bovineBardicheCount == 0) ;
+               else if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
               }
               
             
