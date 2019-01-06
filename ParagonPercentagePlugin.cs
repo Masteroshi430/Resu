@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 06/12/2018 11:41
+// Paragon Percentage Plugin for TurboHUD Version 06/01/2019 21:07
 
 using System;
 using System.Globalization;
@@ -21,6 +21,7 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator NemesisDecorator { get; set; }
         public TopLabelDecorator UnityDecorator { get; set; }
         public TopLabelDecorator ZDPSDecorator { get; set; }
+        public TopLabelDecorator AFKDecorator { get; set; }
         
         public int GRlevel { get; set; }
         public float SheetDPS { get; set; }
@@ -28,8 +29,16 @@ namespace Turbo.Plugins.Resu
         public string Class { get; set; }
         public string Nemesis { get; set; }
         public string Unity { get; set; }
-        public string TimeToNextParagon { get; set; } 
-                
+        public string TimeToNextParagon { get; set; }
+        public int Player0AFKminutes { get; set; }
+        public int Player1AFKminutes { get; set; }
+        public int Player2AFKminutes { get; set; }
+        public int Player3AFKminutes { get; set; }
+        public IWorldCoordinate Player0pos { get; set; }
+        public IWorldCoordinate Player1pos { get; set; }
+        public IWorldCoordinate Player2pos { get; set; }
+        public IWorldCoordinate Player3pos { get; set; }
+        
         public ParagonPercentagePlugin()
         {
             Enabled = true;
@@ -84,6 +93,17 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 120, 0, 191, 255, true, false, false),
                 
                 TextFunc = () =>  "Z",
+                    
+                HintFunc = () => "",
+            };
+            
+            AFKDecorator = new TopLabelDecorator(Hud)
+            {
+                BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 255, 255, 0, 0, true, false, 255, 255, 255, 255, true),
+                
+                TextFunc = () =>  "AFK",
                     
                 HintFunc = () => "",
             };
@@ -231,9 +251,61 @@ namespace Turbo.Plugins.Resu
                        }
                        
                 if (IsZDPS(player)) ZDPSDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-
+                
+                if (player.AnimationState == AcdAnimationState.Idle)
+                 {
+                  if (player.PortraitIndex == 0)
+                  { 
+                   if (player.FloorCoordinate == Player0pos)
+                    {
+                     if (player.CoordinateKnown) Player0AFKminutes++;
+                    }
+                   else Player0AFKminutes = 0;
+                   if (Player0AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                  }
+                  if (player.PortraitIndex == 1) 
+                  { 
+                   if (player.FloorCoordinate == Player1pos)
+                    {
+                     if (player.CoordinateKnown) Player1AFKminutes++;
+                    }
+                   else Player1AFKminutes = 0;
+                   if (Player1AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                  }
+                  if (player.PortraitIndex == 2) 
+                  { 
+                   if (player.FloorCoordinate == Player2pos)
+                    {
+                     if (player.CoordinateKnown) Player2AFKminutes++;
+                    }
+                   else Player2AFKminutes = 0;
+                   if (Player2AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                  }
+                  if (player.PortraitIndex == 3) 
+                  { 
+                   if (player.FloorCoordinate == Player3pos)
+                    {
+                     if (player.CoordinateKnown) Player3AFKminutes++;
+                    }
+                   else Player3AFKminutes = 0;
+                   if (Player3AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                  }
+                  
+                 }
+                else
+                 {
+                  if (player.PortraitIndex == 0) Player0AFKminutes = 0;
+                  if (player.PortraitIndex == 1) Player1AFKminutes = 0;
+                  if (player.PortraitIndex == 2) Player2AFKminutes = 0;
+                  if (player.PortraitIndex == 3) Player3AFKminutes = 0;
+                 }
+               
+                  if (player.PortraitIndex == 0) Player0pos = player.FloorCoordinate;
+                  if (player.PortraitIndex == 1) Player1pos = player.FloorCoordinate;
+                  if (player.PortraitIndex == 2) Player2pos = player.FloorCoordinate;
+                  if (player.PortraitIndex == 3) Player3pos = player.FloorCoordinate;
             
-              };
+              }
              
         }
         
