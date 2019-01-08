@@ -252,6 +252,30 @@ namespace Turbo.Plugins.Resu
                        
                 if (IsZDPS(player)) ZDPSDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 
+                int Multiplicand = 1;
+                switch (Hud.Game.NumberOfPlayersInGame)
+                 {
+                  case 1:
+                  Multiplicand = 1;
+                  break;
+                  
+                  case 2:
+                  Multiplicand = 1;
+                  break;
+                  
+                  case 3:
+                  Multiplicand = 2;
+                  break;
+                  
+                  case 4:
+                  Multiplicand = 3;
+                  break;
+                  
+                  default:
+                  Multiplicand = 1;
+                  break;
+                 }
+                 
                 if (player.AnimationState == AcdAnimationState.Idle)
                  {
                   if (player.PortraitIndex == 0)
@@ -261,7 +285,7 @@ namespace Turbo.Plugins.Resu
                      if (player.CoordinateKnown) Player0AFKminutes++;
                     }
                    else Player0AFKminutes = 0;
-                   if (Player0AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (Player0AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   if (player.PortraitIndex == 1) 
                   { 
@@ -270,7 +294,7 @@ namespace Turbo.Plugins.Resu
                      if (player.CoordinateKnown) Player1AFKminutes++;
                     }
                    else Player1AFKminutes = 0;
-                   if (Player1AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (Player1AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   if (player.PortraitIndex == 2) 
                   { 
@@ -279,7 +303,7 @@ namespace Turbo.Plugins.Resu
                      if (player.CoordinateKnown) Player2AFKminutes++;
                     }
                    else Player2AFKminutes = 0;
-                   if (Player2AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (Player2AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   if (player.PortraitIndex == 3) 
                   { 
@@ -288,7 +312,7 @@ namespace Turbo.Plugins.Resu
                      if (player.CoordinateKnown) Player3AFKminutes++;
                     }
                    else Player3AFKminutes = 0;
-                   if (Player3AFKminutes > (2880/Hud.Game.NumberOfPlayersInGame)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (Player3AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   
                  }
