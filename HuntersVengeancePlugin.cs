@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Hunter's Vengeance Plugin for TurboHUD Version 09/10/2018 22:52
+// Hunter's Vengeance Plugin for TurboHUD Version 15/01/2019 22:59
 
 using System;
 using System.Collections.Generic;
@@ -24,19 +24,20 @@ namespace Turbo.Plugins.Resu
         public int midY { get; set; }
         public WorldDecoratorCollection ZeiMiniMapDecorator { get; set; }
         public WorldDecoratorCollection MiniMapVisorDecorator { get; set; }
-                
+        public bool TargetForAll { get; set; }
         
         public HuntersVengeancePlugin()
         {
             Enabled = true;
             permanentCircle = false;
             ElitesOnlyNumbers = false;
+            TargetForAll = true;
         }
 
         public override void Load(IController hud)
         {
             base.Load(hud);
-                         
+            
             TextFont = Hud.Render.CreateFont("tahoma", 12, 150, 252, 126, 0, true, false, 150, 0, 0, 0, false); // 100
             OutlineBrush = Hud.Render.CreateBrush(30, 252, 126, 0, 3); 
             Fader = new StandardFader(hud, this);
@@ -92,11 +93,23 @@ namespace Turbo.Plugins.Resu
           }
           
          
-           if (ZeiActive == false) return;
+           if (ZeiActive == false) 
+            {
+             if (TargetForAll)
+              {
+               if (Hud.Game.IsInTown) return;
+               goto TargetOnMinimap;
+              }
+             else return;
+            }
+           
+           
+           
            if (permanentCircle) { if (Hud.Game.IsInTown) return;}
            else
-            {   
+            {
            if (!Hud.Game.Me.InCombat) goto MiniMapCircle;
+           else goto TargetOnMinimap;
             }
             
 
@@ -131,7 +144,8 @@ namespace Turbo.Plugins.Resu
             
             MiniMapCircle:
             if (Hud.Game.IsInTown) return;
-            ZeiMiniMapDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, null); 
+            ZeiMiniMapDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, null);
+            TargetOnMinimap:
             var cursorScreenCoord = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
             var visorWorldCoord = cursorScreenCoord.ToWorldCoordinate();
             MiniMapVisorDecorator.Paint(layer, null, visorWorldCoord, null);
