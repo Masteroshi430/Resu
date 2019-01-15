@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 06/12/2018 23:17
+// Ariadne's Thread plugin for TurboHUD version 15/01/2019 15:07
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -30,9 +30,6 @@ namespace Turbo.Plugins.Resu
         public string NameOther1 { get; set; }
         public string NameOther2 { get; set; }
         public string NameOther3 { get; set; }
-        public int StrengthBuff1 { get; set; }
-        public int StrengthBuff2 { get; set; }
-        public int StrengthBuff3 { get; set; }
         public IBrush WhiteBrush { get; set; }
         public WorldDecoratorCollection QuestDecorator { get; set; }
         public WorldDecoratorCollection PoolDecorator { get; set; }
@@ -82,9 +79,6 @@ namespace Turbo.Plugins.Resu
          AreaOther1 = string.Empty; 
          AreaOther2 = string.Empty;
          AreaOther3 = string.Empty;
-         StrengthBuff1 = 0;
-         StrengthBuff2 = 0;
-         StrengthBuff3 = 0;
          StrengthBuffText = string.Empty;
          DistString = string.Empty;
          Speed = string.Empty;
@@ -314,9 +308,9 @@ namespace Turbo.Plugins.Resu
          
          if (Hud.Game.NumberOfPlayersInGame == 1) 
           {
-           NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; StrengthBuff3 = 0;
-           NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty; StrengthBuff2 = 0;
-           NameOther1 = string.Empty; Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther1 = string.Empty; StrengthBuff1 = 0;
+           NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty;
+           NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty;
+           NameOther1 = string.Empty; Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther1 = string.Empty;
            return;
           }
           
@@ -335,13 +329,16 @@ namespace Turbo.Plugins.Resu
           
          
          // Strengh in numbers buff indicator
-         int StrengthBuff = StrengthBuff1 + StrengthBuff2 + StrengthBuff3;
+         var SiNBuff = Hud.Game.Me.Powers.GetBuff(258199);
+         int StrengthBuff = SiNBuff.IconCounts[0] * 10;
+         
          if (StrengthBuff != 0 && !Hud.Game.Me.IsDead)
           {
-              
+           
            StrengthBuffText = "+" + StrengthBuff + "%";
            var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.minimap_dialog_backgroundScreen.minimap_dialog_pve.BoostWrapper.BoostsDifficultyStackPanel.clock").Rectangle;
-           StrengthBuffDecorator.Paint(uiRect.Left - uiRect.Width * 1.14f, uiRect.Top + uiRect.Height * 1f, uiRect.Width, uiRect.Height, HorizontalAlign.Right);
+           if (Hud.Game.Me.Hero.Seasonal) StrengthBuffDecorator.Paint(uiRect.Left - uiRect.Width * 1.14f, uiRect.Top + uiRect.Height * 1f, uiRect.Width, uiRect.Height, HorizontalAlign.Right);
+           else StrengthBuffDecorator.Paint(uiRect.Left - uiRect.Width * 0.96f, uiRect.Top + uiRect.Height * 1f, uiRect.Width, uiRect.Height, HorizontalAlign.Right);
           }
           
          // Thread between players
@@ -359,30 +356,28 @@ namespace Turbo.Plugins.Resu
             else if (player.PortraitIndex == 1)
              { 
                NameOther1 = player.BattleTagAbovePortrait; RealOther1 = player.FloorCoordinate; AreaOther1 = player.SnoArea.NameEnglish;
-               if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; StrengthBuff3 = 0; NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty; StrengthBuff2 = 0; 
+               if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty; 
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other1 = player.FloorCoordinate;
-                 if (player.NormalizedXyDistanceToMe <= 186 && !player.IsDead) StrengthBuff1 = 10; else StrengthBuff1 = 0;
                 }
                 else
                 {
-                 Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff1 = 0;
+                 Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate);
                 }
              }
            
             else if (player.PortraitIndex == 2)
              { 
                NameOther2 = player.BattleTagAbovePortrait; RealOther2 = player.FloorCoordinate; AreaOther2 = player.SnoArea.NameEnglish;
-               if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; StrengthBuff3 = 0; 
+               if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty;
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other2 = player.FloorCoordinate;
-                 if (player.NormalizedXyDistanceToMe <= 186 && !player.IsDead) StrengthBuff2 = 10; else StrengthBuff2 = 0;
                 }
                 else
                 {
-                 Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff2 = 0;
+                 Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate);
                 }
              }
            
@@ -392,11 +387,10 @@ namespace Turbo.Plugins.Resu
                if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
                 {
                  Other3 = player.FloorCoordinate;
-                 if (player.NormalizedXyDistanceToMe <= 186 && !player.IsDead) StrengthBuff3 = 10; else StrengthBuff3 = 0;
                 }
                 else
                 {
-                 Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); StrengthBuff3 = 0;
+                 Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate);
                 }
              }
            }
