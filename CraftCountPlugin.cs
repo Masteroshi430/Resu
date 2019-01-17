@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Craft Count Plugin for TurboHUD Version 25/09/2018 06:51
+// Craft Count Plugin for TurboHUD Version 17/01/2019 12:02
 
 using System;
 using System.Globalization;
@@ -154,15 +154,16 @@ namespace Turbo.Plugins.Resu
                 veiledCrystalCount = Hud.Game.Me.Materials.VeiledCrystal;
                 forgottenSoulCount = Hud.Game.Me.Materials.ForgottenSoul;
                 bloodShardCount = Hud.Game.Me.Materials.BloodShard;
-                khanduranRuneCount = Hud.Game.Me.Materials.KhanduranRune;  
-                caldeumNightShadeCount = Hud.Game.Me.Materials.CaldeumNightShade;  
-                arreatWarTapestryCount = Hud.Game.Me.Materials.ArreatWarTapestry;  
-                corruptedAngelFleshCount = Hud.Game.Me.Materials.CorruptedAngelFlesh;  
-                westmarchHolyWaterCount = Hud.Game.Me.Materials.WestmarchHolyWater;  
-                leoricsRegretCount = Hud.Game.Me.Materials.LeoricsRegret;  
-                idolOfTerrorCount = Hud.Game.Me.Materials.IdolOfTerror;  
-                vialOfPutridnessCount = Hud.Game.Me.Materials.VialOfPutridness;  
+                khanduranRuneCount = Hud.Game.Me.Materials.KhanduranRune;
+                caldeumNightShadeCount = Hud.Game.Me.Materials.CaldeumNightShade;
+                arreatWarTapestryCount = Hud.Game.Me.Materials.ArreatWarTapestry;
+                corruptedAngelFleshCount = Hud.Game.Me.Materials.CorruptedAngelFlesh;
+                westmarchHolyWaterCount = Hud.Game.Me.Materials.WestmarchHolyWater;
+                leoricsRegretCount = Hud.Game.Me.Materials.LeoricsRegret;
+                idolOfTerrorCount = Hud.Game.Me.Materials.IdolOfTerror;
+                vialOfPutridnessCount = Hud.Game.Me.Materials.VialOfPutridness;
                 heartOfFrightCount = Hud.Game.Me.Materials.HeartOfFright;
+                grkCount = Hud.Game.Me.Materials.GreaterRiftKeystone;
 
                 int TotalBounties = 0;
                 int Completed = 0;
@@ -179,13 +180,11 @@ namespace Turbo.Plugins.Resu
                 BountiesLeft = (int)(TotalBounties-BountiesCompletion);
                 
                 
-                var grkLoopCount = 0;
                 var puzzleRingLoopCount = 0;
                 var bovineBardicheLoopCount = 0;
                 
                 foreach (var item in Hud.Inventory.ItemsInStash)
             {
-                if (item.SnoItem.Sno == 2835237830) grkLoopCount += (int)item.Quantity; // GR keystone
                 if (item.SnoItem.Sno == 2346057823) bovineBardicheLoopCount += (int)item.Quantity; // Bovine Bardiche
                 if (item.SnoItem.Sno == 3106130529) puzzleRingLoopCount += (int)item.Quantity; // Puzzle Ring
                 
@@ -193,12 +192,10 @@ namespace Turbo.Plugins.Resu
 
             foreach (var item in Hud.Inventory.ItemsInInventory)
             {
-                if (item.SnoItem.Sno == 2835237830) grkLoopCount += (int)item.Quantity; // GR keystone
                 if (item.SnoItem.Sno == 2346057823) bovineBardicheLoopCount += (int)item.Quantity; // Bovine Bardiche
                 if (item.SnoItem.Sno == 3106130529) puzzleRingLoopCount += (int)item.Quantity; // Puzzle Ring
                 
             }
-                grkCount = Math.Abs(grkLoopCount);
                 puzzleRingCount = Math.Abs(puzzleRingLoopCount);
                 bovineBardicheCount = Math.Abs(bovineBardicheLoopCount);
                 
@@ -226,6 +223,7 @@ namespace Turbo.Plugins.Resu
                prevVialOfPutridnessCount = vialOfPutridnessCount;
                prevHeartOfFrightCount = heartOfFrightCount;
                prevBountiesCompletion = BountiesCompletion;
+               prevGrkCount = grkCount;
               }
               
               CraftCountDecorator.TextFont.Opacity = opacity;
