@@ -411,6 +411,11 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 
 ------
 
+#### [PotionPerfectionPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PotionPerfectionPlugin.cs)
+![](READMEpics/PotionPerfection.png)
+- Shows percentage of potion perfection on potion in stash and inventory. Not displayed when the potion is perfect. 
+------
+
 #### [PrimalAncientProbabilityPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/PrimalAncientProbabilityPlugin.cs)
 ![alt text](READMEpics/pa.png) ![alt text](READMEpics/PAPA.gif)
 - Indicates Ancient & Primal Ancient drop probability.
