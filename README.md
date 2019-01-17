@@ -350,9 +350,9 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 // Settings for Hunter's Vengeance Plugin
                Hud.RunOnPlugin<Resu.HuntersVengeancePlugin>(plugin => 
             { 
-                    // Enable permanent circle : Set it to true;
-                     plugin.permanentCircle = false;
-                     plugin.ElitesOnlyNumbers = false;
+                     plugin.permanentCircle = false;      // Enable permanent circle : Set it to true;
+                     plugin.ElitesOnlyNumbers = false;    // Enable numbers on elites only : Set it to true;
+		     plugin.TargetForAll = true;          // Disable cursor on minimap for all : Set it to false;
             });  
 // End of Settings for Hunter's Vengeance Plugin
 ```
