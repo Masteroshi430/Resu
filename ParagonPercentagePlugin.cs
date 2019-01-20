@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 06/01/2019 21:07
+// Paragon Percentage Plugin for TurboHUD Version 20/01/2019 20:26
 
 using System;
 using System.Globalization;
@@ -30,14 +30,14 @@ namespace Turbo.Plugins.Resu
         public string Nemesis { get; set; }
         public string Unity { get; set; }
         public string TimeToNextParagon { get; set; }
-        public int Player0AFKminutes { get; set; }
-        public int Player1AFKminutes { get; set; }
-        public int Player2AFKminutes { get; set; }
-        public int Player3AFKminutes { get; set; }
         public IWorldCoordinate Player0pos { get; set; }
         public IWorldCoordinate Player1pos { get; set; }
         public IWorldCoordinate Player2pos { get; set; }
         public IWorldCoordinate Player3pos { get; set; }
+        private IWatch _watch0;
+        private IWatch _watch1;
+        private IWatch _watch2;
+        private IWatch _watch3;
         
         public ParagonPercentagePlugin()
         {
@@ -47,7 +47,11 @@ namespace Turbo.Plugins.Resu
         public override void Load(IController hud)
         {
             base.Load(hud);
-
+            _watch0 = Hud.Time.CreateWatch();
+            _watch1 = Hud.Time.CreateWatch();
+            _watch2 = Hud.Time.CreateWatch();
+            _watch3 = Hud.Time.CreateWatch();
+            
             ShowGreaterRiftMaxLevel = true;
             ParagonPercentageOnTheRight = true;
             ParagonPercentage = "0";
@@ -252,76 +256,41 @@ namespace Turbo.Plugins.Resu
                        
                 if (IsZDPS(player)) ZDPSDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 
-                int Multiplicand = 1;
-                switch (Hud.Game.NumberOfPlayersInGame)
-                 {
-                  case 1:
-                  Multiplicand = 1;
-                  break;
-                  
-                  case 2:
-                  Multiplicand = 1;
-                  break;
-                  
-                  case 3:
-                  Multiplicand = 2;
-                  break;
-                  
-                  case 4:
-                  Multiplicand = 3;
-                  break;
-                  
-                  default:
-                  Multiplicand = 1;
-                  break;
-                 }
                  
-                if (player.AnimationState == AcdAnimationState.Idle)
+                if (player.AnimationState == AcdAnimationState.Idle && player.CoordinateKnown)
                  {
                   if (player.PortraitIndex == 0)
                   { 
-                   if (player.FloorCoordinate == Player0pos)
-                    {
-                     if (player.CoordinateKnown) Player0AFKminutes++;
-                    }
-                   else Player0AFKminutes = 0;
-                   if (Player0AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (player.FloorCoordinate != Player0pos) _watch0.Restart();
+                   int AFK0 = (int)(_watch0.ElapsedMilliseconds/60000);
+                   if (AFK0 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   if (player.PortraitIndex == 1) 
                   { 
-                   if (player.FloorCoordinate == Player1pos)
-                    {
-                     if (player.CoordinateKnown) Player1AFKminutes++;
-                    }
-                   else Player1AFKminutes = 0;
-                   if (Player1AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (player.FloorCoordinate != Player1pos) _watch1.Restart();
+                   int AFK1 = (int)(_watch1.ElapsedMilliseconds/60000);
+                   if (AFK1 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   if (player.PortraitIndex == 2) 
                   { 
-                   if (player.FloorCoordinate == Player2pos)
-                    {
-                     if (player.CoordinateKnown) Player2AFKminutes++;
-                    }
-                   else Player2AFKminutes = 0;
-                   if (Player2AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (player.FloorCoordinate != Player2pos) _watch2.Restart();
+                   int AFK2 = (int)(_watch2.ElapsedMilliseconds/60000);
+                   if (AFK2 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   if (player.PortraitIndex == 3) 
                   { 
-                   if (player.FloorCoordinate == Player3pos)
-                    {
-                     if (player.CoordinateKnown) Player3AFKminutes++;
-                    }
-                   else Player3AFKminutes = 0;
-                   if (Player3AFKminutes > (2880/Multiplicand)) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                   if (player.FloorCoordinate != Player3pos) _watch3.Restart();
+                   int AFK3 = (int)(_watch3.ElapsedMilliseconds/60000);
+                   if (AFK3 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
                   
                  }
                 else
                  {
-                  if (player.PortraitIndex == 0) Player0AFKminutes = 0;
-                  if (player.PortraitIndex == 1) Player1AFKminutes = 0;
-                  if (player.PortraitIndex == 2) Player2AFKminutes = 0;
-                  if (player.PortraitIndex == 3) Player3AFKminutes = 0;
+                  if (player.PortraitIndex == 0) _watch0.Restart();
+                  if (player.PortraitIndex == 1) _watch1.Restart();
+                  if (player.PortraitIndex == 2) _watch2.Restart();
+                  if (player.PortraitIndex == 3) _watch3.Restart();
                  }
                
                   if (player.PortraitIndex == 0) Player0pos = player.FloorCoordinate;
