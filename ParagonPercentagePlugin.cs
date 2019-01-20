@@ -257,7 +257,7 @@ namespace Turbo.Plugins.Resu
                 if (IsZDPS(player)) ZDPSDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 
                  
-                if (player.AnimationState == AcdAnimationState.Idle && player.CoordinateKnown)
+                if (player.AnimationState == AcdAnimationState.Idle)
                  {
                   if (player.PortraitIndex == 0)
                   { 

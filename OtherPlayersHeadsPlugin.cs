@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Other Player's heads Plugin for TurboHUD Version 06/12/2018 23:22
+// Other Player's heads Plugin for TurboHUD Version 21/01/2019 21:32
 
 using System.Collections.Generic;
 using System.Linq;
@@ -144,7 +144,7 @@ namespace Turbo.Plugins.Resu
 
         public void PaintWorld(WorldLayer layer)
         {
-            var players = Hud.Game.Players.Where(player => !player.IsMe && player.CoordinateKnown && (player.HeadStone == null));
+            var players = Hud.Game.Players.Where(player => !player.IsMe && player.CoordinateKnown && Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno && (player.HeadStone == null));
             foreach (var player in players)
             {
                 
