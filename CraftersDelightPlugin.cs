@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 06/12/2018 23:18
+// Crafter's Delight Plugin for TurboHUD Version 20/01/2019 15:11
  
 using System.Collections.Generic;
 using System.Linq;
@@ -350,7 +350,7 @@ namespace Turbo.Plugins.Resu
         public void OnLootGenerated(IItem item, bool gambled)
         {
           if (!Hud.Sound.IsIngameSoundEnabled) return;
-          if (SameAsEquipped(item.SnoItem.Sno) && Equipped && item.IsLegendary)
+          if (SameAsEquipped(item.SnoItem.Sno) && Equipped && item.AncientRank > 0)
                     {
                      var soundPlayer = Hud.Sound.LoadSoundPlayer("Equipped-Drop-By-Resu.wav");
                      
@@ -442,7 +442,7 @@ namespace Turbo.Plugins.Resu
                         cubeTexture.Draw(mapX - width / 2, mapY - height / 2, width, height);
                         } 
                         
-                    if (SameAsEquipped(item.SnoItem.Sno) && Equipped)
+                    if (SameAsEquipped(item.SnoItem.Sno) && Equipped && item.AncientRank > 0)
                     {
                      EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "E");
                     }
@@ -509,7 +509,10 @@ namespace Turbo.Plugins.Resu
         
          private bool SameAsEquipped(uint ThatItemSno)
         {
-          return Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno);
+          bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno);
+          bool Cubed = Hud.Game.Me.CubedItems.Any(x => x.Sno == ThatItemSno);
+          if (!Worn & !Cubed) return false;
+          else return true;
         }
 
         private int stashTabAbs;
@@ -524,7 +527,7 @@ namespace Turbo.Plugins.Resu
                 foreach (var item in Hud.Game.Items)
                 {
                     if ((Int32)item.Location > 0 && (Int32)item.Location < 14) continue;
-                    if (SameAsEquipped(item.SnoItem.Sno) && item.IsLegendary)
+                    if (SameAsEquipped(item.SnoItem.Sno) && item.AncientRank > 0)
                      {
                       if (item.Location == ItemLocation.Stash)
                        {
