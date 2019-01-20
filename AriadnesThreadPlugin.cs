@@ -357,7 +357,7 @@ namespace Turbo.Plugins.Resu
              { 
                NameOther1 = player.BattleTagAbovePortrait; RealOther1 = player.FloorCoordinate; AreaOther1 = player.SnoArea.NameEnglish;
                if (Hud.Game.NumberOfPlayersInGame == 2) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty; NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty; 
-               if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
+               if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno && player.CoordinateKnown)
                 {
                  Other1 = player.FloorCoordinate;
                 }
@@ -371,7 +371,7 @@ namespace Turbo.Plugins.Resu
              { 
                NameOther2 = player.BattleTagAbovePortrait; RealOther2 = player.FloorCoordinate; AreaOther2 = player.SnoArea.NameEnglish;
                if (Hud.Game.NumberOfPlayersInGame == 3) NameOther3 = string.Empty; Other3 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther3 = string.Empty;
-               if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
+               if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno && player.CoordinateKnown)
                 {
                  Other2 = player.FloorCoordinate;
                 }
@@ -384,7 +384,7 @@ namespace Turbo.Plugins.Resu
             else if (player.PortraitIndex == 3)
              {
                NameOther3 = player.BattleTagAbovePortrait; RealOther3 = player.FloorCoordinate; AreaOther3 = player.SnoArea.NameEnglish;
-               if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno)
+               if (Hud.Game.Me.SnoArea.Sno == player.SnoArea.Sno && player.CoordinateKnown)
                 {
                  Other3 = player.FloorCoordinate;
                 }
