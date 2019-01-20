@@ -511,7 +511,7 @@ namespace Turbo.Plugins.Resu
         {
           bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno);
           bool Cubed = Hud.Game.Me.CubedItems.Any(x => x.Sno == ThatItemSno);
-          if (!Worn & !Cubed) return false;
+          if (!Worn && !Cubed) return false;
           else return true;
         }
 
