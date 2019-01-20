@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 20/01/2019 15:11
+// Crafter's Delight Plugin for TurboHUD Version 20/01/2019 16:06
  
 using System.Collections.Generic;
 using System.Linq;
@@ -512,7 +512,8 @@ namespace Turbo.Plugins.Resu
           bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno);
           bool Cubed = Hud.Game.Me.CubedItems.Any(x => x.Sno == ThatItemSno);
           if (!Worn && !Cubed) return false;
-          else return true;
+          else if (worn) return true;
+          else if (Cubed) return true;
         }
 
         private int stashTabAbs;
