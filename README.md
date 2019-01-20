@@ -247,7 +247,7 @@ Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/D
 - Horadric Caches
 - Item not yet cubed (minimap)
 - Ancient and Primal indicator on legendary or set icons (minimap).
-- Same item as equipped : indicator on minimap (E) & lines around item in inventory / stash.
+- Same item as equipped or in cube (only for ancients) : indicator on minimap (E) & lines around item in inventory / stash.
 
 ...And adds transparent colored groundlabel names with quantity for all + Slain Farmers (discrete and ground label only) except Bovine Bardiche & Puzzle Ring (already in ItemsPlugin).
 
