@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 20/01/2019 16:06
+// Crafter's Delight Plugin for TurboHUD Version 20/01/2019 16:20
  
 using System.Collections.Generic;
 using System.Linq;
@@ -510,10 +510,14 @@ namespace Turbo.Plugins.Resu
          private bool SameAsEquipped(uint ThatItemSno)
         {
           bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno);
-          bool Cubed = Hud.Game.Me.CubedItems.Any(x => x.Sno == ThatItemSno);
+          bool Cubed1 = Hud.Game.Me.CubeSnoItem1.Sno == ThatItemSno;
+          bool Cubed2 = Hud.Game.Me.CubeSnoItem2.Sno == ThatItemSno;
+          bool Cubed3 = Hud.Game.Me.CubeSnoItem3.Sno == ThatItemSno;
           
           if (Worn) return true;
-          else if (Cubed) return true;
+          else if (Cubed1) return true;
+          else if (Cubed2) return true;
+          else if (Cubed3) return true;
           else return false;
         }
 
