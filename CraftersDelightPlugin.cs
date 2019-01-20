@@ -64,6 +64,7 @@ namespace Turbo.Plugins.Resu
             Hud.GetPlugin<ItemsPlugin>().SetDecorator.ToggleDecorators<MapShapeDecorator>(false);
             Hud.GetPlugin<ItemsPlugin>().AncientSetDecorator.ToggleDecorators<MapShapeDecorator>(false);
             Hud.GetPlugin<ItemsPlugin>().PrimalSetDecorator.ToggleDecorators<MapShapeDecorator>(false);
+            Hud.TogglePlugin<ChestPlugin>(false);  // disables ChestPlugin
         }
         
         private void init() 
@@ -501,8 +502,29 @@ namespace Turbo.Plugins.Resu
                       NextHoradricSound = Hud.Game.CurrentRealTimeMilliseconds + 20000;
                      }
                    }
-            
-            
+             }
+             
+            var loreChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.GizmoType == GizmoType.LoreChest);
+            foreach (var actor in loreChests)
+            {
+             var LoreTexture = Hud.Texture.GetTexture(3651511087);
+             if(!Hud.Game.Me.IsInTown)LoreTexture.Draw(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, 31.5f, 49.5f, 1f);
+            }
+
+            var normalChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.ChestNormal);
+            foreach (var actor in normalChests)
+            {
+             var NormalTexture = Hud.Texture.GetTexture(4061587565);
+             Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+             NormalTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
+            }
+
+            var resplendentChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.Chest);
+            foreach (var actor in resplendentChests)
+            {
+             var RespendentTexture = Hud.Texture.GetTexture(4029005773);
+             Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+             RespendentTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
             }
             
         }
