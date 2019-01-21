@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 20/01/2019 16:20
+// Crafter's Delight Plugin for TurboHUD Version 21/01/2019 07:49
  
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,10 @@ namespace Turbo.Plugins.Resu
         public bool HoradricCaches { get; set; }
         public long HoradricTimer { get; set; }
         public long NextHoradricSound { get; set; }
-        public bool Equipped { get; set; } 
+        public bool Equipped { get; set; }
+        public bool LoreChestsDisplay { get; set; }
+        public bool NormalChestsDisplay { get; set; }
+        public bool ResplendentChestsDisplay { get; set; }
         public IBrush EquippedBrush { get; set; }
         private bool init_mapping;
  
@@ -234,6 +237,9 @@ namespace Turbo.Plugins.Resu
             LegendaryGems = true;
             HoradricCaches = true;
             Equipped = true;
+            LoreChestsDisplay = true;
+            NormalChestsDisplay = true;
+            ResplendentChestsDisplay = true;
             HoradricTimer = 0;
             NextHoradricSound = 0;
             EquippedBrush = Hud.Render.CreateBrush(200, 255, 54, 198, 2, SharpDX.Direct2D1.DashStyle.Solid, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Flat);
@@ -504,29 +510,37 @@ namespace Turbo.Plugins.Resu
                    }
              }
              
-            var loreChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.GizmoType == GizmoType.LoreChest);
-            foreach (var actor in loreChests)
-            {
-             var LoreTexture = Hud.Texture.GetTexture(3651511087);
-             if(!Hud.Game.Me.IsInTown)LoreTexture.Draw(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, 31.5f, 49.5f, 1f);
-            }
-
-            var normalChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.ChestNormal);
-            foreach (var actor in normalChests)
-            {
-             var NormalTexture = Hud.Texture.GetTexture(4061587565);
-             Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
-             NormalTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
-            }
-
-            var resplendentChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.Chest);
-            foreach (var actor in resplendentChests)
-            {
-             var RespendentTexture = Hud.Texture.GetTexture(4029005773);
-             Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
-             RespendentTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
-            }
+            if(LoreChestsDisplay)
+             {
+              var loreChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.GizmoType == GizmoType.LoreChest);
+              foreach (var actor in loreChests)
+               {
+                var LoreTexture = Hud.Texture.GetTexture(3651511087);
+                if(!Hud.Game.Me.IsInTown)LoreTexture.Draw(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, 31.5f, 49.5f, 1f);
+               }
+             }
             
+            if(NormalChestsDisplay)
+             {
+              var normalChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.ChestNormal);
+              foreach (var actor in normalChests)
+               {
+                var NormalTexture = Hud.Texture.GetTexture(4061587565);
+                Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+                NormalTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
+               }
+             }
+             
+            if(ResplendentChestsDisplay)
+             {
+              var resplendentChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.Chest);
+              foreach (var actor in resplendentChests)
+               {
+                var RespendentTexture = Hud.Texture.GetTexture(4029005773);
+                Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+                RespendentTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
+               }
+             }
         }
         
          private bool SameAsEquipped(uint ThatItemSno)
