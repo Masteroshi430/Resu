@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 21/01/2019 07:49
+// Crafter's Delight Plugin for TurboHUD Version 22/01/2019 00:04
  
 using System.Collections.Generic;
 using System.Linq;
@@ -520,6 +520,8 @@ namespace Turbo.Plugins.Resu
                }
              }
             
+            var Glow = Hud.Texture.GetTexture(1981524232);
+            
             if(NormalChestsDisplay)
              {
               var normalChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.ChestNormal);
@@ -527,6 +529,7 @@ namespace Turbo.Plugins.Resu
                {
                 var NormalTexture = Hud.Texture.GetTexture(4061587565);
                 Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+                Glow.Draw(textureX-11, textureY-13, 28f, 33f, 1f);
                 NormalTexture.Draw(textureX-11, textureY-13, 22.77f, 27.06f, 1f);
                }
              }
@@ -538,6 +541,7 @@ namespace Turbo.Plugins.Resu
                {
                 var RespendentTexture = Hud.Texture.GetTexture(4029005773);
                 Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+                Glow.Draw(textureX-11, textureY-13, 31f, 36f, 1f);
                 RespendentTexture.Draw(textureX-11, textureY-13, 22.77f, 27.06f, 1f);
                }
              }
