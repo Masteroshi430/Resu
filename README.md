@@ -246,6 +246,7 @@ Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/D
 - legendary gems
 - Horadric Caches
 - Item not yet cubed (minimap)
+- Chests & lores (minimap) 
 - Ancient and Primal indicator on legendary or set icons (minimap).
 - Same item as equipped or in cube (only for ancients) : indicator on minimap (E) & lines around item in inventory / stash.
 
@@ -282,6 +283,9 @@ Advice: For better experience with this plugin, turn off "Always Show Items Labe
             plugin.HellFire = true;
             plugin.LegendaryGems = true;
             plugin.HoradricCaches = true;
+            plugin.LoreChestsDisplay = true;
+            plugin.NormalChestsDisplay = true;
+            plugin.ResplendentChestsDisplay = true;
             plugin.Equipped = true; // set to false to turn off "same item as equipped" drop sound drop & rendering on minimap & inventory. 
             });  
 // End of CraftersDelightPlugin Customization
