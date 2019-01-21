@@ -527,7 +527,7 @@ namespace Turbo.Plugins.Resu
                {
                 var NormalTexture = Hud.Texture.GetTexture(4061587565);
                 Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
-                NormalTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
+                NormalTexture.Draw(textureX-11, textureY-13, 22.77f, 27.06f, 1f);
                }
              }
              
@@ -538,7 +538,7 @@ namespace Turbo.Plugins.Resu
                {
                 var RespendentTexture = Hud.Texture.GetTexture(4029005773);
                 Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
-                RespendentTexture.Draw(textureX-17, textureY-20, 34.5f, 41f, 1f);
+                RespendentTexture.Draw(textureX-11, textureY-13, 22.77f, 27.06f, 1f);
                }
              }
         }
@@ -546,9 +546,9 @@ namespace Turbo.Plugins.Resu
          private bool SameAsEquipped(uint ThatItemSno)
         {
           bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno);
-          bool Cubed1 = Hud.Game.Me.CubeSnoItem1.Sno == ThatItemSno;
-          bool Cubed2 = Hud.Game.Me.CubeSnoItem2.Sno == ThatItemSno;
-          bool Cubed3 = Hud.Game.Me.CubeSnoItem3.Sno == ThatItemSno;
+          bool Cubed1 = Hud.Game.Me.CubeSnoItem1?.Sno == ThatItemSno;
+          bool Cubed2 = Hud.Game.Me.CubeSnoItem2?.Sno == ThatItemSno;
+          bool Cubed3 = Hud.Game.Me.CubeSnoItem3?.Sno == ThatItemSno;
           
           if (Worn) return true;
           else if (Cubed1) return true;
