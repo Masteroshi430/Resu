@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 28/01/2019 11:55
+// Danger Plugin for TurboHUD Version 28/01/2019 20:53
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -8,6 +8,8 @@ using System;
 using Turbo.Plugins.Default;
 using System.Collections.Generic;
 using System.Globalization;
+using SharpDX;
+using SharpDX.Direct2D1;
 
 namespace Turbo.Plugins.Resu
 {
@@ -15,6 +17,7 @@ namespace Turbo.Plugins.Resu
     
     {
         public Dictionary<IWorldCoordinate, long> BetrayedPoison { get; set; }
+        public static Dictionary<IWorldCoordinate, int> GrotesqueBlow { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorSmall { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorMedium { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorBig { get; set; }
@@ -89,6 +92,7 @@ namespace Turbo.Plugins.Resu
             GrotesqueExplosion = true;
             BetrayedPoisonCloud = true;
             BetrayedPoison = new Dictionary<IWorldCoordinate, long>();
+            GrotesqueBlow = new Dictionary<IWorldCoordinate, int>();
         }
         
        public void Customize()
@@ -280,7 +284,7 @@ namespace Turbo.Plugins.Resu
                 );
                 
                 DemonMineDecorator = new WorldDecoratorCollection(
-                                new GroundCircleDecorator(Hud)
+                new GroundCircleDecorator(Hud)
                 {
                     Brush = Hud.Render.CreateBrush(100, 255, 255, 220, 5, SharpDX.Direct2D1.DashStyle.Dash),
                     Radius = 5,
@@ -288,7 +292,7 @@ namespace Turbo.Plugins.Resu
                 );
                 
                 OrbiterDecorator = new WorldDecoratorCollection(
-                                new GroundCircleDecorator(Hud)
+                new GroundCircleDecorator(Hud)
                 {
                     Brush = Hud.Render.CreateBrush(255, 0, 255, 0, 5, SharpDX.Direct2D1.DashStyle.Solid),
                     Radius = 4,
@@ -303,12 +307,23 @@ namespace Turbo.Plugins.Resu
                 }
                 );
 
-            // timers does not work for grotesque because it has no death actor with creation ticks and the original monster's creation tick is not the same as the time he died
+
             GrotesqueDecorator = new WorldDecoratorCollection(
                 new GroundCircleDecorator(Hud)
                 {
                     Brush = Hud.Render.CreateBrush(160, 255, 50, 50, 3, SharpDX.Direct2D1.DashStyle.Dash),
                     Radius = 20f,
+                },
+                 new GroundLabelDecorator(Hud)
+                {
+                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 255, true, false, 128, 0, 0, 0, true),
+                }, 
+                new GroundTimerDecorator2(Hud)
+                {
+                    CountDownFrom = 1.5f,
+                    BackgroundBrushEmpty = Hud.Render.CreateBrush(128, 0, 0, 0, 0),
+                    BackgroundBrushFill = Hud.Render.CreateBrush(160, 255, 50, 50, 0),
+                    Radius = 30,
                 }
                 );
         }
@@ -1375,6 +1390,11 @@ namespace Turbo.Plugins.Resu
                               worldCoord2 = Hud.Window.CreateWorldCoordinate(1266.420f, 2544.175f, -9.9f);
                               break;
                               
+                              case "1669.276, 1386.676, 0.0":
+                              worldCoord1 = Hud.Window.CreateWorldCoordinate(1690.258f, 1417.582f, 0.3f);
+                              worldCoord2 = Hud.Window.CreateWorldCoordinate(1696.484f, 1403.538f, 0.3f);
+                              break;
+                              
                               default:
                               DemonicForgeDecorator.Paint(layer, actor, actor.FloorCoordinate, "!!! Not repertoriated !!! " + actor.FloorCoordinate);
                               var cursorScreen = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
@@ -1412,7 +1432,7 @@ namespace Turbo.Plugins.Resu
                 if (actor.SnoActor.Sno == 332924 && BloodSprings) BloodSpringsDecoratorSmall.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
                 if (!Hud.Game.Me.IsDead)
                 {
-                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && Desecrator && RunForYourLife || actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && Thunderstorm  && RunForYourLife || actor.SnoActor.Sno == 108869 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 3865 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && Molten  && RunForYourLife || actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && GasCloud && RunForYourLife || actor.SnoActor.Sno == 159369 && actor.NormalizedXyDistanceToMe <= 20 && MorluSpellcasterMeteorPending || actor.SnoActor.Sno >= 4104 && actor.SnoActor.Sno <= 4106 && actor.NormalizedXyDistanceToMe <= 5 && PoisonDeath  && RunForYourLife || actor.SnoActor.Sno == 4803 && actor.NormalizedXyDistanceToMe <= 13f && MoltenExplosion)
+                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && Desecrator && RunForYourLife || actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && Thunderstorm  && RunForYourLife || actor.SnoActor.Sno == 108869 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 3865 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && Molten  && RunForYourLife || actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && GasCloud && RunForYourLife || actor.SnoActor.Sno == 159369 && actor.NormalizedXyDistanceToMe <= 20 && MorluSpellcasterMeteorPending || actor.SnoActor.Sno >= 4104 && actor.SnoActor.Sno <= 4106 && actor.NormalizedXyDistanceToMe <= 5 && PoisonDeath  && RunForYourLife) // || actor.SnoActor.Sno == 4803 && actor.NormalizedXyDistanceToMe <= 13f && MoltenExplosion)
                  {
                   MoveWarningDecorator.Paint(layer, actor, actor.FloorCoordinate, "Moveth!");
                   Danger = false;
@@ -1484,7 +1504,22 @@ namespace Turbo.Plugins.Resu
                     case 195639:
                     case 365465:
                     case 191592:
-                       if (GrotesqueExplosion) GrotesqueDecorator.Paint(layer, monster, monster.FloorCoordinate, monster.SnoMonster.NameLocalized);
+                       if (GrotesqueExplosion)
+                        {
+                         if (!GrotesqueBlow.ContainsKey(monster.FloorCoordinate)) GrotesqueBlow.Add(monster.FloorCoordinate, Hud.Game.CurrentGameTick);
+                         
+                         
+                         int CreatedAtGameTick;
+                         if (GrotesqueBlow.TryGetValue(monster.FloorCoordinate, out CreatedAtGameTick))
+                          {
+                           GrotesqueBlow.TryGetValue(monster.FloorCoordinate, out CreatedAtGameTick);
+                          }
+                         var remaining = 1.5 - ((Hud.Game.CurrentGameTick - CreatedAtGameTick) / 60.0f);
+                         if (remaining < 0) remaining = 0;
+                         var vf = (remaining > 1.0f) ? "F0" : "F1";
+                         var text = remaining.ToString(vf, CultureInfo.InvariantCulture);
+                         GrotesqueDecorator.Paint(layer, monster, monster.FloorCoordinate, text);
+                        }
                         break;
                  }
             }
@@ -1494,9 +1529,107 @@ namespace Turbo.Plugins.Resu
              {
               if ((Hud.Game.CurrentRealTimeMilliseconds - Cloud.Value) < (7*1000)) FastMummyDecorator.Paint(layer, null, Cloud.Key, null);
              }
-            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0) BetrayedPoison.Clear();
+             
+            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0) 
+             {
+              BetrayedPoison.Clear();
+              GrotesqueBlow.Clear();
+             }
         
         }
 
     }
+    
+    
+    public class GroundTimerDecorator2 : IWorldDecorator
+    {
+        public bool Enabled { get; set; }
+        public WorldLayer Layer { get; } = WorldLayer.Ground;
+        public IController Hud { get; }
+
+        public IBrush BackgroundBrushEmpty { get; set; }
+        public IBrush BackgroundBrushFill { get; set; }
+
+        public float Radius { get; set; }
+        public float CountDownFrom { get; set; }
+
+        public GroundTimerDecorator2(IController hud)
+        {
+            Enabled = true;
+            Hud = hud;
+        }
+
+        public void Paint(IActor actor, IWorldCoordinate coord, string text)
+        {
+            if (!Enabled) return;
+            if (actor == null) return;
+
+            var rad = Radius / 1200.0f * Hud.Window.Size.Height;
+            var max = CountDownFrom;
+            
+            int CreatedAtGameTick;
+            if (DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick))
+             {
+              DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick);
+             }
+            
+            var elapsed = (Hud.Game.CurrentGameTick - CreatedAtGameTick) / 60.0f;
+            
+            if (elapsed < 0) return;
+            if (elapsed > max) elapsed = max;
+
+            var screenCoord = coord.ToScreenCoordinate();
+            var startAngle = Convert.ToInt32(360 / max * elapsed) - 90;
+            var endAngle = 360 - 90;
+
+            using (var pg = Hud.Render.CreateGeometry())
+            {
+                using (var gs = pg.Open())
+                {
+                    gs.BeginFigure(new Vector2(screenCoord.X, screenCoord.Y), FigureBegin.Filled);
+                    for (int angle = startAngle; angle <= endAngle; angle++)
+                    {
+                        var mx = rad * (float)Math.Cos(angle * Math.PI / 180.0f);
+                        var my = rad * (float)Math.Sin(angle * Math.PI / 180.0f);
+                        var vector = new Vector2(screenCoord.X + mx, screenCoord.Y + my);
+                        gs.AddLine(vector);
+                    }
+
+                    gs.EndFigure(FigureEnd.Closed);
+                    gs.Close();
+                }
+
+                BackgroundBrushFill.DrawGeometry(pg);
+            }
+
+            using (var pg = Hud.Render.CreateGeometry())
+            {
+                using (var gs = pg.Open())
+                {
+                    gs.BeginFigure(new Vector2(screenCoord.X, screenCoord.Y), FigureBegin.Filled);
+                    for (int angle = endAngle; angle <= startAngle + 360; angle++)
+                    {
+                        var mx = rad * (float)Math.Cos(angle * Math.PI / 180.0f);
+                        var my = rad * (float)Math.Sin(angle * Math.PI / 180.0f);
+                        var vector = new Vector2(screenCoord.X + mx, screenCoord.Y + my);
+                        gs.AddLine(vector);
+                    }
+
+                    gs.EndFigure(FigureEnd.Closed);
+                    gs.Close();
+                }
+
+                BackgroundBrushEmpty.DrawGeometry(pg);
+            }
+        }
+
+        public IEnumerable<ITransparent> GetTransparents()
+        {
+            yield return BackgroundBrushEmpty;
+            yield return BackgroundBrushFill;
+        }
+    }
+
+    
+    
 }
