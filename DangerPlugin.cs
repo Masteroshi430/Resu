@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 28/01/2019 20:53
+// Danger Plugin for TurboHUD Version 28/01/2019 23:58
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -302,7 +302,7 @@ namespace Turbo.Plugins.Resu
                FastMummyDecorator = new WorldDecoratorCollection(
                 new GroundCircleDecorator(Hud)
                 {
-                    Brush = Hud.Render.CreateBrush(128, 255, 50, 50, 3, SharpDX.Direct2D1.DashStyle.Dash),
+                    Brush = Hud.Render.CreateBrush(128, 255, 255, 255, 3, SharpDX.Direct2D1.DashStyle.Dash),
                     Radius = 9,
                 }
                 );
@@ -320,7 +320,7 @@ namespace Turbo.Plugins.Resu
                 }, 
                 new GroundTimerDecorator2(Hud)
                 {
-                    CountDownFrom = 1.5f,
+                    CountDownFrom = 1.3f,
                     BackgroundBrushEmpty = Hud.Render.CreateBrush(128, 0, 0, 0, 0),
                     BackgroundBrushFill = Hud.Render.CreateBrush(160, 255, 50, 50, 0),
                     Radius = 30,
@@ -1514,7 +1514,7 @@ namespace Turbo.Plugins.Resu
                           {
                            GrotesqueBlow.TryGetValue(monster.FloorCoordinate, out CreatedAtGameTick);
                           }
-                         var remaining = 1.5 - ((Hud.Game.CurrentGameTick - CreatedAtGameTick) / 60.0f);
+                         var remaining = 1.3 - ((Hud.Game.CurrentGameTick - CreatedAtGameTick) / 60.0f);
                          if (remaining < 0) remaining = 0;
                          var vf = (remaining > 1.0f) ? "F0" : "F1";
                          var text = remaining.ToString(vf, CultureInfo.InvariantCulture);
