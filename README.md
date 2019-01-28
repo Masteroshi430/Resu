@@ -132,6 +132,8 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 	    plugin.PoisonDeath = true;
 	    plugin.MoltenExplosion = true;
 	    plugin.Orbiter = true;
+	    plugin.GrotesqueExplosion = true;
+            plugin.BetrayedPoisonCloud = true;
             });  
 // End of DangerPlugin Customization
 ```
