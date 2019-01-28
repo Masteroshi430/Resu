@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 06/12/2018 23:15
+// Danger Plugin for TurboHUD Version 28/01/2019 11:55
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -12,7 +12,9 @@ using System.Globalization;
 namespace Turbo.Plugins.Resu
 {
     public class DangerPlugin : BasePlugin, IInGameWorldPainter, ICustomizer
+    
     {
+        public Dictionary<IWorldCoordinate, long> BetrayedPoison { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorSmall { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorMedium { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorBig { get; set; }
@@ -23,6 +25,8 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection ProjectileDecorator { get; set; }
         public WorldDecoratorCollection DemonMineDecorator { get; set; }
         public WorldDecoratorCollection OrbiterDecorator { get; set; }
+        public WorldDecoratorCollection FastMummyDecorator { get; set; }
+        public WorldDecoratorCollection GrotesqueDecorator { get; set; }
         public int offsetX { get; set; }
         public int offsetY { get; set; }
         public bool BloodSprings { get; set; }
@@ -52,7 +56,8 @@ namespace Turbo.Plugins.Resu
         public int PrevSecond { get; set; }
         public bool RunForYourLife { get; set; }
         public bool Danger { get; set; }
-        
+        public bool GrotesqueExplosion { get; set; }
+        public bool BetrayedPoisonCloud { get; set; }
         
         public static HashSet<uint> dangerIds = new HashSet<uint>() { 174900, 185391, 332922, 332923, 332924, 322194, 84608, 341512, 108869, 3865, 219702, 221225, 340319, 95868, 93837, 5212, 159369, 118596, 4104, 4105, 4106, 4803, 343539, 164827, 312942, 337030, 353256, 349564, 117921, 117906, 150825, 468082, 430430};
         
@@ -81,14 +86,17 @@ namespace Turbo.Plugins.Resu
             bloodGolemProjectile = true;
             MoleMutantProjectile = true;
             IcePorcupineProjectile = true;
-
+            GrotesqueExplosion = true;
+            BetrayedPoisonCloud = true;
+            BetrayedPoison = new Dictionary<IWorldCoordinate, long>();
         }
         
        public void Customize()
         {
             Hud.RunOnPlugin<StandardMonsterPlugin>(plugin => plugin.InvisibleDecorator.Decorators.Clear()); // turn off InvisibleDecorator on default StandardMonsterPlugin
+            Hud.TogglePlugin<ExplosiveMonsterPlugin>(false);  // disables ExplosiveMonsterPlugin
         }
-        
+
         public override void Load(IController hud)
         {
           base.Load(hud); 
@@ -188,7 +196,7 @@ namespace Turbo.Plugins.Resu
                     TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 220, true, false, false),
                 }
                 );
-                            
+                
                 ShockTowerDecorator = new WorldDecoratorCollection(
                 new MapShapeDecorator(Hud)
                 {
@@ -284,6 +292,23 @@ namespace Turbo.Plugins.Resu
                 {
                     Brush = Hud.Render.CreateBrush(255, 0, 255, 0, 5, SharpDX.Direct2D1.DashStyle.Solid),
                     Radius = 4,
+                }
+                );
+                
+               FastMummyDecorator = new WorldDecoratorCollection(
+                new GroundCircleDecorator(Hud)
+                {
+                    Brush = Hud.Render.CreateBrush(128, 255, 50, 50, 3, SharpDX.Direct2D1.DashStyle.Dash),
+                    Radius = 9,
+                }
+                );
+
+            // timers does not work for grotesque because it has no death actor with creation ticks and the original monster's creation tick is not the same as the time he died
+            GrotesqueDecorator = new WorldDecoratorCollection(
+                new GroundCircleDecorator(Hud)
+                {
+                    Brush = Hud.Render.CreateBrush(160, 255, 50, 50, 3, SharpDX.Direct2D1.DashStyle.Dash),
+                    Radius = 20f,
                 }
                 );
         }
@@ -1433,6 +1458,45 @@ namespace Turbo.Plugins.Resu
               invisibleTexture.Draw(MonsterScreen.X, MonsterScreen.Y, 150f, 75f, opacityMultiplier: 0.5f); // InvisibleDecorator.Paint(layer, invisibleMonster,invisibleMonster.FloorCoordinate, invisibleMonster.SnoMonster.Sno.ToString());
             }
         
+           // Explosive monster plugin mod
+            var deadMonsters = Hud.Game.Monsters.Where(x => !x.IsAlive);
+            foreach (var monster in deadMonsters)
+             {
+                switch (monster.SnoActor.Sno)
+                 {
+                    case 4104:
+                    case 4105:
+                    case 4106:
+                        if (BetrayedPoisonCloud)
+                         {
+                          if (!BetrayedPoison.ContainsKey(monster.FloorCoordinate)) BetrayedPoison.Add(monster.FloorCoordinate,Hud.Game.CurrentRealTimeMilliseconds);
+                         }
+                        break;
+                    case 3847:
+                    case 218307:
+                    case 218308:
+                    case 365450:
+                    case 3848:
+                    case 218405:
+                    case 3849:
+                    case 113994:
+                    case 3850:
+                    case 195639:
+                    case 365465:
+                    case 191592:
+                       if (GrotesqueExplosion) GrotesqueDecorator.Paint(layer, monster, monster.FloorCoordinate, monster.SnoMonster.NameLocalized);
+                        break;
+                 }
+            }
+        
+
+            foreach (var Cloud in BetrayedPoison)
+             {
+              if ((Hud.Game.CurrentRealTimeMilliseconds - Cloud.Value) < (7*1000)) FastMummyDecorator.Paint(layer, null, Cloud.Key, null);
+             }
+            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0) BetrayedPoison.Clear();
+        
         }
+
     }
 }
