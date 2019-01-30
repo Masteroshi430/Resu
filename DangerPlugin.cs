@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 28/01/2019 23:58
+// Danger Plugin for TurboHUD Version 31/01/2019 00:05
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -16,7 +16,7 @@ namespace Turbo.Plugins.Resu
     public class DangerPlugin : BasePlugin, IInGameWorldPainter, ICustomizer
     
     {
-        public Dictionary<IWorldCoordinate, long> BetrayedPoison { get; set; }
+        public static Dictionary<IWorldCoordinate, int> BetrayedPoison { get; set; }
         public static Dictionary<IWorldCoordinate, int> GrotesqueBlow { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorSmall { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorMedium { get; set; }
@@ -30,6 +30,7 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection OrbiterDecorator { get; set; }
         public WorldDecoratorCollection FastMummyDecorator { get; set; }
         public WorldDecoratorCollection GrotesqueDecorator { get; set; }
+        public WorldDecoratorCollection BetrayedCountdownDecorator { get; set; }
         public int offsetX { get; set; }
         public int offsetY { get; set; }
         public bool BloodSprings { get; set; }
@@ -61,6 +62,7 @@ namespace Turbo.Plugins.Resu
         public bool Danger { get; set; }
         public bool GrotesqueExplosion { get; set; }
         public bool BetrayedPoisonCloud { get; set; }
+        public IActor PoisonCloudActor { get; set; }
         
         public static HashSet<uint> dangerIds = new HashSet<uint>() { 174900, 185391, 332922, 332923, 332924, 322194, 84608, 341512, 108869, 3865, 219702, 221225, 340319, 95868, 93837, 5212, 159369, 118596, 4104, 4105, 4106, 4803, 343539, 164827, 312942, 337030, 353256, 349564, 117921, 117906, 150825, 468082, 430430};
         
@@ -91,7 +93,7 @@ namespace Turbo.Plugins.Resu
             IcePorcupineProjectile = true;
             GrotesqueExplosion = true;
             BetrayedPoisonCloud = true;
-            BetrayedPoison = new Dictionary<IWorldCoordinate, long>();
+            BetrayedPoison = new Dictionary<IWorldCoordinate, int>();
             GrotesqueBlow = new Dictionary<IWorldCoordinate, int>();
         }
         
@@ -326,6 +328,23 @@ namespace Turbo.Plugins.Resu
                     Radius = 30,
                 }
                 );
+                
+           BetrayedCountdownDecorator = new WorldDecoratorCollection(
+                 new GroundLabelDecorator(Hud)
+                {
+                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 50, 255, 50, true, false, 128, 0, 0, 0, true),
+                }, 
+                new GroundTimerDecorator2(Hud)
+                {
+                    CountDownFrom = 2.2f,
+                    BackgroundBrushEmpty = Hud.Render.CreateBrush(128, 0, 0, 0, 0),
+                    BackgroundBrushFill = Hud.Render.CreateBrush(160, 255, 255, 255, 0),
+                    Radius = 30,
+                }
+                );
+                
+                
+                
         }
     
         public void PaintWorld(WorldLayer layer)
@@ -1489,7 +1508,8 @@ namespace Turbo.Plugins.Resu
                     case 4106:
                         if (BetrayedPoisonCloud)
                          {
-                          if (!BetrayedPoison.ContainsKey(monster.FloorCoordinate)) BetrayedPoison.Add(monster.FloorCoordinate,Hud.Game.CurrentRealTimeMilliseconds);
+                          if (!BetrayedPoison.ContainsKey(monster.FloorCoordinate)) BetrayedPoison.Add(monster.FloorCoordinate,Hud.Game.CurrentGameTick);
+                          PoisonCloudActor = monster;
                          }
                         break;
                     case 3847:
@@ -1527,7 +1547,18 @@ namespace Turbo.Plugins.Resu
 
             foreach (var Cloud in BetrayedPoison)
              {
-              if ((Hud.Game.CurrentRealTimeMilliseconds - Cloud.Value) < (7*1000)) FastMummyDecorator.Paint(layer, null, Cloud.Key, null);
+              var remaining = 7 - ((Hud.Game.CurrentGameTick - Cloud.Value) / 60.0f);
+              if (remaining < 0) remaining = 0;
+              var countdown = remaining - 4.8;
+              var vf = (countdown > 1.0f) ? "F0" : "F1";
+              var text = countdown.ToString(vf, CultureInfo.InvariantCulture);
+              if (remaining > 0) 
+               {
+                FastMummyDecorator.Paint(layer, null, Cloud.Key, null);
+                if (countdown > 0) BetrayedCountdownDecorator.Paint(layer, PoisonCloudActor, Cloud.Key, text);
+               }
+              
+
              }
              
             if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0) 
@@ -1568,10 +1599,38 @@ namespace Turbo.Plugins.Resu
             var max = CountDownFrom;
             
             int CreatedAtGameTick;
-            if (DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick))
-             {
-              DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick);
-             }
+            
+             switch (actor.SnoActor.Sno)
+                 {
+                    case 4104:
+                    case 4105:
+                    case 4106:
+                         if (DangerPlugin.BetrayedPoison.TryGetValue(coord, out CreatedAtGameTick))
+                          {
+                           DangerPlugin.BetrayedPoison.TryGetValue(coord, out CreatedAtGameTick);
+                          }
+                        break;
+                    case 3847:
+                    case 218307:
+                    case 218308:
+                    case 365450:
+                    case 3848:
+                    case 218405:
+                    case 3849:
+                    case 113994:
+                    case 3850:
+                    case 195639:
+                    case 365465:
+                    case 191592:
+                         if (DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick))
+                          {
+                           DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick);
+                          }
+                         break;
+                    default:
+                        CreatedAtGameTick = Hud.Game.CurrentGameTick;
+                        break;
+                 }
             
             var elapsed = (Hud.Game.CurrentGameTick - CreatedAtGameTick) / 60.0f;
             
