@@ -332,13 +332,13 @@ namespace Turbo.Plugins.Resu
            BetrayedCountdownDecorator = new WorldDecoratorCollection(
                  new GroundLabelDecorator(Hud)
                 {
-                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 50, 255, 50, true, false, 128, 0, 0, 0, true),
+                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 255, true, false, 128, 0, 0, 0, true),
                 }, 
                 new GroundTimerDecorator2(Hud)
                 {
                     CountDownFrom = 2.2f,
                     BackgroundBrushEmpty = Hud.Render.CreateBrush(128, 0, 0, 0, 0),
-                    BackgroundBrushFill = Hud.Render.CreateBrush(160, 255, 255, 255, 0),
+                    BackgroundBrushFill = Hud.Render.CreateBrush(160, 50, 255, 50, 0),
                     Radius = 30,
                 }
                 );
