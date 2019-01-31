@@ -137,7 +137,7 @@ namespace Turbo.Plugins.Resu
                   }
                  else if (clipState == ClipState.Inventory && BlackSmith.Any())
                   {
-                   if (TotalMaxDurability == TotalCurrentDurability && TotalCurrentDurability != 0) ;
+                  if (TotalMaxDurability == TotalCurrentDurability && TotalCurrentDurability != 0) {}
                    else if (!F3pressed) F3RepairDecorator.Paint(Hud.Window.CursorX, Hud.Window.CursorY, 50, 50, HorizontalAlign.Center);
                   }
                  else  F3pressed = false;

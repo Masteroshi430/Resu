@@ -44,7 +44,7 @@ namespace Turbo.Plugins.Resu
          MysticSentence = 0;
          BlackSmithSentence = 0;
          KulleSentence = 0;
-                  
+         
         }
         
          public void PaintWorld(WorldLayer layer)
@@ -516,7 +516,7 @@ namespace Turbo.Plugins.Resu
                long Extract = Math.Min(Khanduran, Math.Min(Caldeum, Math.Min(Arreat, Math.Min(AngelFlesh, Math.Min(HolyWater, (int)(DeathsBreath/5)))))); 
                long Reforge = Math.Min((int)(Khanduran/5), Math.Min((int)(Caldeum/5), Math.Min((int)(Arreat/5), Math.Min((int)(AngelFlesh/5), Math.Min((int)(HolyWater/5), (int)(ForgottenSoul/50)))))); 
                long Upgrade = Math.Min((int)(VeiledCrystal/50), Math.Min((int)(ArcaneDust/50), Math.Min((int)(ReusableParts/50), (int)(DeathsBreath/25)))); 
-               long Convert = Math.Min((int)(DeathsBreath/10),(int)(ForgottenSoul/10)); 
+               long Convert = Math.Min((int)(DeathsBreath/10),(int)(ForgottenSoul/10));
 
                string ConvertSentence = string.Empty;
                string ConvertPlural = "s";
@@ -576,7 +576,7 @@ namespace Turbo.Plugins.Resu
                 SellerMessage = ConvertSentence;
                 break;
                } 
-               if (Convert == 0 && Upgrade == 0 && Reforge == 0 && Extract == 0 && puzzleRingCount == 0 && bovineBardicheCount == 0) ;
+               if (Convert == 0 && Upgrade == 0 && Reforge == 0 && Extract == 0 && puzzleRingCount == 0 && bovineBardicheCount == 0) {}
                else if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
               }
               

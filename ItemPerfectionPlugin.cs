@@ -69,7 +69,7 @@ namespace Turbo.Plugins.Resu
             bool WeaponDamageRerollCalculatorPlugin = IsPluginNameLoaded("WeaponDamageRerollCalculatorPlugin");
             if (WeaponDamageRerollCalculatorPlugin && item.SnoItem.HasGroupCode("weapons")) return;
             var Perfection = Math.Round(item.Perfection, 2);
-                        
+            
             if (Perfection == 0) return;
             ShadowBrush = Hud.Render.CreateBrush(255, 0, 0, 0, 0.1f); 
             
