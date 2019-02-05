@@ -416,7 +416,7 @@ namespace Turbo.Plugins.Resu
  
                  if (firstItem == null) continue;
  
-                 if (SnoMapping.ContainsKey(firstItem.SnoItem.Sno))
+                 if (SnoMapping.ContainsKey(2979276674))
                  {
                      var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
                      if (count > 1)
