@@ -155,7 +155,7 @@ namespace Turbo.Plugins.Resu
                                 MonsterStatus.Add(monster.AcdId, valuesIn);
                               } 
                            
-                        }                          
+                        }
                     else
                         {
                           MonsterStatus.Remove(monster.AcdId);
