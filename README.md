@@ -288,6 +288,7 @@ Advice: For better experience with this plugin, turn off "Always Show Items Labe
             plugin.LoreChestsDisplay = true;
             plugin.NormalChestsDisplay = true;
             plugin.ResplendentChestsDisplay = true;
+	    plugin.GroupGems = true; // set to false to group gems by type, set to true to group all gems
             plugin.Equipped = true; // set to false to turn off "same item as equipped" drop sound drop & rendering on minimap & inventory. 
             });  
 // End of CraftersDelightPlugin Customization
