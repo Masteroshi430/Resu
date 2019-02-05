@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 25/01/2019 23:55
+// Crafter's Delight Plugin for TurboHUD Version 05/02/2019 07:16
  
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +44,7 @@ namespace Turbo.Plugins.Resu
         public bool LoreChestsDisplay { get; set; }
         public bool NormalChestsDisplay { get; set; }
         public bool ResplendentChestsDisplay { get; set; }
+        public bool GroupGems { get; set; }
         public IBrush EquippedBrush { get; set; }
         private bool init_mapping;
  
@@ -240,6 +241,7 @@ namespace Turbo.Plugins.Resu
             LoreChestsDisplay = true;
             NormalChestsDisplay = true;
             ResplendentChestsDisplay = true;
+            GroupGems = true;
             HoradricTimer = 0;
             NextHoradricSound = 0;
             EquippedBrush = Hud.Render.CreateBrush(200, 255, 54, 198, 2, SharpDX.Direct2D1.DashStyle.Solid, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Flat);
@@ -401,6 +403,38 @@ namespace Turbo.Plugins.Resu
             
             
             var itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor).GroupBy(item => item.SnoItem.Sno);
+            
+            if (GroupGems)
+            {
+             itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode != "gems").GroupBy(item => item.SnoItem.Sno);
+             var gemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "gems").GroupBy(item => item.SnoItem.MainGroupCode);
+              
+              foreach (var items in gemGroups)
+             {
+                 var orderedItems = items.OrderBy(i => i.NormalizedXyDistanceToMe);
+                 var firstItem = orderedItems.FirstOrDefault();
+ 
+                 if (firstItem == null) continue;
+ 
+                 if (SnoMapping.ContainsKey(firstItem.SnoItem.Sno))
+                 {
+                     var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
+                     if (count > 1)
+                     {
+                         var Qtt = " (" + count + ")";
+                         SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, "Gems" + Qtt);
+                         CountDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, count.ToString());
+                     }
+                     else
+                     {
+                         SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, firstItem.SnoItem.NameLocalized);
+                     }
+                 }
+             }
+            }
+ 
+ 
+ 
  
             foreach (var items in itemGroups)
             {
