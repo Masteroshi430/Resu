@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 31/01/2019 00:05
+// Danger Plugin for TurboHUD Version 07/02/2019 08:02
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -31,6 +31,7 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection FastMummyDecorator { get; set; }
         public WorldDecoratorCollection GrotesqueDecorator { get; set; }
         public WorldDecoratorCollection BetrayedCountdownDecorator { get; set; }
+        public WorldDecoratorCollection MorluMeteorCountdownDecorator { get; set; }
         public int offsetX { get; set; }
         public int offsetY { get; set; }
         public bool BloodSprings { get; set; }
@@ -343,7 +344,20 @@ namespace Turbo.Plugins.Resu
                 }
                 );
                 
-                
+           MorluMeteorCountdownDecorator = new WorldDecoratorCollection(
+                 new GroundLabelDecorator(Hud)
+                {
+                    CountDownFrom = 2f,
+                    TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 255, true, false, 128, 0, 0, 0, true),
+                }, 
+                new GroundTimerDecorator(Hud)
+                {
+                    CountDownFrom = 2f,
+                    BackgroundBrushEmpty = Hud.Render.CreateBrush(128, 0, 0, 0, 0),
+                    BackgroundBrushFill = Hud.Render.CreateBrush(160, 255, 50, 50, 0),
+                    Radius = 30,
+                }
+                );
                 
         }
     
@@ -1451,7 +1465,7 @@ namespace Turbo.Plugins.Resu
                 if (actor.SnoActor.Sno == 332924 && BloodSprings) BloodSpringsDecoratorSmall.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
                 if (!Hud.Game.Me.IsDead)
                 {
-                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && Desecrator && RunForYourLife || actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && Thunderstorm  && RunForYourLife || actor.SnoActor.Sno == 108869 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 3865 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && Molten  && RunForYourLife || actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && GasCloud && RunForYourLife || actor.SnoActor.Sno == 159369 && actor.NormalizedXyDistanceToMe <= 20 && MorluSpellcasterMeteorPending || actor.SnoActor.Sno >= 4104 && actor.SnoActor.Sno <= 4106 && actor.NormalizedXyDistanceToMe <= 5 && PoisonDeath  && RunForYourLife) // || actor.SnoActor.Sno == 4803 && actor.NormalizedXyDistanceToMe <= 13f && MoltenExplosion)
+                if (actor.SnoActor.Sno == 84608 && actor.NormalizedXyDistanceToMe <= 8 && Desecrator && RunForYourLife || actor.SnoActor.Sno == 341512 && actor.NormalizedXyDistanceToMe <= 16 && Thunderstorm  && RunForYourLife || actor.SnoActor.Sno == 108869 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 3865 && actor.NormalizedXyDistanceToMe <= 12 && Plagued  && RunForYourLife || actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && Molten  && RunForYourLife || actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && GasCloud && RunForYourLife || actor.SnoActor.Sno >= 4104 && actor.SnoActor.Sno <= 4106 && actor.NormalizedXyDistanceToMe <= 5 && PoisonDeath  && RunForYourLife) // || actor.SnoActor.Sno == 4803 && actor.NormalizedXyDistanceToMe <= 13f && MoltenExplosion) || actor.SnoActor.Sno == 159369 && actor.NormalizedXyDistanceToMe <= 20 && MorluSpellcasterMeteorPending
                  {
                   MoveWarningDecorator.Paint(layer, actor, actor.FloorCoordinate, "Moveth!");
                   Danger = false;
@@ -1485,6 +1499,7 @@ namespace Turbo.Plugins.Resu
                 if (actor.SnoActor.Sno == 95868 && actor.NormalizedXyDistanceToMe <= 5 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().MoltenDecorator.ToggleDecorators<GroundCircleDecorator>(false);
                 if (actor.SnoActor.Sno == 93837 && actor.NormalizedXyDistanceToMe <= 20 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().GhomDecorator.ToggleDecorators<GroundCircleDecorator>(false);
                 if (actor.SnoActor.Sno == 349774 && actor.NormalizedXyDistanceToMe <= 14 && !RunForYourLife) Hud.GetPlugin<EliteMonsterSkillPlugin>().FrozenPulseDecorator.ToggleDecorators<GroundCircleDecorator>(false);
+                if (actor.SnoActor.Sno == 159369 && MorluSpellcasterMeteorPending) MorluMeteorCountdownDecorator.Paint(layer, actor, actor.FloorCoordinate, "nothing");
             }
             if (RunForYourLife && Danger && !Hud.Game.Me.IsDead) MoveWarningDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Danger! " + (int)Hud.Game.Me.Defense.HealthPct + "%");
         
@@ -1494,7 +1509,7 @@ namespace Turbo.Plugins.Resu
             foreach (var invisibleMonster in invisibleMonsters)
             {
               var MonsterScreen = invisibleMonster.FloorCoordinate.ToScreenCoordinate();
-              invisibleTexture.Draw(MonsterScreen.X, MonsterScreen.Y, 150f, 75f, opacityMultiplier: 0.5f); // InvisibleDecorator.Paint(layer, invisibleMonster,invisibleMonster.FloorCoordinate, invisibleMonster.SnoMonster.Sno.ToString());
+              invisibleTexture.Draw(MonsterScreen.X, MonsterScreen.Y, 150f, 75f, opacityMultiplier: 0.5f);
             }
         
            // Explosive monster plugin mod
@@ -1561,7 +1576,7 @@ namespace Turbo.Plugins.Resu
 
              }
              
-            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0) 
+            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0 || Hud.Game.Me.IsInTown && GrotesqueBlow.Count != 0) 
              {
               BetrayedPoison.Clear();
               GrotesqueBlow.Clear();
