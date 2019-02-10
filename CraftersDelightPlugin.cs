@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 05/02/2019 07:16
+// Crafter's Delight Plugin for TurboHUD Version 10/02/2019 16:04
  
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +19,9 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection CountDecorator { get; set; }
         public WorldDecoratorCollection HoradricCacheDecorator { get; set; }
         public WorldDecoratorCollection EquippedDecorator { get; set; }
+        public WorldDecoratorCollection NormalDecorator { get; set; }
+        public WorldDecoratorCollection MagicDecorator { get; set; }
+        public WorldDecoratorCollection RareDecorator { get; set; }
         public bool ShowAncientRank { get; set; }
         public bool SlainFarmers { get; set; }
         public bool DeathsBreath { get; set; }
@@ -45,6 +48,7 @@ namespace Turbo.Plugins.Resu
         public bool NormalChestsDisplay { get; set; }
         public bool ResplendentChestsDisplay { get; set; }
         public bool GroupGems { get; set; }
+        public bool NoobGearMode { get; set; }
         public IBrush EquippedBrush { get; set; }
         private bool init_mapping;
  
@@ -242,6 +246,7 @@ namespace Turbo.Plugins.Resu
             NormalChestsDisplay = true;
             ResplendentChestsDisplay = true;
             GroupGems = true;
+            NoobGearMode = true;
             HoradricTimer = 0;
             NextHoradricSound = 0;
             EquippedBrush = Hud.Render.CreateBrush(200, 255, 54, 198, 2, SharpDX.Direct2D1.DashStyle.Solid, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Flat);
@@ -316,6 +321,46 @@ namespace Turbo.Plugins.Resu
                 Radius = 20,
             }
               );
+              
+            NormalDecorator = new WorldDecoratorCollection(
+                new GroundLabelDecorator(Hud)
+                {
+                    BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                    BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                    TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 255, true, false, false)
+                },
+                new MapLabelDecorator(Hud)
+                {
+                    LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 255, true, false, false),
+                }
+                );
+                
+             MagicDecorator = new WorldDecoratorCollection(
+                new GroundLabelDecorator(Hud)
+                {
+                    BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                    BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                    TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 126, 122, 219, true, false, false)
+                },
+                new MapLabelDecorator(Hud)
+                {
+                    LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 126, 122, 219, true, false, false),
+                }
+                );
+                
+             RareDecorator = new WorldDecoratorCollection(
+                new GroundLabelDecorator(Hud)
+                {
+                    BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                    BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                    TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 147, true, false, false)
+                },
+                new MapLabelDecorator(Hud)
+                {
+                    LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 147, true, false, false),
+                }
+                );
+                
               
         }
  
@@ -458,7 +503,17 @@ namespace Turbo.Plugins.Resu
                     }
                 }
  
-                if (!firstItem.IsLegendary) continue;
+                if (!firstItem.IsLegendary && !NoobGearMode) continue;
+                else if (!firstItem.IsLegendary && NoobGearMode && firstItem.Perfection != 0)
+                 {
+                  if (DisplayItem((byte)firstItem.Quality))
+                   {
+                    if (firstItem.IsNormal)     { NormalDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
+                    else if (firstItem.IsMagic) { MagicDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
+                    else if (firstItem.IsRare)  { RareDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
+                   }
+                 }
+
                 foreach (var item in items)
                 {
                      var inKanaiCube = Hud.Game.Me.IsCubed(item.SnoItem);
@@ -594,6 +649,20 @@ namespace Turbo.Plugins.Resu
           else if (Cubed2) return true;
           else if (Cubed3) return true;
           else return false;
+        }
+        
+         private bool DisplayItem(byte ItemQuality)
+        {
+          var EquippedItems = Hud.Game.Items.Where(x => (int)x.Location > 0 && (int)x.Location < 14);
+          byte LowerQualityEquipped = 9;
+          
+          foreach (var EquippedItem in EquippedItems)
+          {
+           if ((byte)EquippedItem.Quality < LowerQualityEquipped) LowerQualityEquipped = (byte)EquippedItem.Quality;
+          }
+          
+          if (ItemQuality >= LowerQualityEquipped) return true;
+          else  return false;
         }
 
         private int stashTabAbs;
