@@ -251,6 +251,7 @@ Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/D
 - Chests & lores (minimap) 
 - Ancient and Primal indicator on legendary or set icons (minimap).
 - Same item as equipped or in cube (only for ancients) : indicator on minimap (E) & lines around item in inventory / stash.
+- Noob Gear Mode : Displays White, Blue, Yellow stars on floor & minimap if the Normal/Magic/Rare item dropped has better quality than your worst quality item equipped. 
 
 ...And adds transparent colored groundlabel names with quantity for all + Slain Farmers (discrete and ground label only) except Bovine Bardiche & Puzzle Ring (already in ItemsPlugin).
 
@@ -289,7 +290,8 @@ Advice: For better experience with this plugin, turn off "Always Show Items Labe
             plugin.NormalChestsDisplay = true;
             plugin.ResplendentChestsDisplay = true;
 	    plugin.GroupGems = true; // set to false to group gems by type, set to true to group all gems
-            plugin.Equipped = true; // set to false to turn off "same item as equipped" drop sound drop & rendering on minimap & inventory. 
+            plugin.Equipped = true; // set to false to turn off "same item as equipped" drop sound drop & rendering on minimap & inventory.
+	    plugin.NoobGearMode = true; // set to false to turn off Noob Gear Mode.
             });  
 // End of CraftersDelightPlugin Customization
 ```
