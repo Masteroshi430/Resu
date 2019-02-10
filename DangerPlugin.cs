@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 07/02/2019 08:02
+// Danger Plugin for TurboHUD Version 10/02/2019 11:05
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -363,6 +363,7 @@ namespace Turbo.Plugins.Resu
     
         public void PaintWorld(WorldLayer layer)
         {
+            if (Hud.Game.IsInTown) return;
             var hedPlugin = Hud.GetPlugin<HotEnablerDisablerPlugin>();
             bool GoOn = hedPlugin.CanIRun(Hud.Game.Me,this.GetType().Name); 
             if (!GoOn) return;
