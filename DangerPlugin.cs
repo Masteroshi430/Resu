@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 10/02/2019 11:05
+// Danger Plugin for TurboHUD Version 11/02/2019 12:00
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using System.Linq;
@@ -363,10 +363,17 @@ namespace Turbo.Plugins.Resu
     
         public void PaintWorld(WorldLayer layer)
         {
-            if (Hud.Game.IsInTown) return;
+            
             var hedPlugin = Hud.GetPlugin<HotEnablerDisablerPlugin>();
             bool GoOn = hedPlugin.CanIRun(Hud.Game.Me,this.GetType().Name); 
             if (!GoOn) return;
+            
+            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0 || Hud.Game.Me.IsInTown && GrotesqueBlow.Count != 0) 
+             {
+              BetrayedPoison.Clear();
+              GrotesqueBlow.Clear();
+             }
+             else if (Hud.Game.IsInTown) return;
             
             var diff = Hud.Window.Size.Width/Hud.Window.Size.Height;
             offsetX = Convert.ToInt32(Hud.Window.Size.Width/Math.PI); 
@@ -1573,16 +1580,8 @@ namespace Turbo.Plugins.Resu
                 FastMummyDecorator.Paint(layer, null, Cloud.Key, null);
                 if (countdown > 0) BetrayedCountdownDecorator.Paint(layer, PoisonCloudActor, Cloud.Key, text);
                }
-              
+             }
 
-             }
-             
-            if (Hud.Game.Me.IsInTown && BetrayedPoison.Count != 0 || Hud.Game.Me.IsInTown && GrotesqueBlow.Count != 0) 
-             {
-              BetrayedPoison.Clear();
-              GrotesqueBlow.Clear();
-             }
-        
         }
 
     }
