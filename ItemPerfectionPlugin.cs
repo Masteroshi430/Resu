@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Item Perfection plugin for TurboHUD version 12/01/2018 06:23
+// Item Perfection plugin for TurboHUD version 12/02/2019 11:27
  
 using System;
 using System.Diagnostics;
@@ -109,7 +109,7 @@ namespace Turbo.Plugins.Resu
                     else if (coreStat != "Dexterity" && affix.ToString().Contains("Intelligence") || coreStat != "Dexterity" && affix.ToString().Contains("Strength")) defCount += 1f;
                     else if (coreStat != "Intelligence" && affix.ToString().Contains("Dexterity") || coreStat != "Intelligence" && affix.ToString().Contains("Strength")) defCount += 1f;
                     else if (coreStat != "Strength" && affix.ToString().Contains("Intelligence") || coreStat != "Strength" && affix.ToString().Contains("Dexterity")) defCount += 1f;
-                    else {affixes += Environment.NewLine + "Do a partial screenshot of this to help improving the plugin :" + Environment.NewLine + affix;} // I'll remove this one day... 
+                    else {affixes += Environment.NewLine + "Do a partial screenshot of this to help improving the plugin :" + Environment.NewLine + affix;}  // I'll remove this one day... 
                 }
                 
             

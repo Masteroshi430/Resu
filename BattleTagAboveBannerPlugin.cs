@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// BattleTag Above Banner Plugin for TurboHUD Version 17/07/2018 17:50
+// BattleTag Above Banner Plugin for TurboHUD Version 12/02/2019 11:27
 
 using System;
 using System.Collections.Generic;
@@ -75,7 +75,7 @@ namespace Turbo.Plugins.Resu
             if (!Hud.Game.IsInTown) return;
             if (Hud.Game.NumberOfPlayersInGame == 1) return;
 
-            var bannerAround = Hud.Game.Actors.Any(x => x.SnoActor.Sno == 375094 && !x.IsDisabled && !x.IsOperated && x.IsOnScreen);
+            var bannerAround = Hud.Game.Actors.Any(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._invisboxcollision_flippy && !x.IsDisabled && !x.IsOperated && x.IsOnScreen); // 375094 
             if (!bannerAround) return;
 
             foreach (var player in Hud.Game.Players) 

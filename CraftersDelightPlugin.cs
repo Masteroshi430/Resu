@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 10/02/2019 16:04
+// Crafter's Delight Plugin for TurboHUD Version 12/02/2019 11:27
  
 using System.Collections.Generic;
 using System.Linq;
@@ -560,7 +560,7 @@ namespace Turbo.Plugins.Resu
             /// Slain farmer
             if (SlainFarmers)
             {
-                var SlainFarmer = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Sno >= 434676 && x.SnoActor.Sno <= 434679);
+                var SlainFarmer = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && (uint)x.SnoActor.Sno >= 434676 && (uint)x.SnoActor.Sno <= 434679);
                 foreach (var actor in SlainFarmer)
                 {
                     SlainFarmerDecorator.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);

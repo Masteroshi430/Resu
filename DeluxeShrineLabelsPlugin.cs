@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Deluxe Shrine labels plugin for TurboHUD version 10/09/2018 13:00
+// Deluxe Shrine labels plugin for TurboHUD version 12/02/2019 11:27
 // Psycho's Shrine labels plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -174,7 +174,7 @@ namespace Turbo.Plugins.Resu
                 if(shrine.FloorCoordinate.Offset(0, 0, 10).IsOnScreen()) LeaveMessageDecorator.Paint(layer, null, shrine.FloorCoordinate.Offset(0, 0, 10), NemesisMessage);
             }
 
-            var riftPylonSpawnPoints = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 428690);
+            var riftPylonSpawnPoints = Hud.Game.Actors.Where(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._markerlocation_tieredriftpylon); //  428690
             foreach (var actor in riftPylonSpawnPoints)
             {
                 PossibleRiftPylonDecorators.Paint(layer, actor, actor.FloorCoordinate, (PossibleRiftPylonName != string.Empty) ? PossibleRiftPylonName : "Pylon?");

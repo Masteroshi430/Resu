@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Unscathed Monster Shower plugin for TurboHUD version 28/10/2018 02:13
+// Unscathed Monster Shower plugin for TurboHUD version 12/02/2019 11:27
 using Turbo.Plugins.Default;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +40,8 @@ namespace Turbo.Plugins.Resu
           var ScreenCoor = UnscathedMonster.FloorCoordinate.Offset(0, 0, (UnscathedMonster.RadiusScaled*3)).ToScreenCoordinate();
           float Size = (float)((UnscathedMonster.CurHealth/UnscathedMonster.MaxHealth*100)/10);
           
-          if (UnscathedMonster.SnoActor.Sno % 5 == 0) Eye = RedEye;
-          else if (UnscathedMonster.SnoActor.Sno % 3 == 0) Eye = BlueEye;
+          if ((uint)UnscathedMonster.SnoActor.Sno % 5 == 0) Eye = RedEye;
+          else if ((uint)UnscathedMonster.SnoActor.Sno % 3 == 0) Eye = BlueEye;
           else Eye = CatEye;
               
             if ((UnscathedMonster.AcdId + (Hud.Time.Now.Millisecond/2)) % 40 == 0){}

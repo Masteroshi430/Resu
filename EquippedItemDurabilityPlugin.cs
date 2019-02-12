@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Equipped Item Durability plugin for TurboHUD version 31/12/2018 23:03
+// Equipped Item Durability plugin for TurboHUD version 12/02/2019 11:27
 
 using Turbo.Plugins.Default;
 using System.Globalization;
@@ -118,7 +118,7 @@ namespace Turbo.Plugins.Resu
                
                 decorator.Paint((uiRect.Left + uiRect.Width * 0.640f) + (uiRect.Width * 0.002f), uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.024f, uiRect.Height * 0.12f, HorizontalAlign.Center);
                
-               var BlackSmith = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 56947 && x.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 22);
+               var BlackSmith = Hud.Game.Actors.Where(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._pt_blacksmith && x.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 22); // 56947
                
                bool Indestructible = false;
                var Indes = Hud.Game.Me.Powers.GetBuff(318858);

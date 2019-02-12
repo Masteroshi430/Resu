@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 15/01/2019 15:07
+// Ariadne's Thread plugin for TurboHUD version 12/02/2019 11:27
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using Turbo.Plugins.Default;
@@ -230,10 +230,10 @@ namespace Turbo.Plugins.Resu
         {
               DistYards = 0;
               bool FirstQuestMarker = true;
-              var Actors = Hud.Game.Actors.Where(a => a.SnoActor.Sno == 432770 || a.SnoActor.Sno == 430733 || a.SnoActor.Sno == 432885 || a.SnoActor.Sno == 433051 ||
-              a.SnoActor.Sno == 432259 || a.SnoActor.Sno == 433246 || a.SnoActor.Sno == 433385 || a.SnoActor.Sno == 433295 || a.SnoActor.Sno == 433316 || 
-              a.SnoActor.Sno == 434366 || a.SnoActor.Sno == 433124 || a.SnoActor.Sno == 433184 || a.SnoActor.Sno == 433402 || a.SnoActor.Sno == 432331 || 
-              a.SnoActor.Sno == 435703);
+              var Actors = Hud.Game.Actors.Where(a => (uint)a.SnoActor.Sno == 432770 || (uint)a.SnoActor.Sno == 430733 || (uint)a.SnoActor.Sno == 432885 || (uint)a.SnoActor.Sno == 433051 ||
+              (uint)a.SnoActor.Sno == 432259 || (uint)a.SnoActor.Sno == 433246 || (uint)a.SnoActor.Sno == 433385 || (uint)a.SnoActor.Sno == 433295 || (uint)a.SnoActor.Sno == 433316 || 
+              (uint)a.SnoActor.Sno == 434366 || (uint)a.SnoActor.Sno == 433124 || (uint)a.SnoActor.Sno == 433184 || (uint)a.SnoActor.Sno == 433402 || (uint)a.SnoActor.Sno == 432331 || 
+              (uint)a.SnoActor.Sno == 435703);
               if (!Actors.Any())FirstQuestMarker = true;
               foreach (var Actor in Actors)
               {
@@ -243,7 +243,7 @@ namespace Turbo.Plugins.Resu
                
                uint ThatQuest = 0;
                string Name = string.Empty;
-               switch (Actor.SnoActor.Sno)
+               switch ((uint)Actor.SnoActor.Sno)
                {
                 case 432770: Name = "Royal Cocoon"; ThatQuest = 432784; break;
                 case 430733: Name = "Captured Villager"; ThatQuest = 430723; break; 

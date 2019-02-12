@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 12/10/2018 14:26
+// Group GR Level Adviser Plugin for TurboHUD version 12/02/2019 11:27
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -158,7 +158,7 @@ namespace Turbo.Plugins.Resu
                        
             if (PlayerInTownCount == Hud.Game.NumberOfPlayersInGame && Hud.Game.RiftPercentage == 100 && Hud.Game.IsInTown && GardianIsDead && Hud.Game.NumberOfPlayersInGame != 1)
              {
-               var Obelisk = Hud.Game.Actors.FirstOrDefault(x => x.SnoActor.Sno == 345935);
+               var Obelisk = Hud.Game.Actors.FirstOrDefault(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._x1_openworld_lootrunportal); // 345935
                if (Obelisk != null) ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
              }
 

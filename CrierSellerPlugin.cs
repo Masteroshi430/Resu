@@ -1,6 +1,6 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
-// Crier Seller Plugin for TurboHUD version 23/12/2018 10:59
+// Crier Seller Plugin for TurboHUD version 12/02/2019 11:27
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -51,7 +51,7 @@ namespace Turbo.Plugins.Resu
          {
            if (!Hud.Game.IsInTown) return;
            if (Hud.Inventory.InventoryMainUiElement.Visible) return;
-           var Sellers = Hud.Game.Actors.Where(x => x.SnoActor.Sno == 361241 || x.SnoActor.Sno == 56949 || x.SnoActor.Sno == 56948 || x.SnoActor.Sno == 56947 || x.SnoActor.Sno == 429005);
+           var Sellers = Hud.Game.Actors.Where(x => (uint)x.SnoActor.Sno == 361241 || (uint)x.SnoActor.Sno == 56949 || (uint)x.SnoActor.Sno == 56948 || (uint)x.SnoActor.Sno == 56947 || (uint)x.SnoActor.Sno == 429005);
            string SellerMessage = string.Empty;
            int Seconds = Hud.Time.Now.Second;
            
@@ -138,10 +138,10 @@ namespace Turbo.Plugins.Resu
            {
              if (Seller == null) continue;
              if (Seller.SnoActor == null) continue;
-             if (Seller.SnoActor.Sno == 0) continue;
+             if ((uint)Seller.SnoActor.Sno == 0) continue;
              if (Seller.FloorCoordinate == null) continue;
              
-             if (Seller.SnoActor.Sno == 361241) // Kadala
+             if ((uint)Seller.SnoActor.Sno == 361241) // Kadala
               {
                 string BloodShardsPlural = "s";
                 if (Hud.Game.Me.Materials.BloodShard == 1) BloodShardsPlural = string.Empty;
@@ -243,7 +243,7 @@ namespace Turbo.Plugins.Resu
               if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);
               }
               
-             else if (Seller.SnoActor.Sno == 56949) // Jeweler
+             else if ((uint)Seller.SnoActor.Sno == 56949) // Jeweler
               {
                string GemSentence = string.Empty;
                               
@@ -360,7 +360,7 @@ namespace Turbo.Plugins.Resu
                   }
                if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);                  
              }
-              else if (Seller.SnoActor.Sno == 56948) // Mystik
+              else if ((uint)Seller.SnoActor.Sno == 56948) // Mystik
               {
                long ImperialRubies = 0;
                if (GemsCount.TryGetValue("Imperial Ruby", out ImperialRubies)) ImperialRubies = GemsCount["Imperial Ruby"];
@@ -425,7 +425,7 @@ namespace Turbo.Plugins.Resu
                   }
                if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);   
               }
-              else if (Seller.SnoActor.Sno == 56947) // Blacksmith
+              else if ((uint)Seller.SnoActor.Sno == 56947) // Blacksmith
               {
                int BellCount = 0;
                int MushroomCount = 0;
@@ -493,7 +493,7 @@ namespace Turbo.Plugins.Resu
                }
               if (Seller.FloorCoordinate.IsOnScreen() && Seller.FloorCoordinate.XYDistanceTo(Hud.Game.Me.FloorCoordinate) <= 40 && Seller != null) SellerDecorator.Paint(layer, Seller, Seller.FloorCoordinate.Offset(0,0,-2), SellerMessage);               
               }
-              else if (Seller.SnoActor.Sno == 429005) // Kulle
+              else if ((uint)Seller.SnoActor.Sno == 429005) // Kulle
               {
                 var puzzleRingCount = 0;
                 var bovineBardicheCount = 0;
