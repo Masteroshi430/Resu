@@ -22,7 +22,7 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator StrickenStackDecorator { get; set; }
         public TopLabelDecorator StrickenPercentDecorator { get; set; }
         public Dictionary<uint,Tuple<double,int>> MonsterStatus { get; set; }  // AcdId, Health, Stacks
-                
+        
         
         public DiadrasFirstGemPlugin()
         {
@@ -41,7 +41,7 @@ namespace Turbo.Plugins.Resu
             propSquare = (int)(Hud.Window.Size.Width/53.333);
             cooldown = false;
             monsterCount = 0;
-                        
+            
             StrickenStackDecorator = new TopLabelDecorator(Hud)
             {
               TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 0, 0, 0, true, false, 250, 255, 255, 255, true),
@@ -112,7 +112,7 @@ namespace Turbo.Plugins.Resu
                                      int Stacks = (int)(prevStacks + 1); 
                                      Tuple<double,int> updateValues = new Tuple<double,int>(monster.CurHealth, Stacks);
                                      MonsterStatus[monster.AcdId] = updateValues;
-                                     monsterCount++;                                  
+                                     monsterCount++;
                                      cooldown = true;
                                    }
                                     
