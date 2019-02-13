@@ -391,7 +391,7 @@ namespace Turbo.Plugins.Resu
             if ((PrevHealth - Health) >= (Health/10)) RunForYourLife = true;
             else RunForYourLife = false;
              
-            var danger = Hud.Game.Actors.Where(x => dangerIds.Contains(x.SnoActor.Sno));
+            var danger = Hud.Game.Actors.Where(x => dangerIds.Contains((uint)x.SnoActor.Sno));
             foreach (var actor in danger)
             {
                 if ((uint)actor.SnoActor.Sno == 174900 && DemonicForge || (uint)actor.SnoActor.Sno == 185391 && DemonicForge) 
@@ -1524,7 +1524,7 @@ namespace Turbo.Plugins.Resu
             var deadMonsters = Hud.Game.Monsters.Where(x => !x.IsAlive);
             foreach (var monster in deadMonsters)
              {
-                switch (monster.SnoActor.Sno)
+                switch ((uint)monster.SnoActor.Sno)
                  {
                     case 4104:
                     case 4105:
