@@ -174,7 +174,7 @@ namespace Turbo.Plugins.Resu
                 if(shrine.FloorCoordinate.Offset(0, 0, 10).IsOnScreen()) LeaveMessageDecorator.Paint(layer, null, shrine.FloorCoordinate.Offset(0, 0, 10), NemesisMessage);
             }
 
-            var riftPylonSpawnPoints = Hud.Game.Actors.Where(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._markerlocation_tieredriftpylon); //  428690
+            var riftPylonSpawnPoints = Hud.Game.Actors.Where(x =>  x.SnoActor.Sno == ActorSnoEnum._markerlocation_tieredriftpylon); //  428690
             foreach (var actor in riftPylonSpawnPoints)
             {
                 PossibleRiftPylonDecorators.Paint(layer, actor, actor.FloorCoordinate, (PossibleRiftPylonName != string.Empty) ? PossibleRiftPylonName : "Pylon?");

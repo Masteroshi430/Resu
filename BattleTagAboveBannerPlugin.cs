@@ -75,7 +75,7 @@ namespace Turbo.Plugins.Resu
             if (!Hud.Game.IsInTown) return;
             if (Hud.Game.NumberOfPlayersInGame == 1) return;
 
-            var bannerAround = Hud.Game.Actors.Any(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._invisboxcollision_flippy && !x.IsDisabled && !x.IsOperated && x.IsOnScreen); // 375094 
+            var bannerAround = Hud.Game.Actors.Any(x => x.SnoActor.Sno == ActorSnoEnum._invisboxcollision_flippy && !x.IsDisabled && !x.IsOperated && x.IsOnScreen); // 375094 
             if (!bannerAround) return;
 
             foreach (var player in Hud.Game.Players) 

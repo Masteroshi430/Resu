@@ -201,13 +201,13 @@ namespace Turbo.Plugins.Resu
             
             if (ShowCompanions && Hud.Game.NumberOfPlayersInGame == 1)
              {
-               var companions = Hud.Game.Actors.Where(C => (ActorSnoEnum)C.SnoActor.Sno == ActorSnoEnum._hireling_scoundrel || (ActorSnoEnum)C.SnoActor.Sno == ActorSnoEnum._hireling_enchantress || (ActorSnoEnum)C.SnoActor.Sno == ActorSnoEnum._hireling_templar);
+               var companions = Hud.Game.Actors.Where(C => C.SnoActor.Sno == ActorSnoEnum._hireling_scoundrel || C.SnoActor.Sno == ActorSnoEnum._hireling_enchantress || C.SnoActor.Sno == ActorSnoEnum._hireling_templar);
                foreach (var companion in companions)
                {
                   var CompTexture = Hud.Texture.GetTexture(890155253);
-                  if ((ActorSnoEnum)companion.SnoActor.Sno == ActorSnoEnum._hireling_scoundrel) CompTexture = Hud.Texture.GetTexture(441912908); // scoundrel
-                  else if ((ActorSnoEnum)companion.SnoActor.Sno == ActorSnoEnum._hireling_enchantress) CompTexture = Hud.Texture.GetTexture(2807221403); // enchantress
-                  else if ((ActorSnoEnum)companion.SnoActor.Sno == ActorSnoEnum._hireling_templar) CompTexture = Hud.Texture.GetTexture(1094113362); // templar
+                  if (companion.SnoActor.Sno == ActorSnoEnum._hireling_scoundrel) CompTexture = Hud.Texture.GetTexture(441912908); // scoundrel
+                  else if (companion.SnoActor.Sno == ActorSnoEnum._hireling_enchantress) CompTexture = Hud.Texture.GetTexture(2807221403); // enchantress
+                  else if (companion.SnoActor.Sno == ActorSnoEnum._hireling_templar) CompTexture = Hud.Texture.GetTexture(1094113362); // templar
                   else continue; 
                  
                  float CompanionsHeadOpacity = 1f;

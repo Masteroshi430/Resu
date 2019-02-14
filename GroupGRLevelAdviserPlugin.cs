@@ -158,7 +158,7 @@ namespace Turbo.Plugins.Resu
                        
             if (PlayerInTownCount == Hud.Game.NumberOfPlayersInGame && Hud.Game.RiftPercentage == 100 && Hud.Game.IsInTown && GardianIsDead && Hud.Game.NumberOfPlayersInGame != 1)
              {
-               var Obelisk = Hud.Game.Actors.FirstOrDefault(x => (ActorSnoEnum)x.SnoActor.Sno == ActorSnoEnum._x1_openworld_lootrunportal); // 345935
+               var Obelisk = Hud.Game.Actors.FirstOrDefault(x => x.SnoActor.Sno == ActorSnoEnum._x1_openworld_lootrunportal); // 345935
                if (Obelisk != null) ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
              }
 
