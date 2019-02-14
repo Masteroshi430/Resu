@@ -1,5 +1,5 @@
 # Resu
-Turbo.Plugins.Resu ___________________________________________________________________ Supported TurboHUD version ![](https://img.shields.io/github/tag/User5981/Resu.svg)
+Turbo.Plugins.Resu ___________________________________________________________________ Supported version ![](https://img.shields.io/github/tag/User5981/Resu.svg?logo=github&link=https://github.com/User5981/Resu&link=https://github.com/User5981/Resu&label=TurboHUD)
 ```diff
 + LEFT click to download zip-> unzip -> Save As -> plugins/Resu/
 
