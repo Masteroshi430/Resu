@@ -1,5 +1,5 @@
 # Resu
-Turbo.Plugins.Resu ![](https://img.shields.io/github/tag/User5981/Resu.svg?logo=github&link=https://github.com/User5981/Resu&link=https://github.com/User5981/Resu&label=Supported%20TurboHUD%20version&logoColor=yellow&colorB=yellow)
+![](https://img.shields.io/github/tag/User5981/Resu.svg?logo=github&link=https://github.com/User5981/Resu&link=https://github.com/User5981/Resu&label=Supported%20TurboHUD%20version&logoColor=yellow&colorB=yellow)
 ```diff
 + LEFT click to download zip-> unzip -> Save As -> plugins/Resu/
 
