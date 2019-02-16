@@ -1,4 +1,4 @@
-﻿//css_reference C:\V7.7.1.dll;
+﻿//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
 // Custom Life Warning Plugin for TurboHUD Version 14/10/2018 20:57
 // The health globes part was stolen from Xewl's HealthGlobePlugin

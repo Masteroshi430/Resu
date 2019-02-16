@@ -1,4 +1,4 @@
-//css_reference C:\V7.7.1.dll;
+//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
 // Next Hero Plugin for TurboHUD Version 25/09/2019 06:36
 

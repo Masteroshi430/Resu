@@ -1,4 +1,4 @@
-//css_reference C:\V7.7.1.dll;
+//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
 // Diadra's First Gem Plugin for TurboHUD Version 14/01/2018 19:51
 using System;
