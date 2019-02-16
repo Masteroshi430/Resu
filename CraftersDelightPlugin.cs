@@ -1,12 +1,12 @@
 //css_reference C:\V7.7.1.dll;
 // https://github.com/User5981/Resu
 // Crafter's Delight Plugin for TurboHUD Version 12/02/2019 11:27
- 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Turbo.Plugins.Default;
 using System.Threading;
-using System;
+using Turbo.Plugins.Default;
 
 namespace Turbo.Plugins.Resu
 {
@@ -51,18 +51,18 @@ namespace Turbo.Plugins.Resu
         public bool NoobGearMode { get; set; }
         public IBrush EquippedBrush { get; set; }
         private bool init_mapping;
- 
+
         public WorldDecoratorCollection GreaterRiftKeystoneDecorator
         {
             get { return SnoMapping.ContainsKey(2835237830) ? SnoMapping[2835237830] : null; }
             set { SnoMapping[2835237830] = value; }
         }
- 
+
         public CraftersDelightPlugin()
         {
             Enabled = true;
         }
-        
+
         public void Customize()
         {
             Hud.RunOnPlugin<ItemsPlugin>(plugin => plugin.DeathsBreathDecorator.Decorators.Clear()); // turn off death's breath on default item plugins
@@ -74,10 +74,9 @@ namespace Turbo.Plugins.Resu
             Hud.GetPlugin<ItemsPlugin>().PrimalSetDecorator.ToggleDecorators<MapShapeDecorator>(false);
             Hud.TogglePlugin<ChestPlugin>(false);  // disables ChestPlugin
         }
-        
-        private void init() 
+
+        private void init()
         {
-             
             SnoMapping = new Dictionary<uint, WorldDecoratorCollection>();
             var blackBrush = Hud.Render.CreateBrush(160, 0, 0, 0, 1);
             var whiteBrush = Hud.Render.CreateBrush(160, 255, 255, 255, 1);
@@ -97,9 +96,9 @@ namespace Turbo.Plugins.Resu
             var BlueGreenFont = Hud.Render.CreateFont("tahoma", 7, 255, 14, 215, 195, true, false, false);
             var grayFont = Hud.Render.CreateFont("tahoma", 7, 255, 55, 61, 53, true, false, false);
             var RoyalBlueFont = Hud.Render.CreateFont("tahoma", 7, 255, 65, 105, 255, true, false, false);
-            
+
             //Death Breath => already handled by ItemsPlugin but needed
-            if (DeathsBreath) { AddDecorator(2087837753, Hud.Render.CreateBrush(160, 89, 178, 153, 0), whiteBrush, orangeFont); } 
+            if (DeathsBreath) { AddDecorator(2087837753, Hud.Render.CreateBrush(160, 89, 178, 153, 0), whiteBrush, orangeFont); }
             //VeiledCrystal
             if (VeiledCrystal) { AddDecorator(3689019703, Hud.Render.CreateBrush(120, 223, 223, 1, 0), brownBrush, brownFont); }
             //ArcaneDust
@@ -157,7 +156,7 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(2276259506, Hud.Render.CreateBrush(180, 0, 0, 0, 0), orangeBrush, orangeFont);
                 AddDecorator(2276259530, Hud.Render.CreateBrush(180, 0, 0, 0, 0), orangeBrush, orangeFont);
             }
- 
+
             //Infernal machine
             if (InfernalMachine)
             {
@@ -166,17 +165,17 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(2622355732, Hud.Render.CreateBrush(120, 0, 0, 0, 0), whiteBrush, whiteFont);
                 AddDecorator(1458185494, Hud.Render.CreateBrush(120, 0, 0, 0, 0), whiteBrush, whiteFont);
             }
-            
+
             //Bounty crafts
             if (Bounty)
             {
-                AddDecorator(1948629088, Hud.Render.CreateBrush(120, 146, 32, 175,0), orangeBrush, orangeFont);
-                AddDecorator(1948629089, Hud.Render.CreateBrush(120, 146, 32, 175,0), orangeBrush, orangeFont);
-                AddDecorator(1948629090, Hud.Render.CreateBrush(120, 146, 32, 175,0), orangeBrush, orangeFont);
-                AddDecorator(1948629091, Hud.Render.CreateBrush(120, 146, 32, 175,0), orangeBrush, orangeFont);
-                AddDecorator(1948629092, Hud.Render.CreateBrush(120, 146, 32, 175,0), orangeBrush, orangeFont);
+                AddDecorator(1948629088, Hud.Render.CreateBrush(120, 146, 32, 175, 0), orangeBrush, orangeFont);
+                AddDecorator(1948629089, Hud.Render.CreateBrush(120, 146, 32, 175, 0), orangeBrush, orangeFont);
+                AddDecorator(1948629090, Hud.Render.CreateBrush(120, 146, 32, 175, 0), orangeBrush, orangeFont);
+                AddDecorator(1948629091, Hud.Render.CreateBrush(120, 146, 32, 175, 0), orangeBrush, orangeFont);
+                AddDecorator(1948629092, Hud.Render.CreateBrush(120, 146, 32, 175, 0), orangeBrush, orangeFont);
             }
-            
+
             //HellFire crafts
             if (HellFire)
             {
@@ -185,7 +184,7 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(2670343450, Hud.Render.CreateBrush(160, 234, 47, 0, 0), orangeBrush, orangeFont);
                 AddDecorator(3336787100, Hud.Render.CreateBrush(160, 234, 47, 0, 0), orangeBrush, orangeFont);
             }
-            
+
             //Legendary Gems
             if (LegendaryGems)
             {
@@ -211,17 +210,15 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(3250847272, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3250883209, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3250919146, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
-                
             }
-            
-            init_mapping = true; 
-        } 
 
-        
+            init_mapping = true;
+        }
+
         public override void Load(IController hud)
         {
             base.Load(hud);
- 
+
             ShowAncientRank = true;
             SlainFarmers = true;
             DeathsBreath = true;
@@ -250,7 +247,7 @@ namespace Turbo.Plugins.Resu
             HoradricTimer = 0;
             NextHoradricSound = 0;
             EquippedBrush = Hud.Render.CreateBrush(200, 255, 54, 198, 2, SharpDX.Direct2D1.DashStyle.Solid, SharpDX.Direct2D1.CapStyle.Flat, SharpDX.Direct2D1.CapStyle.Flat);
- 
+
             //Slain farmers (actors)
             SlainFarmerDecorator = new WorldDecoratorCollection(
             new MapLabelDecorator(Hud)
@@ -264,18 +261,18 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 146, 29, 0, true, false, false)
             }
             );
-            
+
             //Horadric Cache
             HoradricCacheDecorator = new WorldDecoratorCollection(
              new MapTextureDecorator(Hud)
-                {
-                    SnoItem = Hud.Inventory.GetSnoItem(2116952111),
-                    Radius = 0.6f,
-                    RadiusTransformator = new StandardPingRadiusTransformator(Hud, 500)
-                    {
-                        RadiusMinimumMultiplier = 0.8f,
-                    }
-                },
+             {
+                 SnoItem = Hud.Inventory.GetSnoItem(2116952111),
+                 Radius = 0.6f,
+                 RadiusTransformator = new StandardPingRadiusTransformator(Hud, 500)
+                 {
+                     RadiusMinimumMultiplier = 0.8f,
+                 }
+             },
             new GroundLabelDecorator(Hud)
             {
                 BackgroundBrush = Hud.Render.CreateBrush(100, 0, 0, 0, 0),
@@ -283,15 +280,14 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("tahoma", 7, 160, 255, 255, 255, true, false, false)
             }
             );
-            
-            
+
             //Ancient rank
             ancientRankDecorator = new WorldDecoratorCollection(
             new MapLabelDecorator(Hud)
             {
                 LabelFont = Hud.Render.CreateFont("tahoma", 7, 255, 255, 255, 255, true, false, false),
             }
- 
+
               );
             ancientRankSetDecorator = new WorldDecoratorCollection(
             new MapLabelDecorator(Hud)
@@ -299,15 +295,15 @@ namespace Turbo.Plugins.Resu
                 LabelFont = Hud.Render.CreateFont("tahoma", 7, 255, 0, 170, 0, true, false, false),
             }
               );
-              
-             // item count minimap
+
+            // item count minimap
             CountDecorator = new WorldDecoratorCollection(
             new MapLabelDecorator(Hud)
             {
                 LabelFont = Hud.Render.CreateFont("tahoma", 7, 255, 255, 255, 255, true, false, 255, 0, 0, 100, true),
             }
               );
-              
+
             // Equipped item minimap
             EquippedDecorator = new WorldDecoratorCollection(
             new MapLabelDecorator(Hud)
@@ -321,7 +317,7 @@ namespace Turbo.Plugins.Resu
                 Radius = 20,
             }
               );
-              
+
             NormalDecorator = new WorldDecoratorCollection(
                 new GroundLabelDecorator(Hud)
                 {
@@ -334,36 +330,34 @@ namespace Turbo.Plugins.Resu
                     LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 255, true, false, false),
                 }
                 );
-                
-             MagicDecorator = new WorldDecoratorCollection(
-                new GroundLabelDecorator(Hud)
-                {
-                    BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
-                    BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
-                    TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 126, 122, 219, true, false, false)
-                },
-                new MapLabelDecorator(Hud)
-                {
-                    LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 126, 122, 219, true, false, false),
-                }
-                );
-                
-             RareDecorator = new WorldDecoratorCollection(
-                new GroundLabelDecorator(Hud)
-                {
-                    BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
-                    BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
-                    TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 147, true, false, false)
-                },
-                new MapLabelDecorator(Hud)
-                {
-                    LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 147, true, false, false),
-                }
-                );
-                
-              
+
+            MagicDecorator = new WorldDecoratorCollection(
+               new GroundLabelDecorator(Hud)
+               {
+                   BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                   BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                   TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 126, 122, 219, true, false, false)
+               },
+               new MapLabelDecorator(Hud)
+               {
+                   LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 126, 122, 219, true, false, false),
+               }
+               );
+
+            RareDecorator = new WorldDecoratorCollection(
+               new GroundLabelDecorator(Hud)
+               {
+                   BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                   BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                   TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 147, true, false, false)
+               },
+               new MapLabelDecorator(Hud)
+               {
+                   LabelFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 147, true, false, false),
+               }
+               );
         }
- 
+
         private void AddDecorator(uint sno)
         {
             SnoMapping.Add(sno, new WorldDecoratorCollection(
@@ -376,10 +370,10 @@ namespace Turbo.Plugins.Resu
                         RadiusMinimumMultiplier = 0.8f,
                     }*/
                 }
- 
+
             ));
         }
- 
+
         private void AddDecorator(uint sno, IBrush bgBrush, IBrush borderBrush, IFont textFont)
         {
             SnoMapping.Add(sno, new WorldDecoratorCollection(
@@ -400,94 +394,87 @@ namespace Turbo.Plugins.Resu
                 }
             ));
         }
- 
+
         public void OnLootGenerated(IItem item, bool gambled)
         {
-          if (!Hud.Sound.IsIngameSoundEnabled) return;
-          if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
-                    {
-                     var soundPlayer = Hud.Sound.LoadSoundPlayer("Equipped-Drop-By-Resu.wav");
-                     
-                     ThreadPool.QueueUserWorkItem(state =>
-                       {
-                        try 
-                          { 
-                           soundPlayer.PlaySync(); 
-                          } 
-                        catch (Exception) 
-                          { 
-                          } 
+            if (!Hud.Sound.IsIngameSoundEnabled) return;
+            if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
+            {
+                var soundPlayer = Hud.Sound.LoadSoundPlayer("Equipped-Drop-By-Resu.wav");
 
-                        });
-                    }
-                    
-          if (item.AncientRank < 1) {}
-          else
-          {
-            var soundPlayer = item.AncientRank == 1 ? Hud.Sound.LoadSoundPlayer("Ancient-Drop-By-Resu.wav") : Hud.Sound.LoadSoundPlayer("Primal-Drop-By-Resu.wav");
-            
-            ThreadPool.QueueUserWorkItem(state =>
-              {
-               try 
-                 { 
-                  soundPlayer.PlaySync(); 
-                 } 
-               catch (Exception) 
-                 { 
-                 } 
+                ThreadPool.QueueUserWorkItem(state =>
+                  {
+                      try
+                      {
+                          soundPlayer.PlaySync();
+                      }
+                      catch (Exception)
+                      {
+                      }
+                  });
+            }
 
-               });
+            if (item.AncientRank < 1) { }
+            else
+            {
+                var soundPlayer = item.AncientRank == 1 ? Hud.Sound.LoadSoundPlayer("Ancient-Drop-By-Resu.wav") : Hud.Sound.LoadSoundPlayer("Primal-Drop-By-Resu.wav");
 
-          }
+                ThreadPool.QueueUserWorkItem(state =>
+                  {
+                      try
+                      {
+                          soundPlayer.PlaySync();
+                      }
+                      catch (Exception)
+                      {
+                      }
+                  });
+            }
         }
-        
+
         public void PaintWorld(WorldLayer layer)
         {
-            if(!init_mapping) { init(); } 
+            if (!init_mapping) { init(); }
             if (Hud.Render.UiHidden) return;
-            
-            
+
             var itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor).GroupBy(item => item.SnoItem.Sno);
-            
+
             if (GroupGems)
             {
-             itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode != "gems").GroupBy(item => item.SnoItem.Sno);
-             var gemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "gems").GroupBy(item => item.SnoItem.MainGroupCode);
-              
-              foreach (var items in gemGroups)
-             {
-                 var orderedItems = items.OrderBy(i => i.NormalizedXyDistanceToMe);
-                 var firstItem = orderedItems.FirstOrDefault();
- 
-                 if (firstItem == null) continue;
- 
-                 if (SnoMapping.ContainsKey(2979276674))
-                 {
-                     var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
-                     if (count > 1)
-                     {
-                         var Qtt = " (" + count + ")";
-                         SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, "Gems" + Qtt);
-                         CountDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, count.ToString());
-                     }
-                     else
-                     {
-                         SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, firstItem.SnoItem.NameLocalized);
-                     }
-                 }
-             }
+                itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode != "gems").GroupBy(item => item.SnoItem.Sno);
+                var gemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "gems").GroupBy(item => item.SnoItem.MainGroupCode);
+
+                foreach (var items in gemGroups)
+                {
+                    var orderedItems = items.OrderBy(i => i.NormalizedXyDistanceToMe);
+                    var firstItem = orderedItems.FirstOrDefault();
+
+                    if (firstItem == null) continue;
+
+                    if (SnoMapping.ContainsKey(2979276674))
+                    {
+                        var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
+                        if (count > 1)
+                        {
+                            var Qtt = " (" + count + ")";
+                            SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, "Gems" + Qtt);
+                            CountDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, count.ToString());
+                        }
+                        else
+                        {
+                            SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, firstItem.SnoItem.NameLocalized);
+                        }
+                    }
+                }
             }
- 
- 
- 
- 
+
             foreach (var items in itemGroups)
             {
                 var orderedItems = items.OrderBy(i => i.NormalizedXyDistanceToMe);
                 var firstItem = orderedItems.FirstOrDefault();
- 
+
                 if (firstItem == null) continue;
- 
+
                 if (SnoMapping.ContainsKey(items.Key))
                 {
                     var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
@@ -502,50 +489,50 @@ namespace Turbo.Plugins.Resu
                         SnoMapping[firstItem.SnoItem.Sno].Paint(layer, firstItem, firstItem.FloorCoordinate, firstItem.SnoItem.NameLocalized);
                     }
                 }
- 
+
                 if (!firstItem.IsLegendary && !NoobGearMode) continue;
                 else if (!firstItem.IsLegendary && NoobGearMode && firstItem.Perfection != 0)
-                 {
-                  if (DisplayItem((byte)firstItem.Quality))
-                   {
-                    if (firstItem.IsNormal)     { NormalDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
-                    else if (firstItem.IsMagic) { MagicDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
-                    else if (firstItem.IsRare)  { RareDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
-                   }
-                 }
+                {
+                    if (DisplayItem((byte)firstItem.Quality))
+                    {
+                        if (firstItem.IsNormal) { NormalDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
+                        else if (firstItem.IsMagic) { MagicDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
+                        else if (firstItem.IsRare) { RareDecorator.Paint(layer, firstItem, firstItem.FloorCoordinate, "\u2605"); }
+                    }
+                }
 
                 foreach (var item in items)
                 {
-                     var inKanaiCube = Hud.Game.Me.IsCubed(item.SnoItem);
-                     var canKanaiCube = !inKanaiCube && item.SnoItem.CanKanaiCube;
+                    var inKanaiCube = Hud.Game.Me.IsCubed(item.SnoItem);
+                    var canKanaiCube = !inKanaiCube && item.SnoItem.CanKanaiCube;
 
                     if (canKanaiCube)
-                       {
+                    {
                         var cubeTexture = Hud.Texture.KanaiCubeTexture;
                         float radius;
                         Hud.Render.GetMinimapCoordinates(item.FloorCoordinate.X, item.FloorCoordinate.Y, out float mapX, out float mapY);
                         var RadiusTransformator = new StandardPingRadiusTransformator(Hud, 500)
                         {
-                        RadiusMinimumMultiplier = 0.8f,
+                            RadiusMinimumMultiplier = 0.8f,
                         };
                         radius = 0.9f * Hud.Render.MinimapScale;
                         if (RadiusTransformator != null)
-                            {
-                              radius = RadiusTransformator.TransformRadius(radius);
-                            }
+                        {
+                            radius = RadiusTransformator.TransformRadius(radius);
+                        }
                         var width = cubeTexture.Width * radius;
                         var height = cubeTexture.Height * radius;
                         cubeTexture.Draw(mapX - width / 2, mapY - height / 2, width, height);
-                        } 
-                        
+                    }
+
                     if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
                     {
-                     EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "E");
+                        EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "E");
                     }
-                    
+
                     if (item.AncientRank < 1 || !ShowAncientRank) continue;
                     var ancientRankText = item.AncientRank == 1 ? "Ancient   ->                     <-   Ancient" : "Primal   ->                     <-   Primal";
-                    
+
                     if (item.SetSno != uint.MaxValue)
                     {
                         ancientRankSetDecorator.Paint(layer, item, item.FloorCoordinate, ancientRankText); // set color
@@ -556,145 +543,142 @@ namespace Turbo.Plugins.Resu
                     }
                 }
             }
- 
+
             /// Slain farmer
             if (SlainFarmers)
             {
-                var SlainFarmer = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && (uint)x.SnoActor.Sno >= 434676 && (uint)x.SnoActor.Sno <= 434679);
+                var SlainFarmer = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Sno >= ActorSnoEnum._loottype2_tristramvillager_male_a_corpse_01_farmer/*434676*/ && x.SnoActor.Sno <= ActorSnoEnum._tristramvillager_female_c_corpse_01_farmer /*434679*/);
                 foreach (var actor in SlainFarmer)
                 {
                     SlainFarmerDecorator.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
                 }
             }
-            
+
             /// Horadric Cache
             if (HoradricCaches)
-             {
-             var HoradricCache = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "horadriccache");
-             foreach (var cache in HoradricCache)
-                   {
+            {
+                var HoradricCache = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "horadriccache");
+                foreach (var cache in HoradricCache)
+                {
                     HoradricCacheDecorator.Paint(layer, cache, cache.FloorCoordinate, cache.SnoItem.NameLocalized);
                     string HoradricCacheText = "Cache   ->                       <-   Cache";
                     ancientRankDecorator.Paint(layer, cache, cache.FloorCoordinate, HoradricCacheText);
-                    
+
                     HoradricTimer = NextHoradricSound - Hud.Game.CurrentRealTimeMilliseconds;
                     if (HoradricTimer < 0) HoradricTimer = 0;
                     if (cache.NormalizedXyDistanceToMe <= 50 && HoradricTimer == 0)
-                     {   
-                      if (!Hud.Sound.IsIngameSoundEnabled) continue;
-                      var soundPlayer = Hud.Sound.LoadSoundPlayer("Horadric-Cache-By-Resu.wav");
-            
-                      ThreadPool.QueueUserWorkItem(state =>
-                      {
-                        try 
-                          { 
-                           soundPlayer.PlaySync(); 
-                          } 
-                        catch (Exception) 
-                          { 
-                          } 
-                      });
-                      NextHoradricSound = Hud.Game.CurrentRealTimeMilliseconds + 20000;
-                     }
-                   }
-             }
-             
-            if(LoreChestsDisplay)
-             {
-              var loreChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.GizmoType == GizmoType.LoreChest);
-              foreach (var actor in loreChests)
-               {
-                var LoreTexture = Hud.Texture.GetTexture(3651511087);
-                if(!Hud.Game.Me.IsInTown)LoreTexture.Draw(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, 31.5f, 49.5f, 1f);
-               }
-             }
-            
+                    {
+                        if (!Hud.Sound.IsIngameSoundEnabled) continue;
+                        var soundPlayer = Hud.Sound.LoadSoundPlayer("Horadric-Cache-By-Resu.wav");
+
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            try
+                            {
+                                soundPlayer.PlaySync();
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        });
+                        NextHoradricSound = Hud.Game.CurrentRealTimeMilliseconds + 20000;
+                    }
+                }
+            }
+
+            if (LoreChestsDisplay)
+            {
+                var loreChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.GizmoType == GizmoType.LoreChest);
+                foreach (var actor in loreChests)
+                {
+                    var LoreTexture = Hud.Texture.GetTexture(3651511087);
+                    if (!Hud.Game.Me.IsInTown) LoreTexture.Draw(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, 31.5f, 49.5f, 1f);
+                }
+            }
+
             var Glow = Hud.Texture.GetTexture(1981524232);
-            
-            if(NormalChestsDisplay)
-             {
-              var normalChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.ChestNormal);
-              foreach (var actor in normalChests)
-               {
-                var NormalTexture = Hud.Texture.GetTexture(4061587565);
-                Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
-                Glow.Draw(textureX-11, textureY-13, 28f, 33f, 1f);
-                NormalTexture.Draw(textureX-11, textureY-13, 22.77f, 27.06f, 1f);
-               }
-             }
-             
-            if(ResplendentChestsDisplay)
-             {
-              var resplendentChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.Chest);
-              foreach (var actor in resplendentChests)
-               {
-                var RespendentTexture = Hud.Texture.GetTexture(4029005773);
-                Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
-                Glow.Draw(textureX-11, textureY-13, 31f, 36f, 1f);
-                RespendentTexture.Draw(textureX-11, textureY-13, 22.77f, 27.06f, 1f);
-               }
-             }
+
+            if (NormalChestsDisplay)
+            {
+                var normalChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.ChestNormal);
+                foreach (var actor in normalChests)
+                {
+                    var NormalTexture = Hud.Texture.GetTexture(4061587565);
+                    Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+                    Glow.Draw(textureX - 11, textureY - 13, 28f, 33f, 1f);
+                    NormalTexture.Draw(textureX - 11, textureY - 13, 22.77f, 27.06f, 1f);
+                }
+            }
+
+            if (ResplendentChestsDisplay)
+            {
+                var resplendentChests = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Kind == ActorKind.Chest);
+                foreach (var actor in resplendentChests)
+                {
+                    var RespendentTexture = Hud.Texture.GetTexture(4029005773);
+                    Hud.Render.GetMinimapCoordinates(actor.FloorCoordinate.X, actor.FloorCoordinate.Y, out float textureX, out float textureY);
+                    Glow.Draw(textureX - 11, textureY - 13, 31f, 36f, 1f);
+                    RespendentTexture.Draw(textureX - 11, textureY - 13, 22.77f, 27.06f, 1f);
+                }
+            }
         }
-        
-         private bool SameAsEquipped(uint ThatItemSno, int ThatItemRank)
+
+        private bool SameAsEquipped(uint ThatItemSno, int ThatItemRank)
         {
-          if (ThatItemRank == 1) ThatItemRank = 2;
-          bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno && x.AncientRank <= ThatItemRank);
-          bool Cubed1 = Hud.Game.Me.CubeSnoItem1?.Sno == ThatItemSno && ThatItemRank > 0;
-          bool Cubed2 = Hud.Game.Me.CubeSnoItem2?.Sno == ThatItemSno && ThatItemRank > 0;
-          bool Cubed3 = Hud.Game.Me.CubeSnoItem3?.Sno == ThatItemSno && ThatItemRank > 0;
-          
-          if (Worn) return true;
-          else if (Cubed1) return true;
-          else if (Cubed2) return true;
-          else if (Cubed3) return true;
-          else return false;
+            if (ThatItemRank == 1) ThatItemRank = 2;
+            bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno && x.AncientRank <= ThatItemRank);
+            bool Cubed1 = Hud.Game.Me.CubeSnoItem1?.Sno == ThatItemSno && ThatItemRank > 0;
+            bool Cubed2 = Hud.Game.Me.CubeSnoItem2?.Sno == ThatItemSno && ThatItemRank > 0;
+            bool Cubed3 = Hud.Game.Me.CubeSnoItem3?.Sno == ThatItemSno && ThatItemRank > 0;
+
+            if (Worn) return true;
+            else if (Cubed1) return true;
+            else if (Cubed2) return true;
+            else if (Cubed3) return true;
+            else return false;
         }
-        
-         private bool DisplayItem(byte ItemQuality)
+
+        private bool DisplayItem(byte ItemQuality)
         {
-          var EquippedItems = Hud.Game.Items.Where(x => (int)x.Location > 0 && (int)x.Location < 14);
-          byte LowerQualityEquipped = 9;
-          
-          foreach (var EquippedItem in EquippedItems)
-          {
-           if ((byte)EquippedItem.Quality < LowerQualityEquipped) LowerQualityEquipped = (byte)EquippedItem.Quality;
-          }
-          
-          if (ItemQuality >= LowerQualityEquipped) return true;
-          else  return false;
+            var EquippedItems = Hud.Game.Items.Where(x => (int)x.Location > 0 && (int)x.Location < 14);
+            byte LowerQualityEquipped = 9;
+
+            foreach (var EquippedItem in EquippedItems)
+            {
+                if ((byte)EquippedItem.Quality < LowerQualityEquipped) LowerQualityEquipped = (byte)EquippedItem.Quality;
+            }
+
+            if (ItemQuality >= LowerQualityEquipped) return true;
+            else return false;
         }
 
         private int stashTabAbs;
-        
-         public void PaintTopInGame(ClipState clipState)
+
+        public void PaintTopInGame(ClipState clipState)
         {
-          
             if (clipState == ClipState.Inventory && Equipped)
             {
                 stashTabAbs = Hud.Inventory.SelectedStashTabIndex + Hud.Inventory.SelectedStashPageIndex * Hud.Inventory.MaxStashTabCountPerPage;
- 
+
                 foreach (var item in Hud.Game.Items)
                 {
                     if ((Int32)item.Location > 0 && (Int32)item.Location < 14) continue;
                     if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank))
-                     {
-                      if (item.Location == ItemLocation.Stash)
-                       {
-                        if ((item.InventoryY / 10) != stashTabAbs) continue;
-                       }
-                      if ((item.InventoryX < 0) || (item.InventoryY < 0)) continue;
-                      var rect = Hud.Inventory.GetItemRect(item);
-                      if (rect == System.Drawing.RectangleF.Empty) continue;
-                      EquippedBrush.DrawLine(rect.Right, rect.Bottom, rect.Right, rect.Top);
-                      EquippedBrush.DrawLine(rect.Left, rect.Bottom, rect.Left, rect.Top);
-                      EquippedBrush.DrawLine(rect.Right, rect.Top, rect.Left, rect.Top);
-                      EquippedBrush.DrawLine(rect.Right, rect.Bottom, rect.Left, rect.Bottom);
-                     }
+                    {
+                        if (item.Location == ItemLocation.Stash)
+                        {
+                            if ((item.InventoryY / 10) != stashTabAbs) continue;
+                        }
+                        if ((item.InventoryX < 0) || (item.InventoryY < 0)) continue;
+                        var rect = Hud.Inventory.GetItemRect(item);
+                        if (rect == System.Drawing.RectangleF.Empty) continue;
+                        EquippedBrush.DrawLine(rect.Right, rect.Bottom, rect.Right, rect.Top);
+                        EquippedBrush.DrawLine(rect.Left, rect.Bottom, rect.Left, rect.Top);
+                        EquippedBrush.DrawLine(rect.Right, rect.Top, rect.Left, rect.Top);
+                        EquippedBrush.DrawLine(rect.Right, rect.Bottom, rect.Left, rect.Bottom);
+                    }
                 }
             }
-
         }
-
     }
 }
