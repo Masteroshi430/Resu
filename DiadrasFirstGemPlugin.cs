@@ -90,7 +90,7 @@ namespace Turbo.Plugins.Resu
           
            float gemMaths = 0.8f + (0.01f*(float)StrickenRank);
            var Texture = Hud.Texture.GetItemTexture(Hud.Sno.SnoItems.Unique_Gem_018_x1);
-           var monsters = Hud.Game.Monsters.OrderBy(i => i.NormalizedXyDistanceToMe); //
+           var monsters = Hud.Game.Monsters.OrderBy(i => i.NormalizedXyDistanceToMe);
            foreach (var monster in monsters)
                    {
                      if (ElitesnBossOnly && !monster.IsElite) continue;
