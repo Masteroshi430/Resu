@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 12/02/2019 11:27
+// Crafter's Delight Plugin for TurboHUD Version 17/02/2019 21:23
 
 using System;
 using System.Collections.Generic;
@@ -108,24 +108,53 @@ namespace Turbo.Plugins.Resu
             {
                 AddDecorator(2979276674, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
                 AddDecorator(2979276673, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
-                AddDecorator(3446938396, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
-                AddDecorator(3446938397, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
-                AddDecorator(2838965543, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
-                AddDecorator(2838965544, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
-                AddDecorator(1019190639, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
-                AddDecorator(1019190640, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
-                AddDecorator(4267641563, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
-                AddDecorator(4267641564, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
                 AddDecorator(3256663689, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
                 AddDecorator(3256663690, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
+                AddDecorator(3256663684, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
+                AddDecorator(3256663685, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
+                AddDecorator(3256663686, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
+                AddDecorator(3256663687, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
+                AddDecorator(3256663688, Hud.Render.CreateBrush(160, 82, 107, 173, 0), whiteBrush, whiteFont);
+                
+                AddDecorator(3446938396, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                AddDecorator(3446938397, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
                 AddDecorator(2883100436, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
                 AddDecorator(2883100437, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                AddDecorator(3446938391, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                AddDecorator(3446938392, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                AddDecorator(3446938393, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                AddDecorator(3446938394, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                AddDecorator(3446938395, Hud.Render.CreateBrush(160, 113, 0, 175, 0), whiteBrush, whiteFont);
+                
+                AddDecorator(2838965543, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                AddDecorator(2838965544, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
                 AddDecorator(2561578527, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
                 AddDecorator(2561578528, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                AddDecorator(2838965538, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                AddDecorator(2838965539, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                AddDecorator(2838965540, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                AddDecorator(2838965541, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                AddDecorator(2838965542, Hud.Render.CreateBrush(160, 14, 167, 12, 0), whiteBrush, whiteFont);
+                
+                AddDecorator(1019190639, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                AddDecorator(1019190640, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
                 AddDecorator(1603007847, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
                 AddDecorator(1603007848, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                AddDecorator(1603007812, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                AddDecorator(1603007813, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                AddDecorator(1603007816, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                AddDecorator(1603007817, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                AddDecorator(1603007843, Hud.Render.CreateBrush(160, 157, 21, 8, 0), whiteBrush, whiteFont);
+                
+                AddDecorator(4267641563, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
+                AddDecorator(4267641564, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
                 AddDecorator(2058771923, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
                 AddDecorator(2058771924, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
+                AddDecorator(2058771888, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
+                AddDecorator(2058771889, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
+                AddDecorator(2058771892, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
+                AddDecorator(2058771893, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
+                AddDecorator(2058771919, Hud.Render.CreateBrush(160, 163, 98, 7, 0), whiteBrush, whiteFont);
             }
             //ForgottenSoul
             if (ForgottenSoul) { AddDecorator(2073430088, Hud.Render.CreateBrush(160, 244, 122, 0, 0), mudBrush, mudFont); }
