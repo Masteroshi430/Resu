@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 17/02/2019 21:23
+// Crafter's Delight Plugin for TurboHUD Version 18/02/2019 21:15
 
 using System;
 using System.Collections.Generic;
@@ -394,10 +394,6 @@ namespace Turbo.Plugins.Resu
                 {
                     SnoItem = Hud.Inventory.GetSnoItem(sno),
                     Radius = 0.47f,
-                    /*RadiusTransformator = new StandardPingRadiusTransformator(Hud, 500)
-                    {
-                        RadiusMinimumMultiplier = 0.8f,
-                    }*/
                 }
 
             ));
@@ -410,10 +406,6 @@ namespace Turbo.Plugins.Resu
                 {
                     SnoItem = Hud.Inventory.GetSnoItem(sno),
                     Radius = 0.47f,
-                    /*RadiusTransformator = new StandardPingRadiusTransformator(Hud, 500)
-                    {
-                        RadiusMinimumMultiplier = 0.8f,
-                    }*/
                 },
                 new GroundLabelDecorator(Hud)
                 {
@@ -480,7 +472,7 @@ namespace Turbo.Plugins.Resu
 
                     if (firstItem == null) continue;
 
-                    if (SnoMapping.ContainsKey(2979276674))
+                    if (SnoMapping.ContainsKey(firstItem.SnoItem.Sno)) //2979276674
                     {
                         var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
                         if (count > 1)

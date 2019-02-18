@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 12/02/2019 11:27
+// Ariadne's Thread plugin for TurboHUD version 18/02/2019 21:15
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using System;
@@ -266,6 +266,18 @@ namespace Turbo.Plugins.Resu
                 }
             }
 
+            // Pools of reflection
+            if (Pools)
+            {
+                var PoolsOfReflection = Hud.Game.Shrines.Where(p => !p.IsDisabled && !p.IsOperated && p.Type == ShrineType.PoolOfReflection);
+                //var PoolsOfReflection = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Sno == 373463);
+
+                foreach (var PoolOfReflection in PoolsOfReflection)
+                {
+                    PoolDecorator.Paint(layer, null, PoolOfReflection.FloorCoordinate, PoolOfReflection.SnoActor.NameLocalized);
+                }
+            }
+            
             // modified Xenthalon's AdvancedMarkerPlugin
             var markers = Hud.Game.Markers.OrderBy(i => Hud.Game.Me.FloorCoordinate.XYDistanceTo(i.FloorCoordinate));
             if (markers != null)
@@ -307,18 +319,6 @@ namespace Turbo.Plugins.Resu
                 NameOther2 = string.Empty; Other2 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther2 = string.Empty;
                 NameOther1 = string.Empty; Other1 = Hud.Window.CreateWorldCoordinate(Hud.Game.Me.FloorCoordinate); AreaOther1 = string.Empty;
                 return;
-            }
-
-            // Pools of reflection
-            if (Pools)
-            {
-                var PoolsOfReflection = Hud.Game.Shrines.Where(p => !p.IsDisabled && !p.IsOperated && p.Type == ShrineType.PoolOfReflection);
-                //var PoolsOfReflection = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Sno == 373463);
-
-                foreach (var PoolOfReflection in PoolsOfReflection)
-                {
-                    PoolDecorator.Paint(layer, null, PoolOfReflection.FloorCoordinate, PoolOfReflection.SnoActor.NameLocalized);
-                }
             }
 
             // Strengh in numbers buff indicator
