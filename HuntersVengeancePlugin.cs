@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Hunter's Vengeance Plugin for TurboHUD Version 15/01/2019 22:59
+// Hunter's Vengeance Plugin for TurboHUD Version 19/02/2019 07:11
 
 using System;
 using System.Collections.Generic;
@@ -104,14 +104,8 @@ namespace Turbo.Plugins.Resu
             }
            
            
-           
            if (permanentCircle) { if (Hud.Game.IsInTown) return;}
-           else
-            {
-           if (!Hud.Game.Me.InCombat) goto MiniMapCircle;
-           else goto TargetOnMinimap;
-            }
-            
+           else if (!Hud.Game.Me.InCombat) goto MiniMapCircle;
 
             OutlineBrush.DrawWorldEllipse(50, -1, Hud.Game.Me.FloorCoordinate);
             
@@ -125,7 +119,7 @@ namespace Turbo.Plugins.Resu
                     var monsterScreenCoordinate = monster.FloorCoordinate.ToScreenCoordinate();
                     percentDamageBonus = "";
                     float gemMaths = 4f + (0.08f*(float)ZeiRank);
-                                    
+                    
                     if (monster.NormalizedXyDistanceToMe < 50) {percentDamageBonus = "+" + (gemMaths*((float)monster.NormalizedXyDistanceToMe/10)).ToString("0.00") + "%";}  
                     else {percentDamageBonus = "+" + (gemMaths*5f).ToString("0.00") + "% Max!";}
                   
@@ -145,6 +139,7 @@ namespace Turbo.Plugins.Resu
             MiniMapCircle:
             if (Hud.Game.IsInTown) return;
             ZeiMiniMapDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, null);
+            
             TargetOnMinimap:
             var cursorScreenCoord = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
             var visorWorldCoord = cursorScreenCoord.ToWorldCoordinate();
