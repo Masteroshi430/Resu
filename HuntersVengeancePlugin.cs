@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Hunter's Vengeance Plugin for TurboHUD Version 19/02/2019 07:11
+// Hunter's Vengeance Plugin for TurboHUD Version 20/02/2019 08:17
 
 using System;
 using System.Collections.Generic;
@@ -98,7 +98,7 @@ namespace Turbo.Plugins.Resu
              if (TargetForAll)
               {
                if (Hud.Game.IsInTown) return;
-               goto TargetOnMinimap;
+               else goto TargetOnMinimap;
               }
              else return;
             }
@@ -110,7 +110,7 @@ namespace Turbo.Plugins.Resu
             OutlineBrush.DrawWorldEllipse(50, -1, Hud.Game.Me.FloorCoordinate);
             
              var Smonster = Hud.Game.SelectedMonster2 ?? Hud.Game.SelectedMonster1;
-             if ((Smonster == null)) return;
+             if ((Smonster == null)) goto MiniMapCircle;
              
              var monsters = Hud.Game.AliveMonsters.Where(monster => monster.Attackable && monster == Smonster);
                 foreach (var monster in monsters)
@@ -127,7 +127,7 @@ namespace Turbo.Plugins.Resu
                    float visibleY;
                    float MidX = (float)midX;
                    float MidY = (float)midY;
-          
+                  
                    if (monsterScreenCoordinate.X > MidX) {visibleX = monsterScreenCoordinate.X - 60f;} else  {visibleX = monsterScreenCoordinate.X + 50f;} 
                    if (monsterScreenCoordinate.Y > MidY) {visibleY = monsterScreenCoordinate.Y - 150f;} else  {visibleY = monsterScreenCoordinate.Y + 50f;}
                   
@@ -135,10 +135,12 @@ namespace Turbo.Plugins.Resu
                    TextFont.DrawText(layout, visibleX, visibleY);
                 
                 }
+            goto MiniMapCircle;
             
             MiniMapCircle:
             if (Hud.Game.IsInTown) return;
             ZeiMiniMapDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, null);
+            goto TargetOnMinimap;
             
             TargetOnMinimap:
             var cursorScreenCoord = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
