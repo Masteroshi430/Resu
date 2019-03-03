@@ -1,6 +1,6 @@
 ﻿//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Custom Life Warning Plugin for TurboHUD Version 14/10/2018 20:57
+// Custom Life Warning Plugin for TurboHUD Version 03/03/2019 18:40
 // The health globes part was stolen from Xewl's HealthGlobePlugin
 
 using System;
@@ -24,6 +24,7 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection HealthGlobeDecorator { get; set; }
         public float opacity { get; set; }
         public IBrush ShieldBrush { get; set; }
+        public string SPTL { get; set; }
 
         private List<float> _steps;
 
@@ -82,7 +83,7 @@ namespace Turbo.Plugins.Resu
             InfiniteShieldDecorator = new TopLabelDecorator(Hud)
             {
                 TextFont = Hud.Render.CreateFont("tahoma", 12, 255, 160, 160, 215, true, false, 255, 100, 0, 0, true),
-                TextFunc = () => "∞",
+                TextFunc = () => "∞" + SPTL,
             };
             
         }
@@ -126,8 +127,16 @@ namespace Turbo.Plugins.Resu
             var glowTexture = Hud.Texture.GetTexture(1981524232);
             
              var ShieldPylon = Hud.Game.Me.Powers.GetBuff(266254);
-             if (ShieldPylon == null || !ShieldPylon.Active) {} 
-             else {ShieldPer19 = 19; if (Hud.Game.Me.Defense.CurShield == 0f) InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);}
+             if (ShieldPylon == null || !ShieldPylon.Active) {SPTL = String.Empty;}
+             else {
+                   int ShieldPylonTimeLeft = (int)ShieldPylon.TimeLeftSeconds[0];
+                   ShieldPer19 = 19;
+                   if (Hud.Game.Me.Defense.CurShield == 0f)
+                    {
+                     SPTL = Environment.NewLine + ShieldPylonTimeLeft.ToString();
+                     InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+                    }
+                  }
             
             for (int i = 1; i <= ShieldPer19 && i < _steps.Count; i++)
             {
