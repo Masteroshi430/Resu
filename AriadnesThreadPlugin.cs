@@ -270,7 +270,6 @@ namespace Turbo.Plugins.Resu
             if (Pools)
             {
                 var PoolsOfReflection = Hud.Game.Shrines.Where(p => !p.IsDisabled && !p.IsOperated && p.Type == ShrineType.PoolOfReflection);
-                //var PoolsOfReflection = Hud.Game.Actors.Where(x => !x.IsDisabled && !x.IsOperated && x.SnoActor.Sno == 373463);
 
                 foreach (var PoolOfReflection in PoolsOfReflection)
                 {
