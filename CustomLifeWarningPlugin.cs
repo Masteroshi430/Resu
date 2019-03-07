@@ -83,7 +83,7 @@ namespace Turbo.Plugins.Resu
             InfiniteShieldDecorator = new TopLabelDecorator(Hud)
             {
                 TextFont = Hud.Render.CreateFont("tahoma", 12, 255, 160, 160, 215, true, false, 255, 100, 0, 0, true),
-                TextFunc = () => "∞" + SPTL,
+                TextFunc = () => " ∞" + SPTL,
             };
             
         }
