@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 12/02/2019 11:27
+// Danger Plugin for TurboHUD Version 07/03/2019 21:38
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using SharpDX;
@@ -1626,9 +1626,13 @@ namespace Turbo.Plugins.Resu
 
             int CreatedAtGameTick;
 
-            if (DangerPlugin.BetrayedPoisonActors.Contains(actor.SnoActor.Sno) || DangerPlugin.GrotesqueExplosionActors.Contains(actor.SnoActor.Sno))
+            if (DangerPlugin.BetrayedPoisonActors.Contains(actor.SnoActor.Sno))
             {
                 DangerPlugin.BetrayedPoison.TryGetValue(coord, out CreatedAtGameTick);
+            }
+            else if (DangerPlugin.GrotesqueExplosionActors.Contains(actor.SnoActor.Sno))
+            {
+                DangerPlugin.GrotesqueBlow.TryGetValue(coord, out CreatedAtGameTick);
             }
             else
             {
