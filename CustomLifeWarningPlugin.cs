@@ -133,7 +133,8 @@ namespace Turbo.Plugins.Resu
                    ShieldPer19 = 19;
                    if (Hud.Game.Me.Defense.CurShield == 0f)
                     {
-                     SPTL = Environment.NewLine + ShieldPylonTimeLeft.ToString();
+                     if (ShieldPylonTimeLeft < 10) {SPTL = Environment.NewLine + " " + ShieldPylonTimeLeft.ToString();}
+                     else {SPTL = Environment.NewLine + ShieldPylonTimeLeft.ToString();}
                      InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);
                     }
                   }
@@ -159,7 +160,6 @@ namespace Turbo.Plugins.Resu
 
         public void PaintWorld(WorldLayer layer)
         {
-
             var percentLife = Hud.Game.Me.Defense.HealthPct;
             if (percentLife <= (float)lifePercentageToDisplayGlobes && percentLife > 0f)
             {
