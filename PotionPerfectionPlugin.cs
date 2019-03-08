@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Potion Perfection plugin for TurboHUD version 17/01/2018 14:32
+// Potion Perfection plugin for TurboHUD version 08/03/2019 17:26
  
 using System;
 using System.Globalization;
@@ -39,7 +39,15 @@ namespace Turbo.Plugins.Resu
  
         public void PaintTopInGame(ClipState clipState)
         {
-           
+                
+                var EquippedPotion = Hud.Game.Items.FirstOrDefault(x => x.Location == ItemLocation.MerchantAvaibleItemsForPurchase);
+                if (EquippedPotion != null)
+                 {
+                  var rect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_potion").Rectangle;
+                  DrawPotionPerfection(EquippedPotion, rect);
+                 }
+                
+                
             if (clipState == ClipState.Inventory)
             {
                 stashTabAbs = Hud.Inventory.SelectedStashTabIndex + Hud.Inventory.SelectedStashPageIndex * Hud.Inventory.MaxStashTabCountPerPage;
@@ -74,6 +82,7 @@ namespace Turbo.Plugins.Resu
                  var MaxStat = perfection.Max;
                  var Percentage = Math.Truncate( (( CurStat / MaxStat )*100)*10)/10;
                  var text = Percentage.ToString();
+                 
                  var layout = PotionPerfectionFont.GetTextLayout(text); 
                  if (Percentage != 100) PotionPerfectionFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
                 }
