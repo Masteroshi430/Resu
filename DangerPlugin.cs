@@ -1448,7 +1448,7 @@ namespace Turbo.Plugins.Resu
                         case "739.639, 1824.021, 0.0":
                             worldCoord1 = Hud.Window.CreateWorldCoordinate(703.058f, 1814.118f, 0.1f);
                             worldCoord2 = Hud.Window.CreateWorldCoordinate(703.696f, 1834.336f, 0.5f);
-                            break
+                            break;
 
                         default:
                             DemonicForgeDecorator.Paint(layer, actor, actor.FloorCoordinate, "!!! Not repertoriated !!! " + actor.FloorCoordinate);
