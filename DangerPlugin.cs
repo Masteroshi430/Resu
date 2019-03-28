@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 07/03/2019 21:38
+// Danger Plugin for TurboHUD Version 28/03/2019 20:11
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using SharpDX;
@@ -1445,6 +1445,11 @@ namespace Turbo.Plugins.Resu
                             worldCoord2 = Hud.Window.CreateWorldCoordinate(1696.484f, 1403.538f, 0.3f);
                             break;
 
+                        case "739.639, 1824.021, 0.0":
+                            worldCoord1 = Hud.Window.CreateWorldCoordinate(703.058f, 1814.118f, 0.1f);
+                            worldCoord2 = Hud.Window.CreateWorldCoordinate(703.696f, 1834.336f, 0.5f);
+                            break
+
                         default:
                             DemonicForgeDecorator.Paint(layer, actor, actor.FloorCoordinate, "!!! Not repertoriated !!! " + actor.FloorCoordinate);
                             var cursorScreen = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
@@ -1475,7 +1480,7 @@ namespace Turbo.Plugins.Resu
                     RedBrush.DrawLine(worldCoord1OnMapX, worldCoord1OnMapY, worldCoord2OnMapX, worldCoord2OnMapY);
                 }
 
-                if (actor.SnoActor.Sno == ActorSnoEnum._x1_pand_ext_ordnance_tower_shock_a /*322194*/ && ShockTower) ShockTowerDecorator.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
+                if (actor.SnoActor.Sno == ActorSnoEnum._x1_pand_ext_ordnance_tower_shock_a /*322194*/ && ShockTower) ShockTowerDecorator.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized); 
                 if (actor.SnoActor.Sno == ActorSnoEnum._x1_bog_bloodspring_medium /*332922*/ && BloodSprings) BloodSpringsDecoratorMedium.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
                 if (actor.SnoActor.Sno == ActorSnoEnum._x1_bog_bloodspring_large /*332923*/ && BloodSprings) BloodSpringsDecoratorBig.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
                 if (actor.SnoActor.Sno == ActorSnoEnum._x1_bog_bloodspring_small /*332924*/ && BloodSprings) BloodSpringsDecoratorSmall.Paint(layer, actor, actor.FloorCoordinate, actor.SnoActor.NameLocalized);
