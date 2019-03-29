@@ -344,19 +344,19 @@ namespace Turbo.Plugins.Resu
          var PlayerThree = Hud.Game.Players.Where(x =>x.PortraitIndex == 2).FirstOrDefault();
          var PlayerFour = Hud.Game.Players.Where(x =>x.PortraitIndex == 3).FirstOrDefault();
          
-         if (currentLine.Contains(PlayerOne.BattleTagAbovePortrait))
+         if (currentLine.Contains(PlayerOne.BattleTagAbovePortrait) && PlayerOne != null)
           {
            if(!currentLine.Contains("AFK")) _watch0.Restart();
           }
-         else if (currentLine.Contains(PlayerTwo.BattleTagAbovePortrait))
+         else if (currentLine.Contains(PlayerTwo.BattleTagAbovePortrait) && PlayerTwo != null)
           {
            if(!currentLine.Contains("AFK")) _watch1.Restart();
           }
-         else if (currentLine.Contains(PlayerThree.BattleTagAbovePortrait))
+         else if (currentLine.Contains(PlayerThree.BattleTagAbovePortrait) && PlayerThree != null)
           {
            if(!currentLine.Contains("AFK")) _watch2.Restart();
           }
-         else if (currentLine.Contains(PlayerFour.BattleTagAbovePortrait))
+         else if (currentLine.Contains(PlayerFour.BattleTagAbovePortrait) && PlayerFour != null)
           {
            if(!currentLine.Contains("AFK")) _watch3.Restart();
           }
