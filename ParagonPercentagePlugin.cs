@@ -337,7 +337,7 @@ namespace Turbo.Plugins.Resu
          
         }
         
-        public void OnChatLineChanged(string currentLine, string previousLine)
+/*         public void OnChatLineChanged(string currentLine, string previousLine)
         {
          string Message = currentLine;
             
@@ -363,7 +363,7 @@ namespace Turbo.Plugins.Resu
           {
            if(!Message.Contains("AFK")) _watch3.Restart();
           }
-        }
+        } */
         
         
         public void Customize()
