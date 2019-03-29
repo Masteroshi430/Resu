@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 20/01/2019 20:26
+// Paragon Percentage Plugin for TurboHUD Version 29/03/2019 20:21
 
 using System;
 using System.Globalization;
@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Turbo.Plugins.Resu
 {
-    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, ICustomizer
+    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, ICustomizer, IChatLineChangedHandler
     {
         public bool ShowGreaterRiftMaxLevel { get; set; }
         public bool ParagonPercentageOnTheRight { get; set; }
@@ -336,6 +336,32 @@ namespace Turbo.Plugins.Resu
         if (Points >= 4) {return true;} else {return false;}
          
         }
+        
+        public void OnChatLineChanged(string currentLine, string previousLine)
+        {
+         var PlayerOne = Hud.Game.Players.Where(x =>x.PortraitIndex == 0).FirstOrDefault();
+         var PlayerTwo = Hud.Game.Players.Where(x =>x.PortraitIndex == 1).FirstOrDefault();
+         var PlayerThree = Hud.Game.Players.Where(x =>x.PortraitIndex == 2).FirstOrDefault();
+         var PlayerFour = Hud.Game.Players.Where(x =>x.PortraitIndex == 3).FirstOrDefault();
+         
+         if (currentLine.Contains(PlayerOne.BattleTagAbovePortrait))
+          {
+           if(!currentLine.Contains("AFK")) _watch0.Restart();
+          }
+         else if (currentLine.Contains(PlayerTwo.BattleTagAbovePortrait))
+          {
+           if(!currentLine.Contains("AFK")) _watch1.Restart();
+          }
+         else if (currentLine.Contains(PlayerThree.BattleTagAbovePortrait))
+          {
+           if(!currentLine.Contains("AFK")) _watch2.Restart();
+          }
+         else if (currentLine.Contains(PlayerFour.BattleTagAbovePortrait))
+          {
+           if(!currentLine.Contains("AFK")) _watch3.Restart();
+          }
+        }
+        
         
         public void Customize()
         {
