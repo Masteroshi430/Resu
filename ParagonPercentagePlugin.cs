@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Turbo.Plugins.Resu
 {
-    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, ICustomizer, IChatLineChangedHandler
+    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, ICustomizer //, IChatLineChangedHandler
     {
         public bool ShowGreaterRiftMaxLevel { get; set; }
         public bool ParagonPercentageOnTheRight { get; set; }
