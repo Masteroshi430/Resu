@@ -85,7 +85,7 @@ namespace Turbo.Plugins.Resu
                 BackgroundTextureOpacity1 = 0.9f,
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 7, 250, 255, 255, 255, false, false, true),
                 
-                TextFunc = () =>  "      " + GRlevel,             
+                TextFunc = () =>  "      " + GRlevel,
                     
                 HintFunc = () =>  Class + Nemesis + Unity +  Environment.NewLine + "Sheet DPS : " + ValueToString((long)SheetDPS, ValueFormat.LongNumber) + Environment.NewLine + "EHP : " + ValueToString((long)EHP, ValueFormat.LongNumber),
             };
