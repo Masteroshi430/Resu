@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 18/02/2019 21:15
+// Crafter's Delight Plugin for TurboHUD Version 01/04/2019 16:57
 
 using System;
 using System.Collections.Generic;
@@ -419,7 +419,7 @@ namespace Turbo.Plugins.Resu
         public void OnLootGenerated(IItem item, bool gambled)
         {
             if (!Hud.Sound.IsIngameSoundEnabled) return;
-            if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
+            if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped && item.BoundToMyAccount)
             {
                 var soundPlayer = Hud.Sound.LoadSoundPlayer("Equipped-Drop-By-Resu.wav");
 
@@ -435,8 +435,8 @@ namespace Turbo.Plugins.Resu
                   });
             }
 
-            if (item.AncientRank < 1) { }
-            else
+            if (item.AncientRank < 1 ) { }
+            else if (item.BoundToMyAccount)
             {
                 var soundPlayer = item.AncientRank == 1 ? Hud.Sound.LoadSoundPlayer("Ancient-Drop-By-Resu.wav") : Hud.Sound.LoadSoundPlayer("Primal-Drop-By-Resu.wav");
 
@@ -458,12 +458,12 @@ namespace Turbo.Plugins.Resu
             if (!init_mapping) { init(); }
             if (Hud.Render.UiHidden) return;
 
-            var itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor).GroupBy(item => item.SnoItem.Sno);
+            var itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.BoundToMyAccount).GroupBy(item => item.SnoItem.Sno);
 
             if (GroupGems)
             {
-                itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode != "gems").GroupBy(item => item.SnoItem.Sno);
-                var gemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "gems").GroupBy(item => item.SnoItem.MainGroupCode);
+                itemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode != "gems" && item.BoundToMyAccount).GroupBy(item => item.SnoItem.Sno);
+                var gemGroups = Hud.Game.Items.Where(item => item.Location == ItemLocation.Floor && item.SnoItem.MainGroupCode == "gems" && item.BoundToMyAccount).GroupBy(item => item.SnoItem.MainGroupCode);
 
                 foreach (var items in gemGroups)
                 {
@@ -546,12 +546,12 @@ namespace Turbo.Plugins.Resu
                         cubeTexture.Draw(mapX - width / 2, mapY - height / 2, width, height);
                     }
 
-                    if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
+                    if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped && item.BoundToMyAccount)
                     {
                         EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "E");
                     }
 
-                    if (item.AncientRank < 1 || !ShowAncientRank) continue;
+                    if (item.AncientRank < 1 || !ShowAncientRank || !item.BoundToMyAccount) continue;
                     var ancientRankText = item.AncientRank == 1 ? "Ancient   ->                     <-   Ancient" : "Primal   ->                     <-   Primal";
 
                     if (item.SetSno != uint.MaxValue)
