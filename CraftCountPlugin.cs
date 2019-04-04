@@ -63,7 +63,7 @@ namespace Turbo.Plugins.Resu
         public long BountiesCompletion { get; set; }
         public long prevBountiesCompletion { get; set; }
         public int BountiesLeft { get; set; }
-        public double prevRiftPercentage { get; set; }       
+        public double prevRiftPercentage { get; set; }
          
         public CraftCountPlugin()
         {
