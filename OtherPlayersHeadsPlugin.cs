@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Other Player's heads Plugin for TurboHUD Version 12/02/2019 11:27
+// Other Player's heads Plugin for TurboHUD Version 21/04/2019 14:13
 
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +18,9 @@ namespace Turbo.Plugins.Resu
         public float NameOffsetZ { get; set; }
         public bool ShowCompanions { get; set; }
         public WorldDecoratorCollection ZDPSDecorator { get; set; }
-
+        public bool FemalePlayer1 { get; set; }
+        public bool FemalePlayer2 { get; set; }
+        public bool FemalePlayer3 { get; set; }
 
         public OtherPlayersHeadsPlugin()
        {
@@ -148,42 +150,75 @@ namespace Turbo.Plugins.Resu
             foreach (var player in players)
             {
                 
-                
+                if (player.IsOnScreen)
+                 {
+                  if (player.SnoActor.Sno.ToString().Contains("female")) //is female
+                   {
+                    switch (player.PortraitIndex)
+                     {
+                      case 1:
+                             FemalePlayer1 = true;
+                             break;
+                      case 2:
+                             FemalePlayer2 = true;
+                             break;
+                      case 3:
+                             FemalePlayer3 = true;
+                             break;
+                     }
+                   }
+                  else // is male
+                   {
+                    switch (player.PortraitIndex)
+                     {
+                      case 1:
+                             FemalePlayer1 = false;
+                             break;
+                      case 2:
+                             FemalePlayer2 = false;
+                             break;
+                      case 3:
+                             FemalePlayer3 = false;
+                             break;
+                     }
+                   }
+                 }
+                 
                 var HeroTexture = Hud.Texture.GetTexture(890155253);
                 
                 if (player.HeroClassDefinition.HeroClass.ToString() == "Barbarian")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(3921484788);
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(3921484788);
                     else HeroTexture = Hud.Texture.GetTexture(1030273087);
                    }
                 else if (player.HeroClassDefinition.HeroClass.ToString() == "Crusader")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(3742271755);
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(3742271755);
                     else HeroTexture = Hud.Texture.GetTexture(3435775766);
                    } 
                 else if (player.HeroClassDefinition.HeroClass.ToString() == "DemonHunter")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(3785199803);
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(3785199803);
                     else HeroTexture = Hud.Texture.GetTexture(2939779782);
                    } 
                 else if (player.HeroClassDefinition.HeroClass.ToString() == "Monk")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(2227317895);
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(2227317895);
                     else HeroTexture = Hud.Texture.GetTexture(2918463890);
                    } 
                 else if (player.HeroClassDefinition.HeroClass.ToString() == "Necromancer")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(3285997023); 
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(3285997023); 
                     else HeroTexture = Hud.Texture.GetTexture(473831658);   
                    }
                 else if (player.HeroClassDefinition.HeroClass.ToString() == "WitchDoctor")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(3925954876);
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(3925954876);
                     else HeroTexture = Hud.Texture.GetTexture(1603231623);
                    }
                 else if (player.HeroClassDefinition.HeroClass.ToString() == "Wizard")
                    {
-                    if (player.HeroIsMale) HeroTexture = Hud.Texture.GetTexture(44435619);
+                    if ((player.PortraitIndex == 1 && !FemalePlayer1) || (player.PortraitIndex == 2 && !FemalePlayer2) || (player.PortraitIndex == 3 && !FemalePlayer3)) HeroTexture = Hud.Texture.GetTexture(44435619);
                     else HeroTexture = Hud.Texture.GetTexture(876580014);
                    }
                  float PlayersHeadOpacity = 1f;
