@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Other Player's heads Plugin for TurboHUD Version 21/04/2019 14:13
+// Other Player's heads Plugin for TurboHUD Version 22/04/2019 07:42
 
 using System.Collections.Generic;
 using System.Linq;
@@ -142,6 +142,10 @@ namespace Turbo.Plugins.Resu
                     TextFont = Hud.Render.CreateFont("tahoma", 6f, 255, 182, 26, 255, false, false, 128, 0, 0, 0, true),
                 }
                 ));
+                
+                FemalePlayer1 = false;
+                FemalePlayer2 = false;
+                FemalePlayer3 = false;
         }
 
         public void PaintWorld(WorldLayer layer)
@@ -150,9 +154,9 @@ namespace Turbo.Plugins.Resu
             foreach (var player in players)
             {
                 
-                if (player.IsOnScreen)
+                if (player != null && player.IsOnScreen)
                  {
-                  if (player.SnoActor.Sno.ToString().Contains("female")) //is female
+                  if (player.SnoActor != null && player.SnoActor.Sno != null && player.SnoActor.Sno.ToString().Contains("female")) //is female
                    {
                     switch (player.PortraitIndex)
                      {
