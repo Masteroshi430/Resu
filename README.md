@@ -251,6 +251,7 @@ Note : Don't forget to download the [Soundfiles](https://minhaskamal.github.io/D
 - Chests & lores (minimap) 
 - Ancient and Primal indicator on legendary or set icons (minimap).
 - Same item as equipped or in cube (only for ancients) : indicator on minimap (E) & lines around item in inventory / stash.
+- Same item as in Armory (only for ancients) : indicator on minimap (⚔).
 - Noob Gear Mode : Displays White, Blue, Yellow stars on floor & minimap if the Normal/Magic/Rare item dropped has better quality than your worst quality item equipped. 
 
 ...And adds transparent colored groundlabel names with quantity for all + Slain Farmers (discrete and ground label only) except Bovine Bardiche & Puzzle Ring (already in ItemsPlugin).
