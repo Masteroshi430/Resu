@@ -419,7 +419,7 @@ namespace Turbo.Plugins.Resu
         public void OnLootGenerated(IItem item, bool gambled)
         {
             if (!Hud.Sound.IsIngameSoundEnabled) return;
-            if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
+            if (SameAsEquipped(item, true) && Equipped)
             {
                 var soundPlayer = Hud.Sound.LoadSoundPlayer("Equipped-Drop-By-Resu.wav");
 
@@ -546,9 +546,12 @@ namespace Turbo.Plugins.Resu
                         cubeTexture.Draw(mapX - width / 2, mapY - height / 2, width, height);
                     }
 
-                    if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank) && Equipped)
+                    if (SameAsEquipped(item, false) && Equipped)
                     {
                         EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "E");
+                    } else if (SameAsArmory(item) && Equipped)
+                    {
+                        EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "A");
                     }
 
                     if (item.AncientRank < 1 || !ShowAncientRank) continue;
@@ -642,10 +645,29 @@ namespace Turbo.Plugins.Resu
                     RespendentTexture.Draw(textureX - 11, textureY - 13, 22.77f, 27.06f, 1f);
                 }
             }
+       }
+
+       private bool SameAsArmory(IItem item)
+       {
+            for (int i = 0; i < Hud.Game.Me.ArmorySets.Length; ++i)
+            {
+                var armorySet = Hud.Game.Me.ArmorySets[i];
+                if (armorySet != null)
+                {
+                    if (armorySet.ContainsItem(item))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
-        private bool SameAsEquipped(uint ThatItemSno, int ThatItemRank)
+        private bool SameAsEquipped(IItem item, bool includeArmory)
         {
+            uint ThatItemSno = item.SnoItem.Sno;
+            int ThatItemRank = item.AncientRank;
+
             if (ThatItemRank == 1) ThatItemRank = 2;
             bool Worn = Hud.Game.Items.Any(x => (int)x.Location > 0 && (int)x.Location < 14 && x.SnoItem.Sno == ThatItemSno && x.AncientRank <= ThatItemRank);
             bool Cubed1 = Hud.Game.Me.CubeSnoItem1?.Sno == ThatItemSno && ThatItemRank > 0;
@@ -656,7 +678,10 @@ namespace Turbo.Plugins.Resu
             else if (Cubed1) return true;
             else if (Cubed2) return true;
             else if (Cubed3) return true;
-            else return false;
+
+            /* Consider armory items as equipped */
+            if (!includeArmory) return false;
+            return SameAsArmory(item);
         }
 
         private bool DisplayItem(byte ItemQuality)
@@ -684,7 +709,7 @@ namespace Turbo.Plugins.Resu
                 foreach (var item in Hud.Game.Items)
                 {
                     if ((Int32)item.Location > 0 && (Int32)item.Location < 14) continue;
-                    if (SameAsEquipped(item.SnoItem.Sno, item.AncientRank))
+                    if (SameAsEquipped(item, false))
                     {
                         if (item.Location == ItemLocation.Stash)
                         {
