@@ -1,9 +1,8 @@
-//css_reference C:\v9.0.dll;
+﻿//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Item Perfection plugin for TurboHUD version 12/02/2019 11:27
+// Item Perfection plugin for TurboHUD version 10/05/2019 15:11
  
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Turbo.Plugins.Default;

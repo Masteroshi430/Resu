@@ -1,9 +1,8 @@
-//css_reference C:\v9.0.dll;
+﻿//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Urshi's gift plugin for TurboHUD version 05/01/2018 08:38
+// Urshi's gift plugin for TurboHUD version 10/05/2019 15:11
  
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using Turbo.Plugins.Default;
@@ -160,7 +159,7 @@ namespace Turbo.Plugins.Resu
             if (GRlevel < 1) {GRlevel = 1;}
             var text = GRlevel.ToString("D", CultureInfo.InvariantCulture);
             var layout = GRupgradeChanceFont.GetTextLayout(text); 
-            GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);  
+            GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
             
             }
         }
