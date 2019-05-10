@@ -1,6 +1,6 @@
 //css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 01/04/2019 16:57
+// Crafter's Delight Plugin for TurboHUD Version 10/05/2019 15:58
 
 using System;
 using System.Collections.Generic;
@@ -434,7 +434,22 @@ namespace Turbo.Plugins.Resu
                       }
                   });
             }
+           else if (SameAsArmory(item) && Equipped)
+            {
+                var soundPlayer = Hud.Sound.LoadSoundPlayer("Armory-Drop-By-Resu.wav");
 
+                ThreadPool.QueueUserWorkItem(state =>
+                  {
+                      try
+                      {
+                          soundPlayer.PlaySync();
+                      }
+                      catch (Exception)
+                      {
+                      }
+                  });
+            }
+            
             if (item.AncientRank < 1 ) { }
             else
             {
@@ -549,9 +564,10 @@ namespace Turbo.Plugins.Resu
                     if (SameAsEquipped(item, false) && Equipped)
                     {
                         EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "E");
-                    } else if (SameAsArmory(item) && Equipped)
+                    }
+                    else if (SameAsArmory(item) && Equipped)
                     {
-                        EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "A");
+                        EquippedDecorator.Paint(layer, item, item.FloorCoordinate, "\u2694");
                     }
 
                     if (item.AncientRank < 1 || !ShowAncientRank) continue;
