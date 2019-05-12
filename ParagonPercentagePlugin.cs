@@ -1,4 +1,4 @@
-//css_reference C:\v9.0.dll;
+﻿//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
 // Paragon Percentage Plugin for TurboHUD Version 29/03/2019 20:21
 
@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Turbo.Plugins.Resu
 {
-    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, ICustomizer //, IChatLineChangedHandler
+    public class ParagonPercentagePlugin : BasePlugin, IInGameTopPainter, IChatLineChangedHandler
     {
         public bool ShowGreaterRiftMaxLevel { get; set; }
         public bool ParagonPercentageOnTheRight { get; set; }
@@ -38,7 +38,8 @@ namespace Turbo.Plugins.Resu
         private IWatch _watch1;
         private IWatch _watch2;
         private IWatch _watch3;
-        
+        public string LastChatLine { get; set; }
+
         public ParagonPercentagePlugin()
         {
             Enabled = true;
@@ -56,9 +57,10 @@ namespace Turbo.Plugins.Resu
             ParagonPercentageOnTheRight = true;
             ParagonPercentage = "0";
             DisplayParagonPercentage = true;
-            TimeToNextParagon = String.Empty;
+            TimeToNextParagon = string.Empty;
+            LastChatLine = string.Empty;
 
-            
+
             ParagonPercentageDecorator = new TopLabelDecorator(Hud)
             {
                 BackgroundTexture1 = Hud.Texture.Button2TextureBrown,
@@ -71,7 +73,7 @@ namespace Turbo.Plugins.Resu
             };
 
             
-                        
+            
             GRlevel = -1;
             SheetDPS = -1;
             EHP = -1;
@@ -85,7 +87,7 @@ namespace Turbo.Plugins.Resu
                 BackgroundTextureOpacity1 = 0.9f,
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 7, 250, 255, 255, 255, false, false, true),
                 
-                TextFunc = () =>  "      " + GRlevel,
+                TextFunc = () => "      " + GRlevel,
                     
                 HintFunc = () =>  Class + Nemesis + Unity +  Environment.NewLine + "Sheet DPS : " + ValueToString((long)SheetDPS, ValueFormat.LongNumber) + Environment.NewLine + "EHP : " + ValueToString((long)EHP, ValueFormat.LongNumber),
             };
@@ -134,7 +136,11 @@ namespace Turbo.Plugins.Resu
 
         
         }
-
+        public void OnChatLineChanged(string currentLine, string previousLine)
+        {
+            if (!string.IsNullOrEmpty(currentLine))
+                LastChatLine = currentLine;
+        }
         public void PaintTopInGame(ClipState clipState)
         {
             if (Hud.Render.UiHidden) return;
@@ -174,7 +180,7 @@ namespace Turbo.Plugins.Resu
                   GRlevel = player.HighestHeroSoloRiftLevel; 
                   SheetDPS = player.Offense.SheetDps;
                   EHP = player.Defense.EhpCur;
-                  Class = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();;
+                  Class = IsZDPS(player) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();;
                   var Nemo = player.Powers.GetBuff(318820);
                   if (Nemo == null || !Nemo.Active) {Nemesis = "";} else {Nemesis = " [Nemesis]";}
                   var Unit = player.Powers.GetBuff(318769);
@@ -297,9 +303,28 @@ namespace Turbo.Plugins.Resu
                   if (player.PortraitIndex == 1) Player1pos = player.FloorCoordinate;
                   if (player.PortraitIndex == 2) Player2pos = player.FloorCoordinate;
                   if (player.PortraitIndex == 3) Player3pos = player.FloorCoordinate;
-            
-              }
-             
+
+
+                if (player.PortraitIndex == 0 && LastChatLine.Contains(player.BattleTagAbovePortrait))
+                {
+                    if (!LastChatLine.Contains("AFK")) _watch0.Restart();
+                }
+                else if (player.PortraitIndex == 1 && LastChatLine.Contains(player.BattleTagAbovePortrait))
+                {
+                    if (!LastChatLine.Contains("AFK")) _watch1.Restart();
+                }
+                else if (player.PortraitIndex == 2 && LastChatLine.Contains(player.BattleTagAbovePortrait))
+                {
+                    if (!LastChatLine.Contains("AFK")) _watch2.Restart();
+                }
+                else if (player.PortraitIndex == 3 && LastChatLine.Contains(player.BattleTagAbovePortrait))
+                {
+                    if (!LastChatLine.Contains("AFK")) _watch3.Restart();
+                }
+
+            }
+            LastChatLine = string.Empty;
+            TimeToNextParagon = TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false);
         }
         
         private bool IsZDPS(IPlayer player)
@@ -307,19 +332,24 @@ namespace Turbo.Plugins.Resu
          int Points = 0;
          
          var IllusoryBoots = player.Powers.GetBuff(318761);
-         if (IllusoryBoots == null || !IllusoryBoots.Active) {} else {Points++;}
+         if (IllusoryBoots == null || !IllusoryBoots.Active) {}
+         else {Points++;}
          
          var LeoricsCrown = player.Powers.GetBuff(442353);
-         if (LeoricsCrown == null || !LeoricsCrown.Active) {} else {Points++;}
+         if (LeoricsCrown == null || !LeoricsCrown.Active) {}
+         else {Points++;}
          
          var EfficaciousToxin = player.Powers.GetBuff(403461);
-         if (EfficaciousToxin == null || !EfficaciousToxin.Active) {} else {Points++;}
+         if (EfficaciousToxin == null || !EfficaciousToxin.Active) {}
+         else {Points++;}
          
          var OculusRing = player.Powers.GetBuff(402461);
-         if (OculusRing == null || !OculusRing.Active) {} else {Points++;}
+         if (OculusRing == null || !OculusRing.Active) {}
+         else {Points++;}
          
          var ZodiacRing = player.Powers.GetBuff(402459);
-         if (ZodiacRing == null || !ZodiacRing.Active) {} else {Points++;}
+         if (ZodiacRing == null || !ZodiacRing.Active) {}
+         else {Points++;}
          
          if (player.Offense.SheetDps < 500000f) Points++;
          if (player.Offense.SheetDps > 1500000f) Points--;
@@ -327,49 +357,45 @@ namespace Turbo.Plugins.Resu
          if (player.Defense.EhpMax > 80000000f) Points++;
          
          var ConventionRing = player.Powers.GetBuff(430674);
-         if (ConventionRing == null || !ConventionRing.Active) {} else {Points--;}
+         if (ConventionRing == null || !ConventionRing.Active) {}
+         else {Points--;}
          
          var Stricken = player.Powers.GetBuff(428348);
-         if (Stricken == null || !Stricken.Active) {} else {Points--;}
+         if (Stricken == null || !Stricken.Active) {}
+         else {Points--;}
          
-        
-        if (Points >= 4) {return true;} else {return false;}
-         
+         if (Points >= 4) {return true;}
+         else {return false;}
         }
         
-/*         public void OnChatLineChanged(string currentLine, string previousLine)
+        public string TimeToParagonLevel(uint paragonLevel, bool includetext)
         {
-         string Message = currentLine;
-            
-         var PlayerOne = Hud.Game.Players.Where(x => x.PortraitIndex == 0).FirstOrDefault();
-         var PlayerTwo = Hud.Game.Players.Where(x => x.PortraitIndex == 1).FirstOrDefault();
-         var PlayerThree = Hud.Game.Players.Where(x => x.PortraitIndex == 2).FirstOrDefault();
-         var PlayerFour = Hud.Game.Players.Where(x => x.PortraitIndex == 3).FirstOrDefault();
-         
-         
-         if (PlayerOne != null && Message.Contains(PlayerOne.BattleTagAbovePortrait))
-          {
-           if(!Message.Contains("AFK")) _watch0.Restart();
-          }
-         else if (PlayerTwo != null && Message.Contains(PlayerTwo.BattleTagAbovePortrait))
-          {
-           if(!Message.Contains("AFK")) _watch1.Restart();
-          }
-         else if (PlayerThree != null && Message.Contains(PlayerThree.BattleTagAbovePortrait))
-          {
-           if(!Message.Contains("AFK")) _watch2.Restart();
-          }
-         else if (PlayerFour != null && Message.Contains(PlayerFour.BattleTagAbovePortrait))
-          {
-           if(!Message.Contains("AFK")) _watch3.Restart();
-          }
-        } */
-        
-        
-        public void Customize()
-        {
-         var experiencePlugin = Hud.GetPlugin<TopExperienceStatistics>();
-         TimeToNextParagon = experiencePlugin.TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false);
+            var tracker = Hud.Game.CurrentHeroToday;
+            if (tracker != null)
+            {
+                if (paragonLevel > Hud.Game.Me.CurrentLevelParagon)
+                {
+                    var text = includetext ? "p" + paragonLevel.ToString("D", CultureInfo.InvariantCulture) + ": " : "";
+                    var xph = tracker.GainedExperiencePerHourPlay;
+                    if (xph > 0)
+                    {
+                        var xpRequired = Hud.Sno.TotalParagonExperienceRequired(paragonLevel);
+                        var xpRemaining = xpRequired - Hud.Game.Me.ParagonTotalExp;
+                        var hours = xpRemaining / xph;
+                        var ticks = Convert.ToInt64(Math.Ceiling(hours * 60.0d * 60.0d * 1000.0d * TimeSpan.TicksPerMillisecond));
+                        text += ValueToString(ticks, ValueFormat.LongTimeNoSeconds);
+                    }
+                    else
+                        text += "-";
+                    return text;
+                }
+            }
+
+            return null;
         }
+
+
+
+
     }
 }
