@@ -1,6 +1,5 @@
-﻿//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 29/03/2019 20:21
+﻿// https://github.com/User5981/Resu
+// Paragon Percentage Plugin for TurboHUD Version 16/05/2019 00:45
 
 using System;
 using System.Globalization;
@@ -89,7 +88,7 @@ namespace Turbo.Plugins.Resu
                 
                 TextFunc = () => "      " + GRlevel,
                     
-                HintFunc = () =>  Class + Nemesis + Unity +  Environment.NewLine + "Sheet DPS : " + ValueToString((long)SheetDPS, ValueFormat.LongNumber) + Environment.NewLine + "EHP : " + ValueToString((long)EHP, ValueFormat.LongNumber),
+                HintFunc = () =>  Class + Nemesis + Unity + Environment.NewLine + "Sheet DPS : " + ValueToString((long)SheetDPS, ValueFormat.LongNumber) + Environment.NewLine + "EHP : " + ValueToString((long)EHP, ValueFormat.LongNumber),
             };
             
             ZDPSDecorator = new TopLabelDecorator(Hud)
@@ -136,11 +135,13 @@ namespace Turbo.Plugins.Resu
 
         
         }
+        
         public void OnChatLineChanged(string currentLine, string previousLine)
         {
             if (!string.IsNullOrEmpty(currentLine))
                 LastChatLine = currentLine;
         }
+        
         public void PaintTopInGame(ClipState clipState)
         {
             if (Hud.Render.UiHidden) return;
