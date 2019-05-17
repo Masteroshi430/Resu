@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 16/05/2019 00:45
+// Paragon Percentage Plugin for TurboHUD Version 17/05/2019 22:57
 
 using System;
 using System.Globalization;
@@ -21,7 +21,9 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator UnityDecorator { get; set; }
         public TopLabelDecorator ZDPSDecorator { get; set; }
         public TopLabelDecorator AFKDecorator { get; set; }
-        
+
+        public TopLabelDecorator NPCDecorator { get; set; }
+
         public int GRlevel { get; set; }
         public float SheetDPS { get; set; }
         public float EHP { get; set; }
@@ -37,6 +39,11 @@ namespace Turbo.Plugins.Resu
         private IWatch _watch1;
         private IWatch _watch2;
         private IWatch _watch3;
+        private IWatch _NPCwatch0;
+        private IWatch _NPCwatch1;
+        private IWatch _NPCwatch2;
+        private IWatch _NPCwatch3;
+
         public string LastChatLine { get; set; }
 
         public ParagonPercentagePlugin()
@@ -51,7 +58,11 @@ namespace Turbo.Plugins.Resu
             _watch1 = Hud.Time.CreateWatch();
             _watch2 = Hud.Time.CreateWatch();
             _watch3 = Hud.Time.CreateWatch();
-            
+            _NPCwatch0 = Hud.Time.CreateWatch();
+            _NPCwatch1 = Hud.Time.CreateWatch();
+            _NPCwatch2 = Hud.Time.CreateWatch();
+            _NPCwatch3 = Hud.Time.CreateWatch();
+
             ShowGreaterRiftMaxLevel = true;
             ParagonPercentageOnTheRight = true;
             ParagonPercentage = "0";
@@ -112,7 +123,18 @@ namespace Turbo.Plugins.Resu
                     
                 HintFunc = () => "",
             };
-            
+
+            NPCDecorator = new TopLabelDecorator(Hud)
+            {
+                BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+                BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 255, 0, 255, 0, true, false, 255, 255, 255, 255, true),
+
+                TextFunc = () => "NPC",
+
+                HintFunc = () => "",
+            };
+
             NemesisDecorator = new TopLabelDecorator(Hud)
             {
                 BackgroundTexture1 = Hud.Texture.Button2TextureBrown,
@@ -299,28 +321,64 @@ namespace Turbo.Plugins.Resu
                   if (player.PortraitIndex == 2) _watch2.Restart();
                   if (player.PortraitIndex == 3) _watch3.Restart();
                  }
-               
-                  if (player.PortraitIndex == 0) Player0pos = player.FloorCoordinate;
-                  if (player.PortraitIndex == 1) Player1pos = player.FloorCoordinate;
-                  if (player.PortraitIndex == 2) Player2pos = player.FloorCoordinate;
-                  if (player.PortraitIndex == 3) Player3pos = player.FloorCoordinate;
+
+                if (player.PortraitIndex == 0)
+                {
+                 Player0pos = player.FloorCoordinate;
+                 int NPC0 = (int)(_NPCwatch0.ElapsedMilliseconds / 60000);
+                 if (NPC0 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
+                if (player.PortraitIndex == 1)
+                {
+                 Player1pos = player.FloorCoordinate;
+                 int NPC1 = (int)(_NPCwatch1.ElapsedMilliseconds / 60000);
+                 if (NPC1 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
+                if (player.PortraitIndex == 2)
+                {
+                 Player2pos = player.FloorCoordinate;
+                 int NPC2 = (int)(_NPCwatch2.ElapsedMilliseconds / 60000);
+                 if (NPC2 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
+                if (player.PortraitIndex == 3)
+                {
+                 Player3pos = player.FloorCoordinate;
+                 int NPC3 = (int)(_NPCwatch3.ElapsedMilliseconds / 60000);
+                 if (NPC3 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
 
 
                 if (player.PortraitIndex == 0 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
-                    if (!LastChatLine.Contains("AFK")) _watch0.Restart();
+                    if (!LastChatLine.Contains("AFK"))
+                    {
+                        _watch0.Restart();
+                    }
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch0.Restart();
                 }
                 else if (player.PortraitIndex == 1 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
-                    if (!LastChatLine.Contains("AFK")) _watch1.Restart();
+                    if (!LastChatLine.Contains("AFK"))
+                    {
+                        _watch1.Restart();
+                    }
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch1.Restart();
                 }
                 else if (player.PortraitIndex == 2 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
-                    if (!LastChatLine.Contains("AFK")) _watch2.Restart();
+                    if (!LastChatLine.Contains("AFK"))
+                    {
+                        _watch2.Restart();
+                    }
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch2.Restart();
                 }
                 else if (player.PortraitIndex == 3 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
-                    if (!LastChatLine.Contains("AFK")) _watch3.Restart();
+                    if (!LastChatLine.Contains("AFK"))
+                    {
+                        _watch3.Restart();
+                    }
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch3.Restart();
                 }
 
             }
