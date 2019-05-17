@@ -1,6 +1,5 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
-// Other Player's heads Plugin for TurboHUD Version 22/04/2019 07:42
+﻿// https://github.com/User5981/Resu
+// Other Player's heads Plugin for TurboHUD Version 17/05/2019 15:44
 
 using System.Collections.Generic;
 using System.Linq;
@@ -156,7 +155,7 @@ namespace Turbo.Plugins.Resu
                 
                 if (player != null && player.IsOnScreen)
                  {
-                  if (player.SnoActor != null && player.SnoActor.Sno != null && player.SnoActor.Sno.ToString().Contains("female")) //is female
+                  if (player.SnoActor != null && (uint)player.SnoActor.Sno != 0 && player.SnoActor.Sno.ToString().Contains("female")) //is female
                    {
                     switch (player.PortraitIndex)
                      {
