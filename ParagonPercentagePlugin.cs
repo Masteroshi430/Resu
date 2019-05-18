@@ -128,7 +128,7 @@ namespace Turbo.Plugins.Resu
             {
                 BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                 BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
-                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 255, 0, 255, 0, true, false, 255, 255, 255, 255, true),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 100, 0, 255, 0, true, false, 100, 255, 255, 255, true),
 
                 TextFunc = () => "NPC",
 
