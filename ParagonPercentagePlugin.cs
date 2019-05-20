@@ -160,8 +160,7 @@ namespace Turbo.Plugins.Resu
         
         public void OnChatLineChanged(string currentLine, string previousLine)
         {
-            if (!string.IsNullOrEmpty(currentLine))
-                LastChatLine = currentLine;
+            if (!string.IsNullOrEmpty(currentLine)) LastChatLine = currentLine;
         }
         
         public void PaintTopInGame(ClipState clipState)
@@ -322,39 +321,13 @@ namespace Turbo.Plugins.Resu
                   if (player.PortraitIndex == 3) _watch3.Restart();
                  }
 
-                if (player.PortraitIndex == 0)
-                {
-                 Player0pos = player.FloorCoordinate;
-                 int NPC0 = (int)(_NPCwatch0.ElapsedMilliseconds / 60000);
-                 if (NPC0 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                }
-                if (player.PortraitIndex == 1)
-                {
-                 Player1pos = player.FloorCoordinate;
-                 int NPC1 = (int)(_NPCwatch1.ElapsedMilliseconds / 60000);
-                 if (NPC1 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                }
-                if (player.PortraitIndex == 2)
-                {
-                 Player2pos = player.FloorCoordinate;
-                 int NPC2 = (int)(_NPCwatch2.ElapsedMilliseconds / 60000);
-                 if (NPC2 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                }
-                if (player.PortraitIndex == 3)
-                {
-                 Player3pos = player.FloorCoordinate;
-                 int NPC3 = (int)(_NPCwatch3.ElapsedMilliseconds / 60000);
-                 if (NPC3 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                }
-
-
                 if (player.PortraitIndex == 0 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
                     if (!LastChatLine.Contains("AFK"))
                     {
                         _watch0.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch0.Restart();
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch0.Restart();
                 }
                 else if (player.PortraitIndex == 1 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
@@ -362,7 +335,7 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch1.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch1.Restart();
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch1.Restart();
                 }
                 else if (player.PortraitIndex == 2 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
@@ -370,7 +343,7 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch2.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch2.Restart();
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch2.Restart();
                 }
                 else if (player.PortraitIndex == 3 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
@@ -378,11 +351,34 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch3.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch3.Restart();
+                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch3.Restart();
                 }
-
+                
+                if (player.PortraitIndex == 0)
+                {
+                 Player0pos = player.FloorCoordinate;
+                 int NPC0 = (int)(_NPCwatch0.ElapsedMilliseconds / 60000);
+                 if (NPC0 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
+                else if (player.PortraitIndex == 1)
+                {
+                 Player1pos = player.FloorCoordinate;
+                 int NPC1 = (int)(_NPCwatch1.ElapsedMilliseconds / 60000);
+                 if (NPC1 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
+                 else if (player.PortraitIndex == 2)
+                {
+                 Player2pos = player.FloorCoordinate;
+                 int NPC2 = (int)(_NPCwatch2.ElapsedMilliseconds / 60000);
+                 if (NPC2 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
+                 else if (player.PortraitIndex == 3)
+                {
+                 Player3pos = player.FloorCoordinate;
+                 int NPC3 = (int)(_NPCwatch3.ElapsedMilliseconds / 60000);
+                 if (NPC3 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                }
             }
-            LastChatLine = string.Empty;
             TimeToNextParagon = TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false);
         }
         
