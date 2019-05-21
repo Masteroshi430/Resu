@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 17/05/2019 22:57
+// Paragon Percentage Plugin for TurboHUD Version 21/05/2019 16:15
 
 using System;
 using System.Globalization;
@@ -14,7 +14,6 @@ namespace Turbo.Plugins.Resu
         public bool ParagonPercentageOnTheRight { get; set; }
         public bool DisplayParagonPercentage { get; set; }
         public string ParagonPercentage { get; set; }
-        
         public TopLabelDecorator ParagonPercentageDecorator { get; set; }
         public TopLabelDecorator HighestSoloRiftLevelDecorator { get; set; }
         public TopLabelDecorator NemesisDecorator { get; set; }
@@ -327,7 +326,10 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch0.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch0.Restart();
+                    if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
+                    { }
+                    else
+                    { _NPCwatch0.Restart(); } 
                 }
                 else if (player.PortraitIndex == 1 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
@@ -335,7 +337,10 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch1.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch1.Restart();
+                    if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
+                    { }
+                    else
+                    { _NPCwatch1.Restart(); }
                 }
                 else if (player.PortraitIndex == 2 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
@@ -343,7 +348,10 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch2.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch2.Restart();
+                    if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
+                    { }
+                    else
+                    { _NPCwatch2.Restart(); }
                 }
                 else if (player.PortraitIndex == 3 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
@@ -351,7 +359,10 @@ namespace Turbo.Plugins.Resu
                     {
                         _watch3.Restart();
                     }
-                    if (!LastChatLine.Contains("teleported") && !LastChatLine.Contains("returning") && !LastChatLine.Contains("slain") && !LastChatLine.Contains("AFK")) _NPCwatch3.Restart();
+                    if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
+                    { }
+                    else
+                    { _NPCwatch3.Restart(); }
                 }
                 
                 if (player.PortraitIndex == 0)
