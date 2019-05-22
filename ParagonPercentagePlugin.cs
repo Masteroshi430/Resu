@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 21/05/2019 16:15
+// Paragon Percentage Plugin for TurboHUD Version 22/05/2019 22:50
 
 using System;
 using System.Globalization;
@@ -193,12 +193,10 @@ namespace Turbo.Plugins.Resu
              
               foreach (var player in Hud.Game.Players.OrderBy(p => p.PortraitIndex))
               {
-                  if (player == null) continue;
-                  if (player.PortraitUiElement == null) continue;
-                  if (player.PortraitUiElement.Rectangle == null) continue;
+                  if (player == null || player.PortraitUiElement == null || player.PortraitUiElement.Rectangle == null || player.BattleTagAbovePortrait == null) continue;
                   var portrait = player.PortraitUiElement.Rectangle;
 
-                  GRlevel = player.HighestHeroSoloRiftLevel; 
+                  GRlevel = player.HighestHeroSoloRiftLevel;
                   SheetDPS = player.Offense.SheetDps;
                   EHP = player.Defense.EhpCur;
                   Class = IsZDPS(player) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();;
@@ -252,25 +250,25 @@ namespace Turbo.Plugins.Resu
                                       if (Nemo == null || !Nemo.Active)
                                          {
                                              if (ParagonPercentageOnTheRight)
-                                                {   
+                                                {
                           
                                                  UnityDecorator.Paint(portrait.Left + portrait.Width * 0.71f, portrait.Top + portrait.Height * 0.79f, portrait.Width * 0.28f, portrait.Height * 0.14f, HorizontalAlign.Center);
                                                 }
-                                             else 
-                                                {   
+                                             else
+                                                {
                                                  UnityDecorator.Paint(portrait.Left + portrait.Width * -0.18f, portrait.Top + portrait.Height * 0.79f, portrait.Width * 0.28f, portrait.Height * 0.14f, HorizontalAlign.Center);
                                                 };
-                                         }  
+                                         }
                                          else
                                          {
                                   
                                              if (ParagonPercentageOnTheRight)
-                                                {   
+                                                {
                         
                                                   UnityDecorator.Paint(portrait.Left + portrait.Width * 0.71f, portrait.Top + portrait.Height * 0.93f, portrait.Width * 0.28f, portrait.Height * 0.14f, HorizontalAlign.Center);
                                                 }
-                                             else 
-                                                {   
+                                             else
+                                                {
                                                    UnityDecorator.Paint(portrait.Left + portrait.Width * -0.18f, portrait.Top + portrait.Height * 0.93f, portrait.Width * 0.28f, portrait.Height * 0.14f, HorizontalAlign.Center);
                                                 };
                     
