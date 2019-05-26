@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 22/05/2019 22:50
+// Paragon Percentage Plugin for TurboHUD Version 26/05/2019 17:45
 
 using System;
 using System.Globalization;
@@ -30,6 +30,7 @@ namespace Turbo.Plugins.Resu
         public string Nemesis { get; set; }
         public string Unity { get; set; }
         public string TimeToNextParagon { get; set; }
+        public string MyAccountName { get; set; }
         public IWorldCoordinate Player0pos { get; set; }
         public IWorldCoordinate Player1pos { get; set; }
         public IWorldCoordinate Player2pos { get; set; }
@@ -61,6 +62,10 @@ namespace Turbo.Plugins.Resu
             _NPCwatch1 = Hud.Time.CreateWatch();
             _NPCwatch2 = Hud.Time.CreateWatch();
             _NPCwatch3 = Hud.Time.CreateWatch();
+            _NPCwatch0.Restart();
+            _NPCwatch1.Restart();
+            _NPCwatch2.Restart();
+            _NPCwatch3.Restart();
 
             ShowGreaterRiftMaxLevel = true;
             ParagonPercentageOnTheRight = true;
@@ -77,7 +82,6 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 7, 250, 255, 255, 255, false, false, true),
 
                 TextFunc = () => ParagonPercentage,
-
                 HintFunc = () => "Paragon level " + (Hud.Game.Me.CurrentLevelParagon + 1) + " in " + TimeToNextParagon +  Environment.NewLine + "EXP/h : " + ValueToString(Hud.Game.CurrentHeroToday.GainedExperiencePerHourPlay, ValueFormat.ShortNumber),
             };
 
@@ -89,7 +93,9 @@ namespace Turbo.Plugins.Resu
             Class = "-1";
             Nemesis = "-1";
             Unity = "-1";
-            
+
+
+
             HighestSoloRiftLevelDecorator = new TopLabelDecorator(Hud)
             {
                 BackgroundTexture1 = Hud.Texture.Button2TextureBrown,
@@ -108,7 +114,6 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 120, 0, 191, 255, true, false, false),
                 
                 TextFunc = () =>  "Z",
-                    
                 HintFunc = () => "",
             };
             
@@ -119,7 +124,6 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 255, 255, 0, 0, true, false, 255, 255, 255, 255, true),
                 
                 TextFunc = () =>  "AFK",
-                    
                 HintFunc = () => "",
             };
 
@@ -130,7 +134,6 @@ namespace Turbo.Plugins.Resu
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 100, 0, 255, 0, true, false, 100, 255, 255, 255, true),
 
                 TextFunc = () => "NPC",
-
                 HintFunc = () => "",
             };
 
@@ -160,6 +163,7 @@ namespace Turbo.Plugins.Resu
         public void OnChatLineChanged(string currentLine, string previousLine)
         {
             if (!string.IsNullOrEmpty(currentLine)) LastChatLine = currentLine;
+            Hud.TextLog.Log("chat", LastChatLine, false, true);
         }
         
         public void PaintTopInGame(ClipState clipState)
@@ -168,8 +172,11 @@ namespace Turbo.Plugins.Resu
             if (clipState != ClipState.BeforeClip) return;
             if (Hud.Game.Me.PortraitUiElement.Rectangle == null) return;
             var uiRect = Hud.Game.Me.PortraitUiElement.Rectangle;
-            
-            
+
+            int index = Hud.Game.Me.Hero.BattleTag.IndexOf("#");
+            if (index > 0) MyAccountName = Hud.Game.Me.Hero.BattleTag.Substring(0, index);
+
+
             if (Hud.Game.Me.CurrentLevelNormal == 70)
                    {
                      ParagonPercentage = string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", (Hud.Game.Me.CurrentLevelParagonFloat - Hud.Game.Me.CurrentLevelParagon) * 100);
@@ -290,19 +297,19 @@ namespace Turbo.Plugins.Resu
                    int AFK0 = (int)(_watch0.ElapsedMilliseconds/60000);
                    if (AFK0 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
-                  if (player.PortraitIndex == 1) 
+                  if (player.PortraitIndex == 1)
                   { 
                    if (player.FloorCoordinate != Player1pos) _watch1.Restart();
                    int AFK1 = (int)(_watch1.ElapsedMilliseconds/60000);
                    if (AFK1 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
-                  if (player.PortraitIndex == 2) 
+                  if (player.PortraitIndex == 2)
                   { 
                    if (player.FloorCoordinate != Player2pos) _watch2.Restart();
                    int AFK2 = (int)(_watch2.ElapsedMilliseconds/60000);
                    if (AFK2 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                   }
-                  if (player.PortraitIndex == 3) 
+                  if (player.PortraitIndex == 3)
                   { 
                    if (player.FloorCoordinate != Player3pos) _watch3.Restart();
                    int AFK3 = (int)(_watch3.ElapsedMilliseconds/60000);
@@ -318,44 +325,44 @@ namespace Turbo.Plugins.Resu
                   if (player.PortraitIndex == 3) _watch3.Restart();
                  }
 
-                if (player.PortraitIndex == 0 && LastChatLine.Contains(player.BattleTagAbovePortrait))
+                if (player.PortraitIndex == 0 && LastChatLine.Contains(MyAccountName))
                 {
                     if (!LastChatLine.Contains("AFK"))
                     {
-                        _watch0.Restart();
+                      _watch0.Restart();
                     }
                     if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
                     { }
                     else
-                    { _NPCwatch0.Restart(); } 
+                    { _NPCwatch0.Restart(); }
                 }
                 else if (player.PortraitIndex == 1 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
-                    if (!LastChatLine.Contains("AFK"))
-                    {
-                        _watch1.Restart();
-                    }
-                    if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
-                    { }
-                    else
-                    { _NPCwatch1.Restart(); }
+                     if (!LastChatLine.Contains("AFK"))
+                     {
+                       _watch1.Restart();
+                     }
+                     if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
+                     { }
+                     else
+                     {  _NPCwatch1.Restart(); }
                 }
                 else if (player.PortraitIndex == 2 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
-                    if (!LastChatLine.Contains("AFK"))
-                    {
-                        _watch2.Restart();
-                    }
-                    if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
-                    { }
-                    else
-                    { _NPCwatch2.Restart(); }
+                 if (!LastChatLine.Contains("AFK"))
+                 {
+                   _watch2.Restart();
+                 }
+                 if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
+                 { }
+                 else
+                 { _NPCwatch2.Restart(); }
                 }
                 else if (player.PortraitIndex == 3 && LastChatLine.Contains(player.BattleTagAbovePortrait))
                 {
                     if (!LastChatLine.Contains("AFK"))
                     {
-                        _watch3.Restart();
+                      _watch3.Restart();
                     }
                     if (LastChatLine.Contains("teleported") || LastChatLine.Contains("returning") || LastChatLine.Contains("slain") || LastChatLine.Contains("AFK"))
                     { }
