@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Equipped Item Durability plugin for TurboHUD version 12/02/2019 11:27
 
 using Turbo.Plugins.Default;

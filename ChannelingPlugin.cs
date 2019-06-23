@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Channeling Plugin for TurboHUD Version 09/10/2018 19:21
 
 using System;

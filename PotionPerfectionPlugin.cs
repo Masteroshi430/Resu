@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Potion Perfection plugin for TurboHUD version 08/03/2019 17:26
  
 using System;

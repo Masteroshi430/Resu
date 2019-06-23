@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Ariadne's Thread plugin for TurboHUD version 18/02/2019 21:15
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 

@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Crafter's Delight Plugin for TurboHUD Version 10/05/2019 15:58
 
 using System;

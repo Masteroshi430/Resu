@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Hunter's Vengeance Plugin for TurboHUD Version 20/02/2019 08:17
 
 using System;

@@ -1,5 +1,4 @@
-//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
+﻿// https://github.com/User5981/Resu
 // Craft Count Plugin for TurboHUD Version 17/01/2019 12:02
 
 using System;
