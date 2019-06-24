@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 21/06/2019 22:15
+// Paragon Percentage Plugin for TurboHUD Version 24/06/2019 13:23
 
 using System;
 using System.Globalization;
@@ -43,8 +43,12 @@ namespace Turbo.Plugins.Resu
         private IWatch _NPCwatch1;
         private IWatch _NPCwatch2;
         private IWatch _NPCwatch3;
+        public bool isAFK0 { get; set; }
+        public bool isAFK1 { get; set; }
+        public bool isAFK2 { get; set; }
+        public bool isAFK3 { get; set; }
 
-        public string LastChatLine { get; set; }
+public string LastChatLine { get; set; }
 
         public ParagonPercentagePlugin()
         {
@@ -295,26 +299,50 @@ namespace Turbo.Plugins.Resu
                   { 
                    if (player.FloorCoordinate != Player0pos) _watch0.Restart();
                    int AFK0 = (int)(_watch0.ElapsedMilliseconds/60000);
-                   if (AFK0 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                  }
+                        if (AFK0 > 3)
+                        {
+                         AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                         isAFK0 = true;
+                        }
+                        else
+                            isAFK0 = false; 
+                    }
                   if (player.PortraitIndex == 1)
                   { 
                    if (player.FloorCoordinate != Player1pos) _watch1.Restart();
                    int AFK1 = (int)(_watch1.ElapsedMilliseconds/60000);
-                   if (AFK1 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                  }
+                        if (AFK1 > 3)
+                        {
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            isAFK1 = true;
+                        }
+                        else
+                            isAFK1 = false;
+                    }
                   if (player.PortraitIndex == 2)
                   { 
                    if (player.FloorCoordinate != Player2pos) _watch2.Restart();
                    int AFK2 = (int)(_watch2.ElapsedMilliseconds/60000);
-                   if (AFK2 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                  }
+                        if (AFK2 > 3)
+                        {
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            isAFK2 = true;
+                        }
+                        else
+                            isAFK2 = false;
+                    }
                   if (player.PortraitIndex == 3)
                   { 
                    if (player.FloorCoordinate != Player3pos) _watch3.Restart();
                    int AFK3 = (int)(_watch3.ElapsedMilliseconds/60000);
-                   if (AFK3 > 3) AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                  }
+                        if (AFK3 > 3)
+                        {
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            isAFK3 = true;
+                        }
+                        else
+                            isAFK3 = false;
+                    }
                   
                  }
                 else
@@ -374,25 +402,25 @@ namespace Turbo.Plugins.Resu
                 {
                  Player0pos = player.FloorCoordinate;
                  int NPC0 = (int)(_NPCwatch0.ElapsedMilliseconds / 60000);
-                 if (NPC0 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC0 > 3 && !isAFK0) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 }
                 else if (player.PortraitIndex == 1)
                 {
                  Player1pos = player.FloorCoordinate;
                  int NPC1 = (int)(_NPCwatch1.ElapsedMilliseconds / 60000);
-                 if (NPC1 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC1 > 3 && !isAFK1) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 }
                  else if (player.PortraitIndex == 2)
                 {
                  Player2pos = player.FloorCoordinate;
                  int NPC2 = (int)(_NPCwatch2.ElapsedMilliseconds / 60000);
-                 if (NPC2 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC2 > 3 && !isAFK2) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 }
                  else if (player.PortraitIndex == 3)
                 {
                  Player3pos = player.FloorCoordinate;
                  int NPC3 = (int)(_NPCwatch3.ElapsedMilliseconds / 60000);
-                 if (NPC3 > 3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC3 > 3 && !isAFK3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                 }
             }
             TimeToNextParagon = TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false);
