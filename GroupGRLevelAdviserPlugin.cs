@@ -11,6 +11,7 @@ namespace Turbo.Plugins.Resu
     public class GroupGRLevelAdviserPlugin : BasePlugin, IInGameWorldPainter, IInGameTopPainter
     {
         public TopLabelDecorator GRLevelDecorator { get; set; }
+        public TopLabelDecorator OnGoingGRLevelDecorator { get; set; }
         public TopLabelDecorator BattletagsDecorator { get; set; }
         public TopLabelDecorator ZClassesDecorator { get; set; }
         public TopLabelDecorator HighestSolosDecorator { get; set; }
@@ -26,7 +27,8 @@ namespace Turbo.Plugins.Resu
         public bool GardianIsDead { get; set; }
         public bool TalkedToUrshi { get; set; }
         public bool RedCircle { get; set; }
-        
+        public uint CurrentGRLevel { get; set; }
+
         public GroupGRLevelAdviserPlugin()
         {
             Enabled = true;
@@ -48,8 +50,16 @@ namespace Turbo.Plugins.Resu
            TextFont = Hud.Render.CreateFont("consolas", 8, 220, 255, 255, 255, true, false, 255, 0, 0, 0, true),
            TextFunc = () => "Greater Rift level advised for this" + Environment.NewLine + Hud.Game.NumberOfPlayersInGame + " player group     >   " + GRLevelText + "   <",
           };
-          
-         BattletagsDecorator = new TopLabelDecorator(Hud)
+
+         OnGoingGRLevelDecorator = new TopLabelDecorator(Hud)
+           {
+            BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+            BorderBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 2),
+            TextFont = Hud.Render.CreateFont("consolas", 14, 60, 200, 100, 200, true, false, 60, 255, 255, 255, false),
+            TextFunc = () => " (" + CurrentGRLevel + ")",
+          };
+
+            BattletagsDecorator = new TopLabelDecorator(Hud)
           {
            TextFont = Hud.Render.CreateFont("consolas", 8, 220, 255, 255, 255, true, false, 255, 0, 0, 0, true),
            TextFunc = () => Battletags,
@@ -160,6 +170,16 @@ namespace Turbo.Plugins.Resu
                var Obelisk = Hud.Game.Actors.FirstOrDefault(x => x.SnoActor.Sno == ActorSnoEnum._x1_openworld_lootrunportal); // 345935
                if (Obelisk != null) ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
              }
+
+            // Current Greater rift level display part 
+
+            var PlayerInGreaterRift = Hud.Game.Players.FirstOrDefault(p => p.InGreaterRift);
+            if (PlayerInGreaterRift != null &&  Hud.Render.GreaterRiftBarUiElement.Visible) 
+             {
+               CurrentGRLevel = PlayerInGreaterRift.InGreaterRiftRank;
+               var uiRect = Hud.Render.GreaterRiftBarUiElement.Rectangle; 
+               OnGoingGRLevelDecorator.Paint((int)(uiRect.Left), (int)(uiRect.Bottom / 1.060), 230, 38, HorizontalAlign.Left);
+             } 
 
 
            // 5% of Rift circle part
