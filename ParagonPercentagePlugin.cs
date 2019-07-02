@@ -167,7 +167,7 @@ public string LastChatLine { get; set; }
         public void OnChatLineChanged(string currentLine, string previousLine)
         {
             if (!string.IsNullOrEmpty(currentLine)) LastChatLine = currentLine;
-            Hud.TextLog.Log("chat", LastChatLine, false, true);
+            //Hud.TextLog.Log("chat", LastChatLine, false, true);
         }
         
         public void PaintTopInGame(ClipState clipState)
