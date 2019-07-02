@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Equipped Item Durability plugin for TurboHUD version 12/02/2019 11:27
+// Equipped Item Durability plugin for TurboHUD version 02/07/2019 12:02
 
 using Turbo.Plugins.Default;
 using System.Globalization;
@@ -104,8 +104,8 @@ namespace Turbo.Plugins.Resu
               {
                var ObjectCurrentDurability = Item.StatList.FirstOrDefault(i => i.Id.Contains("Durability_Cur"));
                var ObjectMaxDurability = Item.StatList.FirstOrDefault(i => i.Id.Contains("Durability_Max"));
-               var CurrentDurability = (double)ObjectCurrentDurability.Value;
-               var MaxDurability = (double)ObjectMaxDurability.Value;
+               var CurrentDurability = ObjectCurrentDurability.DoubleValue;
+               var MaxDurability = ObjectMaxDurability.DoubleValue;
                TotalCurrentDurability = TotalCurrentDurability + (decimal)CurrentDurability;
                TotalMaxDurability = TotalMaxDurability + (decimal)MaxDurability;
               }
