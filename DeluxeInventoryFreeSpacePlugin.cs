@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Deluxe Inventory Free Space plugin for TurboHUD version 23/12/2018 14:21
+// Deluxe Inventory Free Space plugin for TurboHUD version 08/07/2019 01:31
 // It's the default Inventory Free Space plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -89,7 +89,7 @@ namespace Turbo.Plugins.Resu
             
             RedDecoratorTwo = new TopLabelDecorator(Hud)
             {
-                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 100, 100, true, false, 255, 0, 0, 0, true),
+                TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 255, 100, 100, true, false, 255, 0, 0, 0, true),
                 BackgroundTexture1 = Hud.Texture.ButtonTextureGray,
                 BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
                 BackgroundTextureOpacity1 = 1.0f,
@@ -100,7 +100,7 @@ namespace Turbo.Plugins.Resu
 
             YellowDecoratorTwo = new TopLabelDecorator(Hud)
             {
-                TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 200, 205, 50, true, false, false),
+                TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 200, 205, 50, true, false, false),
                 BackgroundTexture1 = Hud.Texture.ButtonTextureGray,
                 BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
                 BackgroundTextureOpacity1 = 1.0f,
@@ -111,7 +111,7 @@ namespace Turbo.Plugins.Resu
 
             GreenDecoratorTwo = new TopLabelDecorator(Hud)
             {
-                TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 100, 130, 100, false, false, false),
+                TextFont = Hud.Render.CreateFont("tahoma", 6, 255, 100, 130, 100, false, false, false),
                 BackgroundTexture1 = Hud.Texture.ButtonTextureGray,
                 BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
                 BackgroundTextureOpacity1 = 1.0f,
@@ -285,8 +285,17 @@ namespace Turbo.Plugins.Resu
             var decorator = freeSpace < 2 ? RedDecorator : freeSpace < 20 ? YellowDecorator : GreenDecorator;
             var decoratorTwo = freeSpaceTwo < 2 ? RedDecoratorTwo : freeSpaceTwo < 10 ? YellowDecoratorTwo : GreenDecoratorTwo;
             
-            decorator.Paint((uiRect.Left + uiRect.Width * 0.640f) - (uiRect.Width * 0.024f), uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.024f, uiRect.Height * 0.12f, HorizontalAlign.Center);
-            decoratorTwo.Paint(uiRect.Left + uiRect.Width * 0.640f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.024f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+            decorator.Paint(uiRect.Left + uiRect.Width * 0.595f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.028f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+            decoratorTwo.Paint(uiRect.Left + uiRect.Width * 0.625f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.021f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+            var itemSno = 2603730171;
+            var BloodShard = Hud.Inventory.GetSnoItem(itemSno);
+            var texture = Hud.Texture.GetItemTexture(BloodShard);
+            var remaining = 500 + (Hud.Game.Me.HighestSoloRiftLevel * 10) - Hud.Game.Me.Materials.BloodShard;
+            if (remaining < 100) ;
+            else if (Hud.Game.Me.Materials.BloodShard < 1000)
+                texture.Draw(uiRect.Left + uiRect.Width * 0.665f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.09f, uiRect.Height * 0.09f, 0.5f);
+            else
+                texture.Draw(uiRect.Left + uiRect.Width * 0.6645f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.08f, uiRect.Height * 0.08f, 0.5f);
         }
         
         public void Customize()
