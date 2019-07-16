@@ -47,8 +47,8 @@ namespace Turbo.Plugins.Resu
          GRLevelText = string.Empty;
          CircleSize = 10;
 
-          BlueFont = Hud.Render.CreateFont("tahoma", 12.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
-          YellowFont = Hud.Render.CreateFont("tahoma", 12.0f, 255, 240, 175, 125, true, false, 255, 0, 0, 0, true);
+          BlueFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
+          YellowFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 240, 175, 125, true, false, 255, 0, 0, 0, true);
 
             GRLevelDecorator = new TopLabelDecorator(Hud)
           {
