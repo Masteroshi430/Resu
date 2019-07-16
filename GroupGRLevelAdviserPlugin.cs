@@ -27,6 +27,7 @@ namespace Turbo.Plugins.Resu
         public bool GardianIsDead { get; set; }
         public bool TalkedToUrshi { get; set; }
         public bool RedCircle { get; set; }
+        public bool PackLeaderLifePercentage { get; set; }
         public uint CurrentGRLevel { get; set; }
         public IFont BlueFont { get; set; }
         public IFont YellowFont { get; set; }
