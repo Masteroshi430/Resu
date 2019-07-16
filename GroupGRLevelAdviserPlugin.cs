@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 12/02/2019 11:27
+// Group GR Level Adviser Plugin for TurboHUD version 16/07/2019 20:20
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -28,11 +28,14 @@ namespace Turbo.Plugins.Resu
         public bool TalkedToUrshi { get; set; }
         public bool RedCircle { get; set; }
         public uint CurrentGRLevel { get; set; }
+        public IFont BlueFont { get; set; }
+        public IFont YellowFont { get; set; }
 
         public GroupGRLevelAdviserPlugin()
         {
             Enabled = true;
             RedCircle = true;
+            PackLeaderLifePercentage = true;
         }
 
         
@@ -42,8 +45,11 @@ namespace Turbo.Plugins.Resu
          
          GRLevelText = string.Empty;
          CircleSize = 10;
-         
-         GRLevelDecorator = new TopLabelDecorator(Hud)
+
+          BlueFont = Hud.Render.CreateFont("tahoma", 12.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
+          YellowFont = Hud.Render.CreateFont("tahoma", 12.0f, 255, 240, 175, 125, true, false, 255, 0, 0, 0, true);
+
+            GRLevelDecorator = new TopLabelDecorator(Hud)
           {
            BackgroundBrush = Hud.Render.CreateBrush(150, 0, 0, 0, 0),
            BorderBrush = Hud.Render.CreateBrush(250, 0, 0, 0, 2),
@@ -93,150 +99,190 @@ namespace Turbo.Plugins.Resu
           });
           
         }
-        
-         public void PaintWorld(WorldLayer layer)
-         {
-             // Talking Obelisk part
-             string ObeliskMessage = "";
-             int TenSeconds = ((int)(Hud.Game.CurrentRealTimeMilliseconds/10000)) % 10;
-             int OtherPlayers = Hud.Game.NumberOfPlayersInGame-1;
-             string OPSentence = "";
-             string GenderSentence = "";
-             if (OtherPlayers == 1) OPSentence = "The other player is in town..."; else OPSentence = "The " + OtherPlayers + " other players are in town...";
-             if (Hud.Game.Me.HeroIsMale) GenderSentence = "Hep! ... Young lad..."; else GenderSentence = "Hep! ... Young lady...";
-             
-             switch (TenSeconds)
-                  {
-                   case 0:
-                   ObeliskMessage = "Close me!";
-                   break;
-                   
-                   case 1:
-                   ObeliskMessage = OPSentence;
-                   break;
-                   
-                   case 2:
-                   ObeliskMessage = "Please!";
-                   break;
-                   
-                   case 3:
-                   ObeliskMessage = "It's " + DateTime.Now.ToShortTimeString() + " now...";
-                   break;
 
-                   case 4:
-                   ObeliskMessage = "Everybody is back!";
-                   break;
-                   
-                   case 5:
-                   ObeliskMessage = "You can close!";
-                   break;
-                   
-                   case 6:
-                   ObeliskMessage = "Psssst! ... " + Hud.Game.Me.Hero.Name + "!";
-                   break;
-                   
-                   case 7:
-                   ObeliskMessage = "There's a draught from the rift!";
-                   break;
-                   
-                   case 8:
-                   ObeliskMessage = "Close me, Nephalem!";
-                   break;
-                   
-                   case 9:
-                   ObeliskMessage = GenderSentence;
-                   break;
-                   
-                  }
+        public void PaintWorld(WorldLayer layer)
+        {
+            // Talking Obelisk part
+            string ObeliskMessage = "";
+            int TenSeconds = ((int)(Hud.Game.CurrentRealTimeMilliseconds / 10000)) % 10;
+            int OtherPlayers = Hud.Game.NumberOfPlayersInGame - 1;
+            string OPSentence = "";
+            string GenderSentence = "";
+            if (OtherPlayers == 1)
+                OPSentence = "The other player is in town...";
+            else
+                OPSentence = "The " + OtherPlayers + " other players are in town...";
+            if (Hud.Game.Me.HeroIsMale)
+                GenderSentence = "Hep! ... Young lad...";
+            else
+                GenderSentence = "Hep! ... Young lady...";
 
-                 var Rift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 337492);
-                 var GRift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 382695);
-                 
-                 GardianIsDead = false;
-                 
-                 if (Rift != null) 
-                  {
-                   if (Rift.QuestStepId == 5 || Rift.QuestStepId == 10 || Rift.QuestStepId == 34 || Rift.QuestStepId == 46) GardianIsDead = true;
-                  }
-                 else if (GRift != null)
-                 {
-                  if (GRift.QuestStepId == 5 || GRift.QuestStepId == 10 || GRift.QuestStepId == 34 || GRift.QuestStepId == 46) GardianIsDead = true;
-                 }
-                 else return; 
-                       
-                       
+            switch (TenSeconds)
+            {
+                case 0:
+                    ObeliskMessage = "Close me!";
+                    break;
+
+                case 1:
+                    ObeliskMessage = OPSentence;
+                    break;
+
+                case 2:
+                    ObeliskMessage = "Please!";
+                    break;
+
+                case 3:
+                    ObeliskMessage = "It's " + DateTime.Now.ToShortTimeString() + " now...";
+                    break;
+
+                case 4:
+                    ObeliskMessage = "Everybody is back!";
+                    break;
+
+                case 5:
+                    ObeliskMessage = "You can close!";
+                    break;
+
+                case 6:
+                    ObeliskMessage = "Psssst! ... " + Hud.Game.Me.Hero.Name + "!";
+                    break;
+
+                case 7:
+                    ObeliskMessage = "There's a draught from the rift!";
+                    break;
+
+                case 8:
+                    ObeliskMessage = "Close me, Nephalem!";
+                    break;
+
+                case 9:
+                    ObeliskMessage = GenderSentence;
+                    break;
+
+            }
+
+            var Rift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 337492);
+            var GRift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 382695);
+
+            GardianIsDead = false;
+
+            if (Rift != null)
+            {
+                if (Rift.QuestStepId == 5 || Rift.QuestStepId == 10 || Rift.QuestStepId == 34 || Rift.QuestStepId == 46)
+                    GardianIsDead = true;
+            }
+            else if (GRift != null)
+            {
+                if (GRift.QuestStepId == 5 || GRift.QuestStepId == 10 || GRift.QuestStepId == 34 || GRift.QuestStepId == 46)
+                    GardianIsDead = true;
+            }
+            else
+                return;
+
+
             if (PlayerInTownCount == Hud.Game.NumberOfPlayersInGame && Hud.Game.RiftPercentage == 100 && Hud.Game.IsInTown && GardianIsDead && Hud.Game.NumberOfPlayersInGame != 1)
-             {
-               var Obelisk = Hud.Game.Actors.FirstOrDefault(x => x.SnoActor.Sno == ActorSnoEnum._x1_openworld_lootrunportal); // 345935
-               if (Obelisk != null) ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
-             }
+            {
+                var Obelisk = Hud.Game.Actors.FirstOrDefault(x => x.SnoActor.Sno == ActorSnoEnum._x1_openworld_lootrunportal); // 345935
+                if (Obelisk != null)
+                    ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
+            }
 
             // Current Greater rift level display part 
 
             var PlayerInGreaterRift = Hud.Game.Players.FirstOrDefault(p => p.InGreaterRift);
-            if (PlayerInGreaterRift != null &&  Hud.Render.GreaterRiftBarUiElement.Visible) 
-             {
-               CurrentGRLevel = PlayerInGreaterRift.InGreaterRiftRank;
-               var uiRect = Hud.Render.GreaterRiftBarUiElement.Rectangle; 
-               OnGoingGRLevelDecorator.Paint((int)(uiRect.Left), (int)(uiRect.Bottom / 1.060), 230, 38, HorizontalAlign.Left);
-             } 
-
-
-           // 5% of Rift circle part
-           CircleDecorator = new WorldDecoratorCollection( 
-              new MapShapeDecorator(Hud)
+            if (PlayerInGreaterRift != null && Hud.Render.GreaterRiftBarUiElement.Visible)
             {
-                Brush = Hud.Render.CreateBrush(255, 255, 0, 0, 2),
-                ShapePainter = new CircleShapePainter(Hud),
-                Radius = CircleSize,
+                CurrentGRLevel = PlayerInGreaterRift.InGreaterRiftRank;
+                var uiRect = Hud.Render.GreaterRiftBarUiElement.Rectangle;
+                OnGoingGRLevelDecorator.Paint((int)(uiRect.Left), (int)(uiRect.Bottom / 1.060), 230, 38, HorizontalAlign.Left);
             }
-            );
-           
-          if ((Hud.Game.Me.InGreaterRift || Hud.Game.SpecialArea == SpecialArea.Rift || Hud.Game.SpecialArea == SpecialArea.ChallengeRift) && Hud.Game.RiftPercentage < 100 && RedCircle)
-           {
-            var monsters = Hud.Game.AliveMonsters.OrderByDescending(x => x.SnoMonster.RiftProgression);
-            foreach (var monster in monsters)
-                  {
-                   CircleSize = 10;
-                   NewLoop:
-                   var CircleSizeYardMonsters = monsters.Where(x => x.FloorCoordinate.XYDistanceTo(monster.FloorCoordinate) <= CircleSize);
-                   float RiftPercentage = 0f; 
-                   foreach (var CircleSizeYardMonster in CircleSizeYardMonsters)
-                         {
-                          RiftPercentage = RiftPercentage + CircleSizeYardMonster.SnoMonster.RiftProgression;
-                          if (CircleSizeYardMonster.Rarity == ActorRarity.Rare) RiftPercentage = RiftPercentage + 28.6f; // 4.4% of 650 (4 progression orb drops per yellow)
-                          else if (CircleSizeYardMonster.Rarity == ActorRarity.Champion) RiftPercentage = RiftPercentage + 7.15f; // 1.1% of 650 (1 progression orb drop per blue)
-                         }
-                     
-                   float PercentOfRift = 32.5f; // 5% of 650
-                   if (Hud.Game.RiftPercentage > 95) PercentOfRift = (float)(((100-Hud.Game.RiftPercentage)/100)*650); // if less than 5% rift completion left, use that percentage instead.
-                       
-                   if (RiftPercentage >= PercentOfRift) 
+
+
+            // 5% of Rift circle part
+            CircleDecorator = new WorldDecoratorCollection(
+               new MapShapeDecorator(Hud)
+               {
+                   Brush = Hud.Render.CreateBrush(255, 255, 0, 0, 2),
+                   ShapePainter = new CircleShapePainter(Hud),
+                   Radius = CircleSize,
+               }
+             );
+
+            if ((Hud.Game.Me.InGreaterRift || Hud.Game.SpecialArea == SpecialArea.Rift || Hud.Game.SpecialArea == SpecialArea.ChallengeRift) && Hud.Game.RiftPercentage < 100 && RedCircle)
+            {
+                var monsters = Hud.Game.AliveMonsters.OrderByDescending(x => x.SnoMonster.RiftProgression);
+                foreach (var monster in monsters)
+                {
+                    CircleSize = 10;
+                    NewLoop:
+                    var CircleSizeYardMonsters = monsters.Where(x => x.FloorCoordinate.XYDistanceTo(monster.FloorCoordinate) <= CircleSize);
+                    float RiftPercentage = 0f;
+                    foreach (var CircleSizeYardMonster in CircleSizeYardMonsters)
                     {
-                     CircleDecorator.Paint(layer, null, monster.FloorCoordinate, null);
-                     break;
-                    } 
-                   else if (CircleSize < 56) // Within 55 yards max
-                    {
-                     CircleSize++;
-                     goto NewLoop;
+                        RiftPercentage = RiftPercentage + CircleSizeYardMonster.SnoMonster.RiftProgression;
+                        if (CircleSizeYardMonster.Rarity == ActorRarity.Rare)
+                            RiftPercentage = RiftPercentage + 28.6f; // 4.4% of 650 (4 progression orb drops per yellow)
+                        else if (CircleSizeYardMonster.Rarity == ActorRarity.Champion)
+                            RiftPercentage = RiftPercentage + 7.15f; // 1.1% of 650 (1 progression orb drop per blue)
                     }
-                   
-                  }
-           }
-           
-           // Talked to Urshi part
-           bool UrshiPanel = Hud.Render.GetUiElement("Root.NormalLayer.vendor_dialog_mainPage.riftReward_dialog.LayoutRoot.gemUpgradePane.items_list._content").Visible;
-           if (UrshiPanel) TalkedToUrshi = true;
-           if (Hud.Game.Me.IsInTown) TalkedToUrshi = false;
-          if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && GardianIsDead && Hud.Game.Me.AnimationState == AcdAnimationState.CastingPortal && !TalkedToUrshi && Hud.Game.SpecialArea == SpecialArea.GreaterRift )
-           {
-            TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
-           }
+
+                    float PercentOfRift = 32.5f; // 5% of 650
+                    if (Hud.Game.RiftPercentage > 95)
+                        PercentOfRift = (float)(((100 - Hud.Game.RiftPercentage) / 100) * 650); // if less than 5% rift completion left, use that percentage instead.
+
+                    if (RiftPercentage >= PercentOfRift)
+                    {
+                        CircleDecorator.Paint(layer, null, monster.FloorCoordinate, null);
+                        break;
+                    }
+                    else if (CircleSize < 56) // Within 55 yards max
+                    {
+                        CircleSize++;
+                        goto NewLoop;
+                    }
+
+                }
+            }
+
+            // Talked to Urshi part
+            bool UrshiPanel = Hud.Render.GetUiElement("Root.NormalLayer.vendor_dialog_mainPage.riftReward_dialog.LayoutRoot.gemUpgradePane.items_list._content").Visible;
+            if (UrshiPanel)
+                TalkedToUrshi = true;
+            if (Hud.Game.Me.IsInTown)
+                TalkedToUrshi = false;
+            if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && GardianIsDead && Hud.Game.Me.AnimationState == AcdAnimationState.CastingPortal && !TalkedToUrshi && Hud.Game.SpecialArea == SpecialArea.GreaterRift)
+            {
+                TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
+            }
+
+            // Monster pack part
+          if(PackLeaderLifePercentage)
+            {
+              var EliteLeaders = Hud.Game.AliveMonsters.Where(x => x.Rarity == ActorRarity.Rare);
+              var Blues = Hud.Game.AliveMonsters.Where(x => x.Rarity == ActorRarity.Champion);
+              foreach (var EliteLeader in EliteLeaders)
+              {
+               var MaxHealth = EliteLeader.MaxHealth;
+               var CurHealth = EliteLeader.CurHealth;
+               var LifePercentage = Math.Truncate((CurHealth / MaxHealth * 100) * 10) / 10;
+               var layout = YellowFont.GetTextLayout(LifePercentage + "%");
+               YellowFont.DrawText(layout, EliteLeader.ScreenCoordinate.X, EliteLeader.ScreenCoordinate.Y);
+              }
+
+              foreach (var Blue in Blues)
+              {
+               var MaxHealth = Blue.MaxHealth;
+               var CurHealth = Blue.CurHealth;
+               var LifePercentage = Math.Truncate((CurHealth / MaxHealth * 100) * 10) / 10;
+               var layout = BlueFont.GetTextLayout(LifePercentage + "%");
+               BlueFont.DrawText(layout, Blue.ScreenCoordinate.X, Blue.ScreenCoordinate.Y);
+              }
+            }
+
         }
-        
-        
-        public void PaintTopInGame(ClipState clipState)
+
+
+         public void PaintTopInGame(ClipState clipState)
         {
             int maxGRlevel = 0;
             PlayerInTownCount = 0;
