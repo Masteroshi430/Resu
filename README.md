@@ -329,6 +329,7 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 - Red circle around 5% of Rift completion monster groups on minimap.
 - "Talk to Urshi" reminder when teleporting after Greater rift.
 - Support for Z class (ZDPS, Sup). 
+- Pack leader life percentage (toggleable, on by default)
 
 ![alt text](READMEpics/gr.png)
 
@@ -341,6 +342,7 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
             { 
                     // Set to false if you don't want the red circle
                      plugin.RedCircle = True;
+		     plugin.PackLeaderLifePercentage = True;
             });  
 // End of Settings for Group GR Level Adviser Plugin
 ```
