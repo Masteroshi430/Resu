@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Primal Ancient Probability Plugin for TurboHUD Version 21/06/2019 21:41
+// Primal Ancient Probability Plugin for TurboHUD Version 25/07/2019 18:25
 
 using System;
 using System.Globalization;
@@ -49,7 +49,7 @@ namespace Turbo.Plugins.Resu
         {
           if (item != null && item.SnoItem != null && item.SnoItem.MainGroupCode != "gems_unique" && item.SnoItem.MainGroupCode != "potion") 
            {
-            string itemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();   // item.SnoItem.Sno.ToString() + item.Perfection.ToString(); // item.ItemUniqueId;
+            string itemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();
             if (item.IsLegendary && !legendaries.Contains(itemID)) legendaryCount++;
             if (item.AncientRank == 1 && !legendaries.Contains(itemID)) ancientMarker = legendaryCount;
             if (item.AncientRank == 2 && !legendaries.Contains(itemID)) primalMarker = legendaryCount;
@@ -72,38 +72,40 @@ namespace Turbo.Plugins.Resu
             if (Hud.Game.Me.CurrentLevelNormal != 70 && Hud.Game.Me.CurrentLevelNormal > 0)  {ancientMarker = legendaryCount; return;}
             if (Hud.Game.Me.HighestSoloRiftLevel < 70 && Hud.Game.Me.HighestSoloRiftLevel > 0) primalMarker = legendaryCount;
             
-            if(RunOnlyOnce)
+           if(RunOnlyOnce)
             {
-             if (Hud.Tracker.CurrentAccountToday.DropLegendary != 0 && Hud.Tracker.CurrentAccountYesterday.DropPrimalAncient > 0) 
+             if (Hud.Tracker.CurrentAccountTotal.DropLegendary != 0 && Hud.Tracker.CurrentAccountTotal.DropPrimalAncient > 0)
              {
-               legendaryCount = Hud.Tracker.CurrentAccountToday.DropLegendary;
-               if (Hud.Tracker.CurrentAccountToday.DropAncient <= 1 && (legendaryCount - Hud.Tracker.CurrentAccountToday.DropAncient) > 100) ancientMarker = 0;
+               legendaryCount = Hud.Tracker.CurrentAccountTotal.DropLegendary;
+               if (Hud.Tracker.CurrentAccountTotal.DropAncient <= 1 && (legendaryCount - Hud.Tracker.CurrentAccountTotal.DropAncient) > 100) ancientMarker = legendaryCount;
+               else
+                   {
+                    long DropAncientTotal = Hud.Tracker.CurrentAccountTotal.DropAncient;
+                    if (DropAncientTotal == 0) DropAncientTotal = 1;
+                        var StatDrop = legendaryCount / (100 - 90.2246666);
+                        var StatDropRate = StatDrop / legendaryCount * 100;
+                        var ActualDropRate = DropAncientTotal / legendaryCount * 100;
+                        var FixedDropRate = StatDropRate - ActualDropRate;
+                        if (FixedDropRate <= 0) ancientMarker = legendaryCount;
+                        else ancientMarker = (int)(legendaryCount + (legendaryCount*(FixedDropRate/100)));
+                    }
+               if (Hud.Tracker.CurrentAccountTotal.DropPrimalAncient <= 1) primalMarker = legendaryCount;
                else 
                    {
-                    long DropAncientToday = Hud.Tracker.CurrentAccountToday.DropAncient;
-                    if (DropAncientToday == 0) DropAncientToday = 1;
-                    ancientMarker = (int)(Hud.Tracker.CurrentAccountToday.DropLegendary - (Hud.Tracker.CurrentAccountToday.DropLegendary/DropAncientToday));
-                   }
-               if (Hud.Tracker.CurrentAccountToday.DropPrimalAncient <= 1) primalMarker = 0;
-               else 
-                   {
-                    long DropPrimalAncientToday = Hud.Tracker.CurrentAccountToday.DropPrimalAncient;
-                    if (DropPrimalAncientToday == 0) DropPrimalAncientToday = 1;   
-                    primalMarker = (int)(Hud.Tracker.CurrentAccountToday.DropLegendary - (Hud.Tracker.CurrentAccountToday.DropLegendary/DropPrimalAncientToday));
-                   }
+                    long DropPrimalAncientTotal = Hud.Tracker.CurrentAccountTotal.DropPrimalAncient;
+                    if (DropPrimalAncientTotal == 0) DropPrimalAncientTotal = 1;
+                        var StatDrop = legendaryCount / (100 - 99.7753334);
+                        var StatDropRate = StatDrop / legendaryCount * 100;
+                        var ActualDropRate = DropPrimalAncientTotal / legendaryCount * 100;
+                        var FixedDropRate = StatDropRate - ActualDropRate;
+                        if (FixedDropRate <= 0)
+                            primalMarker = legendaryCount;
+                        else
+                            primalMarker = (int)(legendaryCount + (legendaryCount * (FixedDropRate / 100)));
+                    }
              } 
-             else if (Hud.Tracker.CurrentAccountYesterday.DropLegendary != 0)
-             {
-               legendaryCount = Hud.Tracker.CurrentAccountYesterday.DropLegendary + Hud.Tracker.CurrentAccountToday.DropLegendary;
-               var TodayYesterdayDropAncient = Hud.Tracker.CurrentAccountYesterday.DropAncient + Hud.Tracker.CurrentAccountToday.DropAncient;
-               var TodayYesterdayDropPrimalAncient = Hud.Tracker.CurrentAccountYesterday.DropPrimalAncient + Hud.Tracker.CurrentAccountToday.DropPrimalAncient;
-               if (TodayYesterdayDropAncient <= 1) {ancientMarker = 0; TodayYesterdayDropAncient = 1;}
-               else ancientMarker = (int)(legendaryCount - (legendaryCount / TodayYesterdayDropAncient));
-               if (TodayYesterdayDropPrimalAncient <= 1) {primalMarker = 0; TodayYesterdayDropPrimalAncient = 1;}
-               else primalMarker = (int)(legendaryCount - (legendaryCount / TodayYesterdayDropPrimalAncient));  
-             }
              RunOnlyOnce = false;
-            }
+            } 
 
             long PrimalAncientTotal = Hud.Tracker.CurrentAccountTotal.DropPrimalAncient;
             long AncientTotal = Hud.Tracker.CurrentAccountTotal.DropAncient;
@@ -113,7 +115,7 @@ namespace Turbo.Plugins.Resu
                     
              ancientDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("arial", 7, 220, 227, 153, 25, true, false, 255, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("arial", 6, 220, 227, 153, 25, true, false, 255, 0, 0, 0, true),
                  TextFunc = () => ancientText,
                  HintFunc = () => "Chance for the next Legendary drop to be Ancient." + Environment.NewLine + "Total Ancient drops : " + AncientTotal + " (" + TotalPercAncient + ") of Legendary drops",
               
@@ -121,7 +123,7 @@ namespace Turbo.Plugins.Resu
             
              primalDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("arial", 7, 180, 255, 64, 64, true, false, 255, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("arial", 6, 180, 255, 64, 64, true, false, 255, 0, 0, 0, true),
                  TextFunc = () => primalText,
                  HintFunc = () => "Chance for the next Legendary drop to be Primal Ancient." + Environment.NewLine + "Total Primal Ancient drops : " + PrimalAncientTotal + " (" + TotalPercPrimal + ") of Legendary drops",
               
@@ -132,29 +134,29 @@ namespace Turbo.Plugins.Resu
             double probaPrimal = 0;
             double powAncient = legendaryCount-ancientMarker;
             double powPrimal = legendaryCount-primalMarker;
-            double ancientMaths = 90.2246666/100; // previous : 90.00
-            double primalMaths = 99.7753334/100; // previous : 99.78
-                        
-            if (powAncient == 0) powAncient = 1;
-            if (powPrimal == 0) powPrimal = 1;
+            double ancientMaths = 90.2246666/100; 
+            double primalMaths = 99.7753334/100; 
+            
+            if (powAncient <= 0) powAncient = 1;
+            if (powPrimal <= 0) powPrimal = 1;
             
             probaAncient = (1 - Math.Pow(ancientMaths, powAncient))*100;
             probaPrimal = (1 - Math.Pow(primalMaths, powPrimal))*100;
-                           
-            probaAncient = Math.Round(probaAncient, 2);   
-            probaPrimal = Math.Round(probaPrimal, 2);   
             
-                
+            probaAncient = Math.Round(probaAncient, 2);
+            probaPrimal = Math.Round(probaPrimal, 2);
+            
+            
             ancientText = "A: " + probaAncient  + "%";
             primalText =  "P: " + probaPrimal  + "%";
 
-            var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_progressBar_manaBall").Rectangle;
+            var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_progressBar_healthBall").Rectangle;
             
-            ancientDecorator.Paint(uiRect.Left - (uiRect.Width/3f), uiRect.Top + uiRect.Height * 0.88f, 50f, 50f, HorizontalAlign.Left); 
+            ancientDecorator.Paint(uiRect.Right - (uiRect.Width/1.6f), uiRect.Top + uiRect.Height * 0.88f, 50f, 50f, HorizontalAlign.Left);
 
             if (Hud.Game.Me.HighestSoloRiftLevel >= 70)
             {
-            primalDecorator.Paint(uiRect.Left + (uiRect.Width/10f), uiRect.Top + uiRect.Height * 0.88f, 50f, 50f, HorizontalAlign.Left); 
+            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 4.1f), uiRect.Top + uiRect.Height * 0.88f, 50f, 50f, HorizontalAlign.Left);
             }
             
             bool KanaiRecipe = Hud.Render.GetUiElement("Root.NormalLayer.Kanais_Recipes_main").Visible;
