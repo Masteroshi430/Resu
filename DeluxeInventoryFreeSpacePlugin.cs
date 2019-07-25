@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Deluxe Inventory Free Space plugin for TurboHUD version 08/07/2019 01:31
+// Deluxe Inventory Free Space plugin for TurboHUD version 25/07/2019 20:17
 // It's the default Inventory Free Space plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -20,6 +20,10 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator RedDecoratorTwo { get; set; }
         public TopLabelDecorator YellowDecoratorTwo { get; set; }
         public TopLabelDecorator GreenDecoratorTwo { get; set; }
+        public TopLabelDecorator BloodRedDecorator { get; set; }
+        public TopLabelDecorator BloodYellowDecorator { get; set; }
+        public TopLabelDecorator BloodGreenDecorator { get; set; }
+        public bool ShowRemaining { get; set; }
         public float SquareSide { get; set; }
         public int freeSpaceTwo { get; set; }
         public Dictionary<string,string> InventorySlots;
@@ -39,7 +43,17 @@ namespace Turbo.Plugins.Resu
             base.Load(hud);
             
             HeroName = string.Empty;
-            
+
+            string textFunc()
+            {
+                return (ShowRemaining ? 500 + (Hud.Game.Me.HighestSoloRiftLevel * 10) - Hud.Game.Me.Materials.BloodShard : Hud.Game.Me.Materials.BloodShard).ToString("D", CultureInfo.InvariantCulture);
+            }
+
+            string hintFunc()
+            {
+                return ShowRemaining ? "amount of blood shards remaining" : "amount of blood shards";
+            }
+
             InventorySlots = new Dictionary<string,string>
             {
              {"C0R0", string.Empty}, {"C0R1", string.Empty}, {"C0R2", string.Empty}, {"C0R3", string.Empty}, {"C0R4", string.Empty}, {"C0R5", string.Empty},
@@ -119,7 +133,39 @@ namespace Turbo.Plugins.Resu
                 TextFunc = () => freeSpaceTwo == int.MaxValue ? "\u25AE ?" : "\u25AE" + freeSpaceTwo.ToString("D", CultureInfo.InvariantCulture),
                 HintFunc = () => "free space in inventory for two slot items",
             };
-            
+
+            BloodRedDecorator = new TopLabelDecorator(Hud)
+            {
+                TextFont = Hud.Render.CreateFont("tahoma", 8, 255, 255, 100, 100, true, false, 255, 0, 0, 0, true),
+                BackgroundTexture1 = Hud.Texture.ButtonTextureGray,
+                BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
+                BackgroundTextureOpacity1 = 1.0f,
+                BackgroundTextureOpacity2 = 1.0f,
+                TextFunc = textFunc,
+                HintFunc = hintFunc,
+            };
+
+            BloodYellowDecorator = new TopLabelDecorator(Hud)
+            {
+                TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 200, 205, 50, true, false, false),
+                BackgroundTexture1 = Hud.Texture.ButtonTextureGray,
+                BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
+                BackgroundTextureOpacity1 = 1.0f,
+                BackgroundTextureOpacity2 = 1.0f,
+                TextFunc = textFunc,
+                HintFunc = hintFunc,
+            };
+
+            BloodGreenDecorator = new TopLabelDecorator(Hud)
+            {
+                TextFont = Hud.Render.CreateFont("tahoma", 7, 255, 100, 130, 100, false, false, false),
+                BackgroundTexture1 = Hud.Texture.ButtonTextureGray,
+                BackgroundTexture2 = Hud.Texture.BackgroundTextureOrange,
+                BackgroundTextureOpacity1 = 1.0f,
+                BackgroundTextureOpacity2 = 1.0f,
+                TextFunc = textFunc,
+                HintFunc = hintFunc,
+            };
         }
 
         public void PaintTopInGame(ClipState clipState)
@@ -131,7 +177,24 @@ namespace Turbo.Plugins.Resu
               
             var uiRect = Hud.Render.InGameBottomHudUiElement.Rectangle;
             var freeSpace = Hud.Game.Me.InventorySpaceTotal - Hud.Game.InventorySpaceUsed;
-            
+
+            var BloodRemaining = 500 + (Hud.Game.Me.HighestSoloRiftLevel * 10) - Hud.Game.Me.Materials.BloodShard;
+
+            var BloodDecorator = BloodRemaining < 100 ? BloodRedDecorator : (BloodRemaining < 200 ? BloodYellowDecorator : BloodGreenDecorator);
+            BloodDecorator.Paint(uiRect.Left + (uiRect.Width * 0.647f), uiRect.Top + (uiRect.Height * 0.88f), uiRect.Width * 0.038f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+           // BloodDecorator.Paint(uiRect.Left + (uiRect.Width * 0.664f), uiRect.Top + (uiRect.Height * 0.88f), uiRect.Width * 0.038f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+            var itemSno = 2603730171;
+            var BloodShard = Hud.Inventory.GetSnoItem(itemSno);
+            var texture = Hud.Texture.GetItemTexture(BloodShard);
+            var remaining = 500 + (Hud.Game.Me.HighestSoloRiftLevel * 10) - Hud.Game.Me.Materials.BloodShard;
+            if (remaining < 100)
+                ;
+            else if (Hud.Game.Me.Materials.BloodShard < 1000)
+                texture.Draw(uiRect.Left + uiRect.Width * 0.648f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.09f, uiRect.Height * 0.09f, 0.5f);
+            else
+                texture.Draw(uiRect.Left + uiRect.Width * 0.6475f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.08f, uiRect.Height * 0.08f, 0.5f);
+
+
             if (HeroName != Hud.Game.Me.HeroName)
               {
                freeSpaceTwo = int.MaxValue;
@@ -287,20 +350,13 @@ namespace Turbo.Plugins.Resu
             
             decorator.Paint(uiRect.Left + uiRect.Width * 0.595f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.028f, uiRect.Height * 0.12f, HorizontalAlign.Center);
             decoratorTwo.Paint(uiRect.Left + uiRect.Width * 0.625f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.021f, uiRect.Height * 0.12f, HorizontalAlign.Center);
-            var itemSno = 2603730171;
-            var BloodShard = Hud.Inventory.GetSnoItem(itemSno);
-            var texture = Hud.Texture.GetItemTexture(BloodShard);
-            var remaining = 500 + (Hud.Game.Me.HighestSoloRiftLevel * 10) - Hud.Game.Me.Materials.BloodShard;
-            if (remaining < 100) ;
-            else if (Hud.Game.Me.Materials.BloodShard < 1000)
-                texture.Draw(uiRect.Left + uiRect.Width * 0.665f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.09f, uiRect.Height * 0.09f, 0.5f);
-            else
-                texture.Draw(uiRect.Left + uiRect.Width * 0.6645f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.08f, uiRect.Height * 0.08f, 0.5f);
+
         }
         
         public void Customize()
         {
             Hud.TogglePlugin<InventoryFreeSpacePlugin>(false);
+            Hud.TogglePlugin<BloodShardPlugin>(false);
         }
         
         public void OnItemPicked(IItem item)
