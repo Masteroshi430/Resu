@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Primal Ancient Probability Plugin for TurboHUD Version 25/07/2019 18:25
+// Primal Ancient Probability Plugin for TurboHUD Version 25/07/2019 22:43
 
 using System;
 using System.Globalization;
@@ -74,38 +74,11 @@ namespace Turbo.Plugins.Resu
             
            if(RunOnlyOnce)
             {
-             if (Hud.Tracker.CurrentAccountTotal.DropLegendary != 0 && Hud.Tracker.CurrentAccountTotal.DropPrimalAncient > 0)
-             {
-               legendaryCount = Hud.Tracker.CurrentAccountTotal.DropLegendary;
-               if (Hud.Tracker.CurrentAccountTotal.DropAncient <= 1 && (legendaryCount - Hud.Tracker.CurrentAccountTotal.DropAncient) > 100) ancientMarker = legendaryCount;
-               else
-                   {
-                    long DropAncientTotal = Hud.Tracker.CurrentAccountTotal.DropAncient;
-                    if (DropAncientTotal == 0) DropAncientTotal = 1;
-                        var StatDrop = legendaryCount / (100 - 90.2246666);
-                        var StatDropRate = StatDrop / legendaryCount * 100;
-                        var ActualDropRate = DropAncientTotal / legendaryCount * 100;
-                        var FixedDropRate = StatDropRate - ActualDropRate;
-                        if (FixedDropRate <= 0) ancientMarker = legendaryCount;
-                        else ancientMarker = (int)(legendaryCount + (legendaryCount*(FixedDropRate/100)));
-                    }
-               if (Hud.Tracker.CurrentAccountTotal.DropPrimalAncient <= 1) primalMarker = legendaryCount;
-               else 
-                   {
-                    long DropPrimalAncientTotal = Hud.Tracker.CurrentAccountTotal.DropPrimalAncient;
-                    if (DropPrimalAncientTotal == 0) DropPrimalAncientTotal = 1;
-                        var StatDrop = legendaryCount / (100 - 99.7753334);
-                        var StatDropRate = StatDrop / legendaryCount * 100;
-                        var ActualDropRate = DropPrimalAncientTotal / legendaryCount * 100;
-                        var FixedDropRate = StatDropRate - ActualDropRate;
-                        if (FixedDropRate <= 0)
-                            primalMarker = legendaryCount;
-                        else
-                            primalMarker = (int)(legendaryCount + (legendaryCount * (FixedDropRate / 100)));
-                    }
-             } 
+             legendaryCount = Hud.Tracker.CurrentAccountTotal.DropLegendary;
+             ancientMarker = legendaryCount;
+             primalMarker = legendaryCount;
              RunOnlyOnce = false;
-            } 
+            }
 
             long PrimalAncientTotal = Hud.Tracker.CurrentAccountTotal.DropPrimalAncient;
             long AncientTotal = Hud.Tracker.CurrentAccountTotal.DropAncient;
@@ -134,11 +107,11 @@ namespace Turbo.Plugins.Resu
             double probaPrimal = 0;
             double powAncient = legendaryCount-ancientMarker;
             double powPrimal = legendaryCount-primalMarker;
-            double ancientMaths = 90.2246666/100; 
-            double primalMaths = 99.7753334/100; 
+            double ancientMaths = 90.2246666/100;
+            double primalMaths = 99.7753334/100;
             
-            if (powAncient <= 0) powAncient = 1;
-            if (powPrimal <= 0) powPrimal = 1;
+            if (powAncient == 0) powAncient = 1;
+            if (powPrimal == 0) powPrimal = 1;
             
             probaAncient = (1 - Math.Pow(ancientMaths, powAncient))*100;
             probaPrimal = (1 - Math.Pow(primalMaths, powPrimal))*100;
