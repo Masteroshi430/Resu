@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Custom Life Warning Plugin for TurboHUD Version 03/03/2019 18:40
+// Custom Life Warning Plugin for TurboHUD Version 26/07/2019 21:11
 // The health globes part was stolen from Xewl's HealthGlobePlugin
 
 using System;
@@ -125,7 +125,15 @@ namespace Turbo.Plugins.Resu
             
             var glowTexture = Hud.Texture.GetTexture(1981524232);
             
-             var ShieldPylon = Hud.Game.Me.Powers.GetBuff(266254);
+            for (int i = 1; i <= ShieldPer19 && i < _steps.Count; i++)
+            {
+                float Angle = _steps[i];
+                var PointOne = PointOnCircle(CircleRadius, Angle, CircleCenter.X, CircleCenter.Y);
+                glowTexture.Draw(PointOne.Item1-15, PointOne.Item2, 50f, 50f, opacityMultiplier: 0.5f);
+                ShieldDecorator.Paint(PointOne.Item1, PointOne.Item2, 50f, 50f, HorizontalAlign.Left);
+            }
+            
+            var ShieldPylon = Hud.Game.Me.Powers.GetBuff(266254);
              if (ShieldPylon == null || !ShieldPylon.Active) {SPTL = String.Empty;}
              else {
                    int ShieldPylonTimeLeft = (int)ShieldPylon.TimeLeftSeconds[0];
@@ -137,14 +145,6 @@ namespace Turbo.Plugins.Resu
                      InfiniteShieldDecorator.Paint(uiRect.Left + uiRect.Width * 0.2f, uiRect.Top + uiRect.Height * 0.66f, uiRect.Width * 0.63f, uiRect.Height * 0.12f, HorizontalAlign.Center);
                     }
                   }
-            
-            for (int i = 1; i <= ShieldPer19 && i < _steps.Count; i++)
-            {
-                float Angle = _steps[i];
-                var PointOne = PointOnCircle(CircleRadius, Angle, CircleCenter.X, CircleCenter.Y);
-                glowTexture.Draw(PointOne.Item1-15, PointOne.Item2, 50f, 50f, opacityMultiplier: 0.5f);
-                ShieldDecorator.Paint(PointOne.Item1, PointOne.Item2, 50f, 50f, HorizontalAlign.Left);
-            }
         }
 
         public static Tuple<float, float> PointOnCircle(float radius, float angleInDegrees, float CircleCenterX, float CircleCenterY)
