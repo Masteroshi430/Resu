@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// BattleTag Above Banner Plugin for TurboHUD Version 12/02/2019 11:27
+// BattleTag Above Banner Plugin for TurboHUD Version 30/07/2019 18:49
 
 using System;
 using System.Collections.Generic;
@@ -136,6 +136,9 @@ namespace Turbo.Plugins.Resu
                 var BattleTagTexture = Hud.Texture.GetTexture(3098562643);
                 var TownTexture = Hud.Texture.GetTexture(3153923970);
                 var ToScreenPos = coordinates[currentAct][playerIndex].ToScreenCoordinate();
+
+                var HudRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_window_hud_overlay").Rectangle;
+                if (ToScreenPos.X >= HudRect.Left && ToScreenPos.X <= HudRect.Right && ToScreenPos.Y >= HudRect.Top && ToScreenPos.Y <= HudRect.Bottom) continue;
 
                 BattleTagTexture.Draw((float)(ToScreenPos.X-(ScreenWidth/32.653)), (float)(ToScreenPos.Y-(ScreenHeight/52.941)), (float)(ScreenWidth/10), (float)(ScreenHeight/28), 0.7843f); 
                 HeroTexture.Draw((float)(ToScreenPos.X-(ScreenWidth/28.769)), (float)(ToScreenPos.Y-(ScreenHeight/52.941)), (float)(ScreenWidth/56), (float)(ScreenHeight/31), 0.7843f);
