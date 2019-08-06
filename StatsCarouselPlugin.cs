@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Stats Carousel plugin for TurboHUD version 31/05/2019 16:58
+// Stats Carousel plugin for TurboHUD version 06/08/2019 11:47
 using Turbo.Plugins.Default;
 using System;
 
@@ -101,11 +101,11 @@ namespace Turbo.Plugins.Resu
             string SessionTimeTown = ToReadableTime(Hud.Tracker.Session.TownElapsedMilliseconds);
 
 
-            long TotalGainedExperience = Hud.Tracker.CurrentAccountTotal.GainedExperience;
+            double TotalGainedExperience = Hud.Tracker.CurrentAccountTotal.GainedExperience;
             double TotalGainedExperiencePerHour = Hud.Tracker.CurrentAccountTotal.GainedExperiencePerHourPlay;
-            long TodayGainedExperience = Hud.Tracker.CurrentAccountToday.GainedExperience;
+            double TodayGainedExperience = Hud.Tracker.CurrentAccountToday.GainedExperience;
             double TodayGainedExperiencePerHour = Hud.Tracker.CurrentAccountToday.GainedExperiencePerHourPlay;
-            long SessionGainedExperience = Hud.Tracker.Session.GainedExperience;
+            double SessionGainedExperience = Hud.Tracker.Session.GainedExperience;
             double SessionGainedExperiencePerHour = Hud.Tracker.Session.GainedExperiencePerHourPlay;
 
             long TotalMonsterKill = Hud.Tracker.CurrentAccountTotal.MonsterKill;

@@ -205,8 +205,8 @@ namespace Turbo.Plugins.Resu
                 Radius = 10.0f,
                 ShapePainter = new CircleShapePainter(Hud),
                 RadiusTransformator = new StandardPingRadiusTransformator(Hud, 333),
-            },
-            new MapLabelDecorator(Hud)
+            }
+      /*      new MapLabelDecorator(Hud)
             {
                 LabelFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, true, false, false),
             },
@@ -214,7 +214,7 @@ namespace Turbo.Plugins.Resu
             {
                 BackgroundBrush = Hud.Render.CreateBrush(160, 255, 0, 0, 0),
                 TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 220, true, false, false),
-            }
+            }*/
             );
 
             ShockTowerDecorator = new WorldDecoratorCollection(
@@ -231,20 +231,20 @@ namespace Turbo.Plugins.Resu
                 Radius = 30.0f,
                 ShapePainter = new CircleShapePainter(Hud),
             },
-            new MapLabelDecorator(Hud)
+        /*    new MapLabelDecorator(Hud)
             {
                 LabelFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, true, false, false),
-            },
+            },*/
             new GroundCircleDecorator(Hud)
             {
                 Brush = Hud.Render.CreateBrush(100, 255, 255, 220, 5, SharpDX.Direct2D1.DashStyle.Dash),
                 Radius = 30,
-            },
+            }/*
             new GroundLabelDecorator(Hud)
             {
                 BackgroundBrush = Hud.Render.CreateBrush(160, 0, 0, 0, 0),
                 TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 79, 170, 245, true, false, false),
-            }
+            }*/
             );
 
             ArcaneDecorator = new WorldDecoratorCollection(

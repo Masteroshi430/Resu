@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 24/06/2019 13:23
+// Paragon Percentage Plugin for TurboHUD Version 06/08/2019 11:45
 
 using System;
 using System.Globalization;
@@ -183,7 +183,7 @@ public string LastChatLine { get; set; }
 
             if (Hud.Game.Me.CurrentLevelNormal == 70)
                    {
-                     ParagonPercentage = string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", (Hud.Game.Me.CurrentLevelParagonFloat - Hud.Game.Me.CurrentLevelParagon) * 100);
+                     ParagonPercentage = string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", (Hud.Game.Me.CurrentLevelParagonDouble  - Hud.Game.Me.CurrentLevelParagon) * 100);
                    }
             else if (Hud.Game.Me.CurrentLevelNormal < 70)
                    {
