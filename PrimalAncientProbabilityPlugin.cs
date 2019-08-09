@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Primal Ancient Probability Plugin for TurboHUD Version 25/07/2019 22:43
+// Primal Ancient Probability Plugin for TurboHUD Version 09/08/2019 18:03
 
 using System;
 using System.Globalization;
@@ -125,11 +125,11 @@ namespace Turbo.Plugins.Resu
 
             var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_progressBar_healthBall").Rectangle;
             
-            ancientDecorator.Paint(uiRect.Right - (uiRect.Width/1.6f), uiRect.Top + uiRect.Height * 0.88f, 50f, 50f, HorizontalAlign.Left);
+            ancientDecorator.Paint(uiRect.Right - (uiRect.Width/1.6f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
 
             if (Hud.Game.Me.HighestSoloRiftLevel >= 70)
             {
-            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 4.1f), uiRect.Top + uiRect.Height * 0.88f, 50f, 50f, HorizontalAlign.Left);
+            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 4.1f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
             }
             
             bool KanaiRecipe = Hud.Render.GetUiElement("Root.NormalLayer.Kanais_Recipes_main").Visible;
