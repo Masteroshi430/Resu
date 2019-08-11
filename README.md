@@ -412,6 +412,7 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
                 plugin.ParagonPercentageOnTheRight = false; // set to true to display % on the left 
 		plugin.ShowGreaterRiftMaxLevel = false; // set to true to disable GR level display
 		plugin.DisplayParagonPercentage = true; // set to false to disable paragon percentage display
+		plugin.NPCDeco = true; // set to false to disable NPC decorator
             });  
 // End of settings for Paragon Percentage Plugin
 
