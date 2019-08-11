@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 06/08/2019 11:45
+// Paragon Percentage Plugin for TurboHUD Version 11/08/2019 11:53
 
 using System;
 using System.Globalization;
@@ -20,7 +20,6 @@ namespace Turbo.Plugins.Resu
         public TopLabelDecorator UnityDecorator { get; set; }
         public TopLabelDecorator ZDPSDecorator { get; set; }
         public TopLabelDecorator AFKDecorator { get; set; }
-
         public TopLabelDecorator NPCDecorator { get; set; }
 
         public int GRlevel { get; set; }
@@ -47,8 +46,12 @@ namespace Turbo.Plugins.Resu
         public bool isAFK1 { get; set; }
         public bool isAFK2 { get; set; }
         public bool isAFK3 { get; set; }
-
-public string LastChatLine { get; set; }
+        public string NamePlayer0 { get; set; }
+        public string NamePlayer1 { get; set; }
+        public string NamePlayer2 { get; set; }
+        public string NamePlayer3 { get; set; }
+        public string LastChatLine { get; set; }
+        public bool NPCDeco { get; set; }
 
         public ParagonPercentagePlugin()
         {
@@ -75,6 +78,7 @@ public string LastChatLine { get; set; }
             ParagonPercentageOnTheRight = true;
             ParagonPercentage = "0";
             DisplayParagonPercentage = true;
+            NPCDeco = true;
             TimeToNextParagon = string.Empty;
             LastChatLine = string.Empty;
 
@@ -135,7 +139,7 @@ public string LastChatLine { get; set; }
             {
                 BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                 BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
-                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 40, 0, 255, 0, true, false, 40, 255, 255, 255, true),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 30, 0, 255, 0, true, false, 40, 255, 255, 255, true),
 
                 TextFunc = () => "NPC",
                 HintFunc = () => "",
@@ -400,27 +404,51 @@ public string LastChatLine { get; set; }
                 
                 if (player.PortraitIndex == 0)
                 {
-                 Player0pos = player.FloorCoordinate;
+                 if (!string.IsNullOrEmpty(player.BattleTagAbovePortrait) && player.BattleTagAbovePortrait != NamePlayer0 )
+                  {
+                   _NPCwatch0.Restart();
+                   _watch0.Restart();
+                  }
+                    Player0pos = player.FloorCoordinate;
                  int NPC0 = (int)(_NPCwatch0.ElapsedMilliseconds / 60000);
-                 if (NPC0 > 3 && !isAFK0) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC0 > 3 && !isAFK0 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                    NamePlayer0 = player.BattleTagAbovePortrait;
                 }
                 else if (player.PortraitIndex == 1)
                 {
-                 Player1pos = player.FloorCoordinate;
+                    if (!string.IsNullOrEmpty(player.BattleTagAbovePortrait) && player.BattleTagAbovePortrait != NamePlayer1)
+                    {
+                        _NPCwatch1.Restart();
+                        _watch1.Restart();
+                    }
+                    Player1pos = player.FloorCoordinate;
                  int NPC1 = (int)(_NPCwatch1.ElapsedMilliseconds / 60000);
-                 if (NPC1 > 3 && !isAFK1) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC1 > 3 && !isAFK1 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                    NamePlayer1 = player.BattleTagAbovePortrait;
                 }
                  else if (player.PortraitIndex == 2)
                 {
-                 Player2pos = player.FloorCoordinate;
+                    if (!string.IsNullOrEmpty(player.BattleTagAbovePortrait) && player.BattleTagAbovePortrait != NamePlayer2)
+                    {
+                        _NPCwatch2.Restart();
+                        _watch2.Restart();
+                    }
+                    Player2pos = player.FloorCoordinate;
                  int NPC2 = (int)(_NPCwatch2.ElapsedMilliseconds / 60000);
-                 if (NPC2 > 3 && !isAFK2) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC2 > 3 && !isAFK2 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                    NamePlayer2 = player.BattleTagAbovePortrait;
                 }
                  else if (player.PortraitIndex == 3)
                 {
-                 Player3pos = player.FloorCoordinate;
+                    if (!string.IsNullOrEmpty(player.BattleTagAbovePortrait) && player.BattleTagAbovePortrait != NamePlayer3)
+                    {
+                        _NPCwatch3.Restart();
+                        _watch3.Restart();
+                    }
+                    Player3pos = player.FloorCoordinate;
                  int NPC3 = (int)(_NPCwatch3.ElapsedMilliseconds / 60000);
-                 if (NPC3 > 3 && !isAFK3) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC3 > 3 && !isAFK3 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                    NamePlayer3 = player.BattleTagAbovePortrait;
                 }
             }
             TimeToNextParagon = TimeToParagonLevel(Hud.Game.Me.CurrentLevelParagon + 1, false);
