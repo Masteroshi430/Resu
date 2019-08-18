@@ -74,6 +74,7 @@ Note 2 : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/h
               plugin.ResourceMin = 15; // Resource % at which the LowNotification sound is played (also threshold for HighNotification to be replayed even if LowNotification is disabled)
 	      plugin.HighNotification = true; // Play HighNotification
 	      plugin.LowNotification = true; // Play LowNotification
+	      plugin.DisciplineInsteadOfHatred = false; // set to true to be notified for discipline instead of hatred (demon hunters)
             });  
 // End of ChannelingPlugin Customization
 ```
