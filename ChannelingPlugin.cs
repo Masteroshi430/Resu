@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Channeling Plugin for TurboHUD Version 09/10/2018 19:21
+// Channeling Plugin for TurboHUD Version 18/08/2019 14:10
 
 using System;
 using System.Globalization;
@@ -17,7 +17,8 @@ namespace Turbo.Plugins.Resu
         public bool isOn { get; set; }
         public bool HighNotification { get; set; }
         public bool LowNotification { get; set; }
-                
+        public bool DisciplineInsteadOfHatred { get; set; }
+
         public ChannelingPlugin()
         {
             Enabled = true;
@@ -26,6 +27,7 @@ namespace Turbo.Plugins.Resu
             isOn = false;
             HighNotification = true;
             LowNotification = true;
+            DisciplineInsteadOfHatred = false;
         }
         
         public override void Load(IController hud)
@@ -50,8 +52,8 @@ namespace Turbo.Plugins.Resu
                     resource = Hud.Game.Me.Stats.ResourcePctWrath;
                     break;
                 case HeroClass.DemonHunter:
-                    resource = Hud.Game.Me.Stats.ResourcePctHatred;
-                    //resource = Hud.Game.Me.Stats.ResourcePctDiscipline;
+                    if (DisciplineInsteadOfHatred) resource = Hud.Game.Me.Stats.ResourcePctDiscipline;
+                    else resource = Hud.Game.Me.Stats.ResourcePctHatred;
                     break;
                 case HeroClass.Monk:
                     resource = Hud.Game.Me.Stats.ResourcePctSpirit;
