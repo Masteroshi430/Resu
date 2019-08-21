@@ -1,6 +1,6 @@
 ﻿//css_reference C:\v9.0.dll;
 // https://github.com/User5981/Resu
-// Urshi's gift plugin for TurboHUD version 10/05/2019 15:11
+// Urshi's gift plugin for TurboHUD version 21/08/2019 14:41 (mobile phone edition)
  
 using System;
 using System.Globalization;
@@ -133,6 +133,8 @@ namespace Turbo.Plugins.Resu
                 case 3250883209: // 3250883209 - Iceblink 
                 case 3249805099: // 3249805099 - Boon of the Hoarder
                     return jewelRank == 50;
+                case 3250955083: // 3250955083 - Legacy of dreams
+                    return jewelRank == 99;
                 default:
                     return false;
             }
