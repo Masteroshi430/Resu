@@ -41,7 +41,7 @@ namespace Turbo.Plugins.Resu
             }
         }
        
-        private HashSet<int> Chances = new HashSet<int> {100,90,80,70,60,30,15,8,4,2,1};
+        private readonly HashSet<int> Chances = new HashSet<int> {100,90,80,70,60,30,15,8,4,2,1};
               
         public Func<float> LeftFunc { get; set; }
         public Func<float> TopFunc { get; set; }
