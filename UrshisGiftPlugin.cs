@@ -1,7 +1,6 @@
-﻿//css_reference C:\v9.0.dll;
-// https://github.com/User5981/Resu
-// Urshi's gift plugin for TurboHUD version 10/05/2019 15:11
- 
+﻿// https://github.com/User5981/Resu
+// Urshi's gift plugin for TurboHUD version 21/08/2019 14:41 (mobile phone edition)
+
 using System;
 using System.Globalization;
 using System.Linq;
@@ -41,7 +40,7 @@ namespace Turbo.Plugins.Resu
             }
         }
        
-        private HashSet<int> Chances = new HashSet<int> {100,90,80,70,60,30,15,8,4,2,1};
+        private readonly HashSet<int> Chances = new HashSet<int> {100,90,80,70,60,30,15,8,4,2,1};
               
         public Func<float> LeftFunc { get; set; }
         public Func<float> TopFunc { get; set; }
@@ -133,10 +132,12 @@ namespace Turbo.Plugins.Resu
                 case 3250883209: // 3250883209 - Iceblink 
                 case 3249805099: // 3249805099 - Boon of the Hoarder
                     return jewelRank == 50;
+                case 3250955083: // 3250955083 - Legacy of dreams
+                    return jewelRank == 99;
                 default:
                     return false;
             }
-        }          
+        }
  
         private void DrawItemGRupgradeChance(IItem item, System.Drawing.RectangleF rect)
         {
@@ -144,7 +145,7 @@ namespace Turbo.Plugins.Resu
             if (jewelRank == -1) {jewelRank = 0;}
             bool Max = IsMaxedGem(item, jewelRank);
             
-            if (Max)                  
+            if (Max)
             {
                 var layout = GRupgradeChanceFont.GetTextLayout("max");
                 GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
@@ -158,7 +159,7 @@ namespace Turbo.Plugins.Resu
             GRlevel = jewelRank + AddPerc + (NumberOfAttempts - 1);
             if (GRlevel < 1) {GRlevel = 1;}
             var text = GRlevel.ToString("D", CultureInfo.InvariantCulture);
-            var layout = GRupgradeChanceFont.GetTextLayout(text); 
+            var layout = GRupgradeChanceFont.GetTextLayout(text);
             GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
             
             }
@@ -168,7 +169,7 @@ namespace Turbo.Plugins.Resu
         {
             var item = Hud.Inventory.HoveredItem;
             if (item == null) return;
-            var jewelRank = item.JewelRank; 
+            var jewelRank = item.JewelRank;
             if (item.ItemsInSocket == null)
               {
                if (!item.IsLegendary) return;
@@ -178,40 +179,40 @@ namespace Turbo.Plugins.Resu
             else
               {
                var legendaryGem = item.ItemsInSocket.FirstOrDefault(x => x.Quality == ItemQuality.Legendary && x.JewelRank > -1);
-               if (legendaryGem == null) return;     
+               if (legendaryGem == null) return;
                jewelRank = legendaryGem.JewelRank;
                         
                if (item.SnoItem.MainGroupCode == "2h" || item.SnoItem.MainGroupCode == "1h" )
                   {
                    if (!item.IsLegendary || item.SetSno != uint.MaxValue)
                        {
-                         LGemName =  item.AncientRank + "GoE: ";    
-                       } 
+                         LGemName =  item.AncientRank + "GoE: ";
+                       }
                     else
                        {
                         LGemName =  Environment.NewLine + "GoE: ";
-                       }                
+                       }
                   }
                 else if (item.SnoItem.MainGroupCode == "helm")
                   {
                     if (item.AncientRank < 1 || item.SetSno != uint.MaxValue)
                        {
-                        LGemName =  "RSS: ";    
-                       } 
+                        LGemName =  "RSS: ";
+                       }
                     else
                        {
                         LGemName =  Environment.NewLine + "RSS: ";
-                       }        
+                       }
     
-                  }                
+                  }
                else if (item.AncientRank < 1 || item.SetSno != uint.MaxValue)
                   {
                    LGemName = legendaryGem.SnoItem.NameLocalized + ":" + Environment.NewLine;   
-                  } 
+                  }
                else
                   {
                    LGemName = Environment.NewLine + legendaryGem.SnoItem.NameLocalized + ":" + Environment.NewLine;
-                  }             
+                  }
               
                     
             if (jewelRank == -1) jewelRank = 0;
@@ -227,28 +228,26 @@ namespace Turbo.Plugins.Resu
                }
             else
                {
-                GRlevel = jewelRank + AddPerc + (NumberOfAttempts - 1);  
+                GRlevel = jewelRank + AddPerc + (NumberOfAttempts - 1);
                 if (GRlevel < 1) {GRlevel = 1;}
                 if (NumberOfAttempts == 1)
-                   {    
+                   {
                     var textOne = string.Format(UpgradeTextOne, GRlevel, ChanceWantedPercentage, LGemName);
                     var layoutOne = UpgradeFont.GetTextLayout(textOne);
                     UpgradeFont.DrawText(layoutOne, LeftFunc(), TopFunc());
          
                    }
                 else
-                   {     
+                   {
                     var text = string.Format(UpgradeText, GRlevel, NumberOfAttempts, ChanceWantedPercentage, LGemName);
                     var layout = UpgradeFont.GetTextLayout(text); 
                     UpgradeFont.DrawText(layout, LeftFunc(), TopFunc());
                    }
                }
                
-            } 
+            }
             
         }
         
     }
 }
-            
-            
