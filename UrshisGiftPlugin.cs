@@ -1,6 +1,7 @@
-﻿// https://github.com/User5981/Resu
+// https://github.com/User5981/Resu
 // Urshi's gift plugin for TurboHUD version 21/08/2019 14:41 (mobile phone edition)
-
+ 
+>>>>>>> 966efa1352898a70a42ecdf8b8cf8cc7027ffde3
 using System;
 using System.Globalization;
 using System.Linq;
@@ -250,4 +251,3 @@ namespace Turbo.Plugins.Resu
         }
         
     }
-}
