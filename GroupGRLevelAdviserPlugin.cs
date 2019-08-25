@@ -4,6 +4,7 @@ using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 
 namespace Turbo.Plugins.Resu
 {
@@ -24,6 +25,7 @@ namespace Turbo.Plugins.Resu
         public int PlayerInTownCount { get; set; }
         public WorldDecoratorCollection CircleDecorator { get; set; }
         public WorldDecoratorCollection TalkToUrshiDecorator { get; set; }
+        public WorldDecoratorCollection BossCountdownDecorator { get; set; }
         public bool GardianIsDead { get; set; }
         public bool TalkedToUrshi { get; set; }
         public bool RedCircle { get; set; }
@@ -31,6 +33,8 @@ namespace Turbo.Plugins.Resu
         public uint CurrentGRLevel { get; set; }
         public IFont BlueFont { get; set; }
         public IFont YellowFont { get; set; }
+
+        private IWatch _Countdown;
 
         public GroupGRLevelAdviserPlugin()
         {
@@ -46,8 +50,9 @@ namespace Turbo.Plugins.Resu
          
          GRLevelText = string.Empty;
          CircleSize = 10;
+         _Countdown = Hud.Time.CreateWatch();
 
-          BlueFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
+            BlueFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
           YellowFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 240, 175, 125, true, false, 255, 0, 0, 0, true);
 
             GRLevelDecorator = new TopLabelDecorator(Hud)
@@ -98,7 +103,14 @@ namespace Turbo.Plugins.Resu
            BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
            TextFont = Hud.Render.CreateFont("tahoma", 20, 255, 255, 255, 255, true, true, true),
           });
-          
+
+          BossCountdownDecorator = new WorldDecoratorCollection(
+          new GroundLabelDecorator(Hud)
+          {
+              BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
+              TextFont = Hud.Render.CreateFont("tahoma", 100, 100, 255, 255, 255, true, true, true),
+          });
+
         }
 
         public void PaintWorld(WorldLayer layer)
@@ -188,7 +200,7 @@ namespace Turbo.Plugins.Resu
                     ObeliskClose.Paint(layer, Obelisk, Obelisk.FloorCoordinate, ObeliskMessage);
             }
 
-            // Current Greater rift level display part 
+            // Current Greater rift level display part
 
             var PlayerInGreaterRift = Hud.Game.Players.FirstOrDefault(p => p.InGreaterRift);
             if (PlayerInGreaterRift != null && Hud.Render.GreaterRiftBarUiElement.Visible)
@@ -256,8 +268,27 @@ namespace Turbo.Plugins.Resu
                 TalkToUrshiDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, "Talk to Urshi!");
             }
 
+
+            // Countdown to boss fight part
+            const int Magictime = 3750; // time in ms between 100% rift completion and the moment you can hit the boss
+            if (Hud.Game.Me.InGreaterRift && Hud.Game.RiftPercentage == 100 && !GardianIsDead)
+             {
+              _Countdown.Start();
+                float TimeLeft = (float)(Magictime - _Countdown.ElapsedMilliseconds)/1000;
+                bool BossOnScreen = Hud.Game.AliveMonsters.Where(x => x.IsOnScreen && x.Rarity == ActorRarity.Boss).Any();
+                if (TimeLeft > 0 && TimeLeft < Magictime && BossOnScreen) BossCountdownDecorator.Paint(layer, null, Hud.Game.Me.FloorCoordinate, TimeLeft.ToString("F1", CultureInfo.InvariantCulture));
+             }
+
+            if (_Countdown.ElapsedMilliseconds > Magictime)
+             {
+              _Countdown.Stop();
+              if (GardianIsDead) _Countdown.Reset();
+             }
+            
+
+
             // Monster pack part
-          if(PackLeaderLifePercentage)
+            if (PackLeaderLifePercentage)
             {
               var EliteLeaders = Hud.Game.AliveMonsters.Where(x => x.Rarity == ActorRarity.Rare);
               var Blues = Hud.Game.AliveMonsters.Where(x => x.Rarity == ActorRarity.Champion);
