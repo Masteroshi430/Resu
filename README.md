@@ -330,7 +330,8 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 - Red circle around 5% of Rift completion monster groups on minimap.
 - "Talk to Urshi" reminder when teleporting after Greater rift.
 - Support for Z class (ZDPS, Sup). 
-- Pack leader life percentage (toggleable, on by default)
+- Pack leader life percentage (toggleable, on by default).
+- Countdown between the moment the Grift is completed 100% and the moment you can hit the boss (if boss is on screen).
 
 ![alt text](READMEpics/gr.png)
 
