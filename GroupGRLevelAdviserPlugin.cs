@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 16/07/2019 20:20
+// Group GR Level Adviser Plugin for TurboHUD version 28/08/2019 23:51
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -34,13 +34,17 @@ namespace Turbo.Plugins.Resu
         public IFont BlueFont { get; set; }
         public IFont YellowFont { get; set; }
 
+        public IFont GRTimeFont { get; set; }
+
         private IWatch _Countdown;
+        public bool TimeToGRBoss { get; set; }
 
         public GroupGRLevelAdviserPlugin()
         {
             Enabled = true;
             RedCircle = true;
             PackLeaderLifePercentage = true;
+            TimeToGRBoss = true;
         }
 
         
@@ -54,6 +58,7 @@ namespace Turbo.Plugins.Resu
 
             BlueFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
           YellowFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 240, 175, 125, true, false, 255, 0, 0, 0, true);
+              GRTimeFont = Hud.Render.CreateFont("tahoma", 7, 255, 180, 147, 109, true, false, 160, 0, 0, 0, true);
 
             GRLevelDecorator = new TopLabelDecorator(Hud)
           {
@@ -201,7 +206,6 @@ namespace Turbo.Plugins.Resu
             }
 
             // Current Greater rift level display part
-
             var PlayerInGreaterRift = Hud.Game.Players.FirstOrDefault(p => p.InGreaterRift);
             if (PlayerInGreaterRift != null && Hud.Render.GreaterRiftBarUiElement.Visible)
             {
@@ -366,6 +370,22 @@ namespace Turbo.Plugins.Resu
                }
               
              }
+
+            // time to Grift boss part
+            var GriftBar = Hud.Render.GreaterRiftBarUiElement;
+            if (GriftBar.Visible && TimeToGRBoss)
+             {
+              var RiftPercentage = Hud.Game.RiftPercentage;
+                if (RiftPercentage == 0) RiftPercentage = 1;
+              var GriftStart = Hud.Game.CurrentTimedEventStartTick;
+              var Now = Hud.Game.CurrentGameTick;
+              var TimeEllapsed = Now - GriftStart;
+              var TimeToBoss = (TimeEllapsed / RiftPercentage) * (100 - RiftPercentage);
+              var text = ValueToString((long)(TimeToBoss) * 1000 * TimeSpan.TicksPerMillisecond / 60, ValueFormat.LongTime);
+              var textLayout = GRTimeFont.GetTextLayout(text);
+              if (TimeToBoss != 0) GRTimeFont.DrawText(textLayout, GriftBar.Rectangle.Right - (float)(GriftBar.Rectangle.Width / 900.0f) - (textLayout.Metrics.Width) - 1, GriftBar.Rectangle.Top + ((GriftBar.Rectangle.Height - textLayout.Metrics.Height) / 2) + 1);
+            }
+
         }
         
         private bool IsZDPS(IPlayer player)
