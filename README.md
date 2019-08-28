@@ -331,7 +331,8 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 - "Talk to Urshi" reminder when teleporting after Greater rift.
 - Support for Z class (ZDPS, Sup). 
 - Pack leader life percentage (toggleable, on by default).
-- Countdown between the moment the Grift is completed 100% and the moment you can hit the boss (if boss is on screen).
+- Countdown between the moment the Grift is completed 100% and the moment you can hit the boss (if boss is on screen) (toggleable, on by default).
+- time left to boss fight in Grift bar (toggleable, on by default).
 
 ![alt text](READMEpics/gr.png)
 
@@ -342,9 +343,10 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 // Settings for Group GR Level Adviser Plugin
                Hud.RunOnPlugin<Resu.GroupGRLevelAdviserPlugin>(plugin => 
             { 
-                    // Set to false if you don't want the red circle
-                     plugin.RedCircle = True;
-		     plugin.PackLeaderLifePercentage = True;
+                    
+                     plugin.RedCircle = True;                  // Set to false if you don't want the red circle
+		     plugin.PackLeaderLifePercentage = True;   // Set to false if you don't want the life percentage on elites
+		     plugin.TimeToGRBoss = true;               // Set to false if you don't want the time left to boss fight in Grift bar 
             });  
 // End of Settings for Group GR Level Adviser Plugin
 ```
