@@ -334,7 +334,8 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 - Countdown between the moment the Grift is completed 100% and the moment you can hit the boss (if boss is on screen) (toggleable, on by default).
 - time left to boss fight in Grift bar (toggleable, on by default).
 
-![alt text](READMEpics/gr.png)
+![alt text](READMEpics/gr.png) ![alt text](READMEpics/gr2.png)
+![alt text](READMEpics/gr3.png)
 
 <p><details>
 <summary>Customization (paste this in the Customization part of User/PluginEnablerOrDisablerPlugin.cs)</summary>
