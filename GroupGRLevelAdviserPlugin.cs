@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 28/08/2019 23:51
+// Group GR Level Adviser Plugin for TurboHUD version 30/08/2019 14:39
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -38,6 +38,9 @@ namespace Turbo.Plugins.Resu
 
         private IWatch _Countdown;
         public bool TimeToGRBoss { get; set; }
+        public bool BossSpawned { get; set; }
+        public int BossFightStart { get; set; }
+
 
         public GroupGRLevelAdviserPlugin()
         {
@@ -383,7 +386,41 @@ namespace Turbo.Plugins.Resu
               var TimeToBoss = (TimeEllapsed / RiftPercentage) * (100 - RiftPercentage);
               var text = ValueToString((long)(TimeToBoss) * 1000 * TimeSpan.TicksPerMillisecond / 60, ValueFormat.LongTime);
               var textLayout = GRTimeFont.GetTextLayout(text);
-              if (TimeToBoss != 0) GRTimeFont.DrawText(textLayout, GriftBar.Rectangle.Right - (float)(GriftBar.Rectangle.Width / 900.0f) - (textLayout.Metrics.Width) - 1, GriftBar.Rectangle.Top + ((GriftBar.Rectangle.Height - textLayout.Metrics.Height) / 2) + 1);
+              var secondsLeft = (Hud.Game.CurrentTimedEventEndTick - Hud.Game.CurrentTimedEventEndTickMod - (double)Hud.Game.CurrentGameTick) / 60.0d;
+              var Position = 1;
+              if (secondsLeft < 180) Position = 900;
+              var BossTexture = Hud.Texture.GetTexture(3153276977);
+              var BossDead = Hud.Texture.GetTexture(3692681898);
+              var Boss = Hud.Game.AliveMonsters.FirstOrDefault(x => x.Rarity == ActorRarity.Boss);
+
+                if (Boss != null && !BossSpawned)
+                {
+                 BossFightStart = Hud.Game.CurrentGameTick;
+                 BossSpawned = true;
+                }
+
+                if (Boss == null) BossSpawned = false;
+
+                if (TimeToBoss != 0)
+                {
+                    BossTexture.Draw(GriftBar.Rectangle.Right - (float)(GriftBar.Rectangle.Width / 900.0f * Position) - (textLayout.Metrics.Width / 2), GriftBar.Rectangle.Bottom - (GriftBar.Rectangle.Height * 0.2f), 45.0f, 45.0f, 1f);
+                    GRTimeFont.DrawText(textLayout, GriftBar.Rectangle.Right - (float)(GriftBar.Rectangle.Width / 900.0f * Position) - (textLayout.Metrics.Width / 2), GriftBar.Rectangle.Bottom + (GriftBar.Rectangle.Height * 0.7f));
+                }
+                else if (Boss != null)
+                {
+                    var MaxHealth = Boss.MaxHealth;
+                    var CurHealth = Boss.CurHealth;
+                    var LifePercentage = (CurHealth / MaxHealth) * 100;
+                    TimeEllapsed = Now - BossFightStart;
+                    var TimeToEnd = (TimeEllapsed / (100- LifePercentage)) * (LifePercentage);
+                    text = ValueToString((long)(TimeToEnd) * 1000 * TimeSpan.TicksPerMillisecond / 60, ValueFormat.LongTime);
+                    textLayout = GRTimeFont.GetTextLayout(text);
+                    if (TimeToEnd != 0 && LifePercentage < 100)
+                    {
+                        BossDead.Draw(GriftBar.Rectangle.Right - (float)(GriftBar.Rectangle.Width / 900.0f * Position) - (textLayout.Metrics.Width / 2), GriftBar.Rectangle.Bottom - (GriftBar.Rectangle.Height * 0.2f), 45.0f, 45.0f, 1f);
+                        GRTimeFont.DrawText(textLayout, GriftBar.Rectangle.Right - (float)(GriftBar.Rectangle.Width / 900.0f * Position) - (textLayout.Metrics.Width / 2), GriftBar.Rectangle.Bottom + (GriftBar.Rectangle.Height * 0.7f));
+                    }
+                }
             }
 
         }
