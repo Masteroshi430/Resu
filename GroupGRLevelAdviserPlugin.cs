@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 30/08/2019 14:39
+// Group GR Level Adviser Plugin for TurboHUD version 01/09/2019 18:06
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace Turbo.Plugins.Resu
         public bool TimeToGRBoss { get; set; }
         public bool BossSpawned { get; set; }
         public int BossFightStart { get; set; }
-
+        public int NumberOfZplayers { get; set; }
 
         public GroupGRLevelAdviserPlugin()
         {
@@ -179,7 +179,6 @@ namespace Turbo.Plugins.Resu
                 case 9:
                     ObeliskMessage = GenderSentence;
                     break;
-
             }
 
             var Rift = Hud.Game.Quests.FirstOrDefault(q => q.SnoQuest.Sno == 337492);
@@ -320,23 +319,32 @@ namespace Turbo.Plugins.Resu
 
         }
 
-
+         // GR level adviser part
          public void PaintTopInGame(ClipState clipState)
         {
             int maxGRlevel = 0;
             PlayerInTownCount = 0;
-            int NonZPlayerCount = 0;
             Battletags = string.Empty;
             ZClasses = string.Empty;
             HighestSolos = string.Empty;
+            NumberOfZplayers = 0;
             
             foreach (var player in Hud.Game.Players)
                   {
-                   if (!IsZDPS(player)) 
+                   if (!IsZDPS(player))
                     {
-                     maxGRlevel +=  player.HighestHeroSoloRiftLevel;
-                     NonZPlayerCount++;
+                    var SheetDPS = player.Offense.SheetDps;
+                    var DPSmaxGRlevel = (154 - (((7.5 - (SheetDPS / 1000000)) / 0.5) * 6));
+                     maxGRlevel += (int)DPSmaxGRlevel;
                     }
+                   else
+                    {
+                    var EHP = player.Defense.EhpMax;
+                    var ZmaxGRlevel = (150 - (((220 - (EHP / 1000000)) / 5) * 2));
+                    maxGRlevel += (int)ZmaxGRlevel;
+                    NumberOfZplayers++;
+                    }
+
                    if (player.IsInTown) PlayerInTownCount++;
                    string Battletag = player.BattleTagAbovePortrait;
                    
@@ -355,9 +363,11 @@ namespace Turbo.Plugins.Resu
                   
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
              {
-              if (NonZPlayerCount == 0) NonZPlayerCount = 1;
-              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / NonZPlayerCount + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
+              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / Hud.Game.NumberOfPlayersInGame + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
               GRLevelText = GRAverage.ToString();
+              if (NumberOfZplayers == Hud.Game.NumberOfPlayersInGame) GRLevelText = "Zero DPS party?";
+              else if (NumberOfZplayers == 0 && Hud.Game.NumberOfPlayersInGame != 1) GRLevelText = (int)(GRAverage - (GRAverage/5)) + " no sup!";
+              else if (NumberOfZplayers == (Hud.Game.NumberOfPlayersInGame - 1) && Hud.Game.NumberOfPlayersInGame == 4) GRLevelText = GRAverage  + " 3 sup!";
               var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
               if (Hud.Window.CursorY >= uiRect.Top && Hud.Window.CursorY <= (uiRect.Top + uiRect.Height) && Hud.Window.CursorX >= uiRect.Left && Hud.Window.CursorX <= (uiRect.Left + uiRect.Width)) 
                {
