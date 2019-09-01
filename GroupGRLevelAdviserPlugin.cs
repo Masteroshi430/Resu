@@ -41,6 +41,7 @@ namespace Turbo.Plugins.Resu
         public bool BossSpawned { get; set; }
         public int BossFightStart { get; set; }
         public int NumberOfZplayers { get; set; }
+        public int Position { get; set; }
 
         public GroupGRLevelAdviserPlugin()
         {
@@ -58,6 +59,7 @@ namespace Turbo.Plugins.Resu
          GRLevelText = string.Empty;
          CircleSize = 10;
          _Countdown = Hud.Time.CreateWatch();
+         Position = 1;
 
             BlueFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 125, 175, 240, true, false, 255, 0, 0, 0, true);
           YellowFont = Hud.Render.CreateFont("tahoma", 14.0f, 255, 240, 175, 125, true, false, 255, 0, 0, 0, true);
@@ -334,7 +336,7 @@ namespace Turbo.Plugins.Resu
                    if (!IsZDPS(player))
                     {
                     var SheetDPS = player.Offense.SheetDps;
-                    var DPSmaxGRlevel = (154 - (((7.5 - (SheetDPS / 1000000)) / 0.5) * 6));
+                    var DPSmaxGRlevel = (150 - (((15 - (SheetDPS / 1000000)) / 3) * 12.5));
                      maxGRlevel += (int)DPSmaxGRlevel;
                     }
                    else
@@ -364,6 +366,7 @@ namespace Turbo.Plugins.Resu
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
              {
               int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / Hud.Game.NumberOfPlayersInGame + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
+              if (GRAverage > 150) GRAverage = 150;
               GRLevelText = GRAverage.ToString();
               if (NumberOfZplayers == Hud.Game.NumberOfPlayersInGame) GRLevelText = "Zero DPS party?";
               else if (NumberOfZplayers == 0 && Hud.Game.NumberOfPlayersInGame != 1) GRLevelText = (int)(GRAverage - (GRAverage/5)) + " no sup!";
@@ -397,8 +400,8 @@ namespace Turbo.Plugins.Resu
               var text = ValueToString((long)(TimeToBoss) * 1000 * TimeSpan.TicksPerMillisecond / 60, ValueFormat.LongTime);
               var textLayout = GRTimeFont.GetTextLayout(text);
               var secondsLeft = (Hud.Game.CurrentTimedEventEndTick - Hud.Game.CurrentTimedEventEndTickMod - (double)Hud.Game.CurrentGameTick) / 60.0d;
-              var Position = 1;
-              if (secondsLeft < 180) Position = 900;
+              if (secondsLeft < 180 && Position < 900) Position += 5;
+              else if (Position > 1) Position -= 5;
               var BossTexture = Hud.Texture.GetTexture(3153276977);
               var BossDead = Hud.Texture.GetTexture(3692681898);
               var Boss = Hud.Game.AliveMonsters.FirstOrDefault(x => x.Rarity == ActorRarity.Boss);
