@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 10/05/2019 15:58
+// Crafter's Delight Plugin for TurboHUD Version 02/09/2019 08:07
 
 using System;
 using System.Collections.Generic;
@@ -238,6 +238,7 @@ namespace Turbo.Plugins.Resu
                 AddDecorator(3250847272, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3250883209, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
                 AddDecorator(3250919146, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
+                AddDecorator(3250955083, Hud.Render.CreateBrush(120, 255, 255, 255, 0), RoyalBlueBrush, RoyalBlueFont);
             }
 
             init_mapping = true;
