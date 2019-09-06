@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Channeling Plugin for TurboHUD Version 18/08/2019 14:10
+// Channeling Plugin for TurboHUD Version 06/09/2019 16:11
 
 using System;
 using System.Globalization;
@@ -14,20 +14,30 @@ namespace Turbo.Plugins.Resu
         
         public int ResourceMax { get; set; }
         public int ResourceMin { get; set; }
+        public int DisciplineMin { get; set; }
+        public int DisciplineMax { get; set; }
+        public int HatredMin { get; set; }
+        public int HatredMax { get; set; }
         public bool isOn { get; set; }
+        public bool DisciplineIsOn { get; set; }
+        public bool HatredIsOn { get; set; }
         public bool HighNotification { get; set; }
         public bool LowNotification { get; set; }
-        public bool DisciplineInsteadOfHatred { get; set; }
 
         public ChannelingPlugin()
         {
             Enabled = true;
             ResourceMax = 100;
             ResourceMin = 15;
+            DisciplineMax = 100;
+            DisciplineMin = 15;
+            HatredMax = 100;
+            HatredMin = 15;
             isOn = false;
+            DisciplineIsOn = false;
+            HatredIsOn = false;
             HighNotification = true;
             LowNotification = true;
-            DisciplineInsteadOfHatred = false;
         }
         
         public override void Load(IController hud)
@@ -42,7 +52,8 @@ namespace Turbo.Plugins.Resu
             if (!GoOn) return;
             
             float resource = 0f;
-            
+            bool IsDemonHunter = false;
+
             switch (Hud.Game.Me.HeroClassDefinition.HeroClass)
             {
                 case HeroClass.Barbarian:
@@ -52,8 +63,7 @@ namespace Turbo.Plugins.Resu
                     resource = Hud.Game.Me.Stats.ResourcePctWrath;
                     break;
                 case HeroClass.DemonHunter:
-                    if (DisciplineInsteadOfHatred) resource = Hud.Game.Me.Stats.ResourcePctDiscipline;
-                    else resource = Hud.Game.Me.Stats.ResourcePctHatred;
+                    IsDemonHunter = true;
                     break;
                 case HeroClass.Monk:
                     resource = Hud.Game.Me.Stats.ResourcePctSpirit;
@@ -69,50 +79,153 @@ namespace Turbo.Plugins.Resu
                     break;
             }
             if (!Hud.Sound.IsIngameSoundEnabled) return;
-            
-            if (resource >= ResourceMax && isOn == true)
-               {
-                 if (Hud.Game.Me.IsDead || Hud.Game.IsInTown){ isOn = false; }
-                 else if (HighNotification)
-                         { 
-                           
-                           var highSound = Hud.Sound.LoadSoundPlayer("Resource-Full-By-Resu.wav");
-            
-                           ThreadPool.QueueUserWorkItem(state =>
-                           {
-                            try 
-                               { 
-                                highSound.PlaySync(); 
-                               } 
-                            catch (Exception) 
-                              { 
-                              } 
-                         });  
-                           isOn = false;
-                         }
-                 else isOn = false;
-               }
-            else if (resource <= ResourceMin && isOn == false)
+
+            if (!IsDemonHunter)
+            {
+                if (resource >= ResourceMax && isOn == true)
+                {
+                    if (Hud.Game.Me.IsDead || Hud.Game.IsInTown)
+                    { isOn = false; }
+                    else if (HighNotification)
                     {
-                      if (Hud.Game.Me.IsDead || Hud.Game.IsInTown){ }
-                      else if (LowNotification)
-                              {
-                                var lowSound = Hud.Sound.LoadSoundPlayer("Resource-Low-By-Resu.wav");
-                                ThreadPool.QueueUserWorkItem(state =>
-                                {
-                                 try
-                                    {
-                                     lowSound.PlaySync();
-                                    }
-                                 catch (Exception)
+                        var highSound = Hud.Sound.LoadSoundPlayer("Resource-Full-By-Resu.wav");
+                        ThreadPool.QueueUserWorkItem(state =>
+                               {
+                                   try
+                                   {
+                                       highSound.PlaySync();
+                                   }
+                                   catch (Exception)
                                    {
                                    }
-                                  
-                                });
-                                isOn = true;
-                              }
-                      else isOn = true;
+                               });
+                        isOn = false;
                     }
+                    else
+                        isOn = false;
+                }
+                else if (resource <= ResourceMin && isOn == false)
+                {
+                    if (Hud.Game.Me.IsDead || Hud.Game.IsInTown)
+                    { }
+                    else if (LowNotification)
+                    {
+                        var lowSound = Hud.Sound.LoadSoundPlayer("Resource-Low-By-Resu.wav");
+                        ThreadPool.QueueUserWorkItem(state =>
+                                    {
+                                        try
+                                        {
+                                            lowSound.PlaySync();
+                                        }
+                                        catch (Exception)
+                                        {
+                                        }
+
+                                    });
+                        isOn = true;
+                    }
+                    else
+                        isOn = true;
+                }
+            }
+           else
+            {
+             var Discipline = Hud.Game.Me.Stats.ResourcePctDiscipline;
+             var Hatred = Hud.Game.Me.Stats.ResourcePctHatred;
+
+                if (Discipline >= DisciplineMax && DisciplineIsOn == true)
+                {
+                    if (Hud.Game.Me.IsDead || Hud.Game.IsInTown)
+                    { DisciplineIsOn = false; }
+                    else if (HighNotification)
+                    {
+                        var highSound = Hud.Sound.LoadSoundPlayer("Discipline-Full-By-Resu.wav");
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            try
+                            {
+                                highSound.PlaySync();
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        });
+                        DisciplineIsOn = false;
+                    }
+                    else
+                        DisciplineIsOn = false;
+                }
+                else if (Discipline <= DisciplineMin && DisciplineIsOn == false)
+                {
+                    if (Hud.Game.Me.IsDead || Hud.Game.IsInTown)
+                    { }
+                    else if (LowNotification)
+                    {
+                        var lowSound = Hud.Sound.LoadSoundPlayer("Discipline-Low-By-Resu.wav");
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            try
+                            {
+                                lowSound.PlaySync();
+                            }
+                            catch (Exception)
+                            {
+                            }
+
+                        });
+                        DisciplineIsOn = true;
+                    }
+                    else
+                        DisciplineIsOn = true;
+                }
+
+
+                if (Hatred >= HatredMax && HatredIsOn == true)
+                {
+                    if (Hud.Game.Me.IsDead || Hud.Game.IsInTown)
+                    { HatredIsOn = false; }
+                    else if (HighNotification)
+                    {
+                        var highSound = Hud.Sound.LoadSoundPlayer("Hatred-Full-By-Resu.wav");
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            try
+                            {
+                                highSound.PlaySync();
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        });
+                        HatredIsOn = false;
+                    }
+                    else
+                        HatredIsOn = false;
+                }
+                else if (Hatred <= HatredMin && HatredIsOn == false)
+                {
+                    if (Hud.Game.Me.IsDead || Hud.Game.IsInTown)
+                    { }
+                    else if (LowNotification)
+                    {
+                        var lowSound = Hud.Sound.LoadSoundPlayer("Hatred-Low-By-Resu.wav");
+                        ThreadPool.QueueUserWorkItem(state =>
+                        {
+                            try
+                            {
+                                lowSound.PlaySync();
+                            }
+                            catch (Exception)
+                            {
+                            }
+
+                        });
+                        HatredIsOn = true;
+                    }
+                    else
+                        HatredIsOn = true;
+                }
+            }
         }
     }
 }
