@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 01/09/2019 18:06
+// Group GR Level Adviser Plugin for TurboHUD version 61/09/2019 15:16
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -388,6 +388,7 @@ namespace Turbo.Plugins.Resu
              }
 
             // time to Grift boss part
+            if (clipState == ClipState.Inventory) return;
             var GriftBar = Hud.Render.GreaterRiftBarUiElement;
             if (GriftBar.Visible && TimeToGRBoss)
              {
