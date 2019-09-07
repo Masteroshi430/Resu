@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Deluxe Shrine labels plugin for TurboHUD version 12/02/2019 11:27
+// Deluxe Shrine labels plugin for TurboHUD version 07/09/2019 05:57
 // Psycho's Shrine labels plugin with new features 
 
 using Turbo.Plugins.Default;
@@ -107,8 +107,16 @@ namespace Turbo.Plugins.Resu
             
             if (NemesisMessage != string.Empty) NemesisMessage = "Leave for" + NemesisMessage;
             if (MyNemesisCount == 1) NemesisMessage = "HIT ME!";
-            
-            var shrines = Hud.Game.Shrines.Where(x => !x.IsDisabled && !x.IsOperated);
+
+            var GriftBar = Hud.Render.GreaterRiftBarUiElement;
+            var RiftPercentage = Hud.Game.RiftPercentage;
+
+            if (GriftBar.Visible && RiftPercentage > 95 && NemesisMessage == "HIT ME!")
+             {
+               NemesisMessage = "Keep for boss!";
+             }
+
+             var shrines = Hud.Game.Shrines.Where(x => !x.IsDisabled && !x.IsOperated);
             foreach (var shrine in shrines)
             {
                 if (ShowAllWhenHealthIsUnder40 && Hud.Game.Me.Defense.HealthPct < (float)40) {ShowHealingWells = true; ShowPoolOfReflection = true;}
