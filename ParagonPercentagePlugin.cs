@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 11/08/2019 11:53
+// Paragon Percentage Plugin for TurboHUD Version 10/09/2019 17:28
 
 using System;
 using System.Globalization;
@@ -107,11 +107,11 @@ namespace Turbo.Plugins.Resu
             HighestSoloRiftLevelDecorator = new TopLabelDecorator(Hud)
             {
                 BackgroundTexture1 = Hud.Texture.Button2TextureBrown,
-                BackgroundTextureOpacity1 = 0.9f,
+                BackgroundTextureOpacity1 = 0.0f, // BackgroundTextureOpacity1 = 0.9f,
                 TextFont = Hud.Render.CreateFont("Segoe UI Light", 7, 250, 255, 255, 255, false, false, true),
                 
-                TextFunc = () => "      " + GRlevel,
-                    
+                TextFunc = () => "      ", // + GRlevel
+
                 HintFunc = () =>  Class + Nemesis + Unity + Environment.NewLine + "Sheet DPS : " + ValueToString((long)SheetDPS, ValueFormat.LongNumber) + Environment.NewLine + "EHP : " + ValueToString((long)EHP, ValueFormat.LongNumber),
             };
             
@@ -214,7 +214,7 @@ namespace Turbo.Plugins.Resu
                   GRlevel = player.HighestHeroSoloRiftLevel;
                   SheetDPS = player.Offense.SheetDps;
                   EHP = player.Defense.EhpCur;
-                  Class = IsZDPS(player) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();;
+                  Class = IsZDPS(player) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass.ToString();
                   var Nemo = player.Powers.GetBuff(318820);
                   if (Nemo == null || !Nemo.Active) {Nemesis = "";} else {Nemesis = " [Nemesis]";}
                   var Unit = player.Powers.GetBuff(318769);
@@ -224,12 +224,30 @@ namespace Turbo.Plugins.Resu
                   
                   if (player.CurrentLevelNormal == 70 && ShowGreaterRiftMaxLevel)
                    {
-                      
-                      var grk = Hud.Inventory.GetSnoItem(2835237830);
-                      var texture = Hud.Texture.GetItemTexture(grk);
-                     
-                     HighestSoloRiftLevelDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.2f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                     texture.Draw(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.17f, 20f, 20f, 1f); 
+                   uint TextNumber = 795145286;
+
+                    if (GRlevel > 0 && GRlevel < 10) TextNumber = (uint)(795145286 + GRlevel);
+                    else if (GRlevel > 9 && GRlevel < 20) TextNumber = (uint)(795145309 + GRlevel);
+                    else if (GRlevel > 19 && GRlevel < 30) TextNumber = (uint)(795145332 + GRlevel);
+                    else if (GRlevel > 29 && GRlevel < 40) TextNumber = (uint)(795145355 + GRlevel);
+                    else if (GRlevel > 39 && GRlevel < 50) TextNumber = (uint)(795145378 + GRlevel);
+                    else if (GRlevel > 49 && GRlevel < 60) TextNumber = (uint)(795145401 + GRlevel);
+                    else if (GRlevel > 59 && GRlevel < 70) TextNumber = (uint)(795145424 + GRlevel);
+                    else if (GRlevel > 69 && GRlevel < 80) TextNumber = (uint)(795145447 + GRlevel);
+                    else if (GRlevel > 79 && GRlevel < 90) TextNumber = (uint)(795145470 + GRlevel);
+                    else if (GRlevel > 89 && GRlevel < 100) TextNumber = (uint)(795145493 + GRlevel);
+                    else if (GRlevel > 99 && GRlevel < 110) TextNumber = (uint)(469991699 + GRlevel);
+                    else if (GRlevel > 109 && GRlevel < 120) TextNumber = (uint)(469991722 + GRlevel);
+                    else if (GRlevel > 119 && GRlevel < 130) TextNumber = (uint)(469991745 + GRlevel);
+                    else if (GRlevel > 129 && GRlevel < 140) TextNumber = (uint)(469991768 + GRlevel);
+                    else if (GRlevel > 139 && GRlevel < 150) TextNumber = (uint)(469991791 + GRlevel);
+                    else if (GRlevel == 150) TextNumber = 469991964;
+
+                    var texture = Hud.Texture.GetTexture(TextNumber);
+                    if (texture == null) texture = Hud.Texture.GetTexture(795145286);
+
+                    HighestSoloRiftLevelDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.2f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                     texture.Draw(portrait.Left + portrait.Width * 0.30f, portrait.Top + portrait.Height * 0.14f, 37f, 37f, 1f); 
                    }
                   
                   
