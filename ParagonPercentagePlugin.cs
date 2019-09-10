@@ -248,7 +248,7 @@ namespace Turbo.Plugins.Resu
                     var glow = Hud.Texture.GetTexture(1738962956);
 
                     HighestSoloRiftLevelDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.2f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                    glow.Draw(portrait.Left + portrait.Width * 0.17f, portrait.Top + portrait.Height * 0.08f, 60f, 60f, 1f);
+                    glow.Draw(portrait.Left + portrait.Width * 0.17f, portrait.Top + portrait.Height * 0.08f, 60f, 60f, 0.5f);
                     texture.Draw(portrait.Left + portrait.Width * 0.30f, portrait.Top + portrait.Height * 0.14f, 37f, 37f, 1f);
                   }
                   
