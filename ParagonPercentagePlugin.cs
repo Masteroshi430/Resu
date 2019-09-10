@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 10/09/2019 17:28
+// Paragon Percentage Plugin for TurboHUD Version 10/09/2019 18:21
 
 using System;
 using System.Globalization;
@@ -224,7 +224,7 @@ namespace Turbo.Plugins.Resu
                   
                   if (player.CurrentLevelNormal == 70 && ShowGreaterRiftMaxLevel)
                    {
-                   uint TextNumber = 795145286;
+                    uint TextNumber = 795145286;
 
                     if (GRlevel > 0 && GRlevel < 10) TextNumber = (uint)(795145286 + GRlevel);
                     else if (GRlevel > 9 && GRlevel < 20) TextNumber = (uint)(795145309 + GRlevel);
@@ -245,10 +245,12 @@ namespace Turbo.Plugins.Resu
 
                     var texture = Hud.Texture.GetTexture(TextNumber);
                     if (texture == null) texture = Hud.Texture.GetTexture(795145286);
+                    var glow = Hud.Texture.GetTexture(1738962956);
 
                     HighestSoloRiftLevelDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.2f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                     texture.Draw(portrait.Left + portrait.Width * 0.30f, portrait.Top + portrait.Height * 0.14f, 37f, 37f, 1f); 
-                   }
+                    glow.Draw(portrait.Left + portrait.Width * 0.17f, portrait.Top + portrait.Height * 0.08f, 60f, 60f, 1f);
+                    texture.Draw(portrait.Left + portrait.Width * 0.30f, portrait.Top + portrait.Height * 0.14f, 37f, 37f, 1f);
+                  }
                   
                   
                   if (!player.IsMe)
