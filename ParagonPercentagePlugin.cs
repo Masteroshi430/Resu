@@ -139,7 +139,7 @@ namespace Turbo.Plugins.Resu
             {
                 BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                 BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
-                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 15, 0, 255, 0, true, false, 35, 255, 255, 255, true),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 10, 15, 0, 255, 0, true, false, 35, 255, 255, 255, true),
 
                 TextFunc = () => "NPC",
                 HintFunc = () => "",
@@ -243,14 +243,17 @@ namespace Turbo.Plugins.Resu
                     else if (GRlevel > 139 && GRlevel < 150) TextNumber = (uint)(469991791 + GRlevel);
                     else if (GRlevel == 150) TextNumber = 469991964;
 
-                    var texture = Hud.Texture.GetTexture(TextNumber);
-                    if (texture == null) texture = Hud.Texture.GetTexture(795145286);
-                    var glow = Hud.Texture.GetTexture(1738962956);
+                    if (GRlevel != 0)
+                     { 
+                      var texture = Hud.Texture.GetTexture(TextNumber);
+                      if (texture == null) texture = Hud.Texture.GetTexture(795145286);
+                      var glow = Hud.Texture.GetTexture(1738962956);
 
-                    HighestSoloRiftLevelDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.2f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                    glow.Draw(portrait.Left + portrait.Width * 0.17f, portrait.Top + portrait.Height * 0.08f, 60f, 60f, 0.5f);
-                    texture.Draw(portrait.Left + portrait.Width * 0.30f, portrait.Top + portrait.Height * 0.14f, 37f, 37f, 1f);
-                  }
+                      HighestSoloRiftLevelDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.2f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                      glow.Draw(portrait.Left + portrait.Width * 0.17f, portrait.Top + portrait.Height * 0.08f, 60f, 60f, 0.5f);
+                      texture.Draw(portrait.Left + portrait.Width * 0.30f, portrait.Top + portrait.Height * 0.14f, 37f, 37f, 1f);
+                     }
+                }
                   
                   
                   if (!player.IsMe)
@@ -431,7 +434,7 @@ namespace Turbo.Plugins.Resu
                   }
                     Player0pos = player.FloorCoordinate;
                  int NPC0 = (int)(_NPCwatch0.ElapsedMilliseconds / 60000);
-                 if (NPC0 > 3 && !isAFK0 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC0 > 3 && !isAFK0 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                     NamePlayer0 = player.BattleTagAbovePortrait;
                 }
                 else if (player.PortraitIndex == 1)
@@ -443,7 +446,7 @@ namespace Turbo.Plugins.Resu
                     }
                     Player1pos = player.FloorCoordinate;
                  int NPC1 = (int)(_NPCwatch1.ElapsedMilliseconds / 60000);
-                 if (NPC1 > 3 && !isAFK1 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC1 > 3 && !isAFK1 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                     NamePlayer1 = player.BattleTagAbovePortrait;
                 }
                  else if (player.PortraitIndex == 2)
@@ -455,7 +458,7 @@ namespace Turbo.Plugins.Resu
                     }
                     Player2pos = player.FloorCoordinate;
                  int NPC2 = (int)(_NPCwatch2.ElapsedMilliseconds / 60000);
-                 if (NPC2 > 3 && !isAFK2 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC2 > 3 && !isAFK2 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                     NamePlayer2 = player.BattleTagAbovePortrait;
                 }
                  else if (player.PortraitIndex == 3)
@@ -467,7 +470,7 @@ namespace Turbo.Plugins.Resu
                     }
                     Player3pos = player.FloorCoordinate;
                  int NPC3 = (int)(_NPCwatch3.ElapsedMilliseconds / 60000);
-                 if (NPC3 > 3 && !isAFK3 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                 if (NPC3 > 3 && !isAFK3 && NPCDeco) NPCDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                     NamePlayer3 = player.BattleTagAbovePortrait;
                 }
             }
