@@ -325,6 +325,7 @@ namespace Turbo.Plugins.Resu
          public void PaintTopInGame(ClipState clipState)
         {
             int maxGRlevel = 0;
+            int maxGRlevelZ = 0;
             PlayerInTownCount = 0;
             Battletags = string.Empty;
             ZClasses = string.Empty;
@@ -343,7 +344,7 @@ namespace Turbo.Plugins.Resu
                     {
                     var EHP = player.Defense.EhpMax;
                     var ZmaxGRlevel = (150 - (((220 - (EHP / 1000000)) / 5) * 2));
-                    maxGRlevel += (int)ZmaxGRlevel;
+                    maxGRlevelZ += (int)ZmaxGRlevel;
                     NumberOfZplayers++;
                     }
 
@@ -362,14 +363,19 @@ namespace Turbo.Plugins.Resu
                    ZClasses = (ZClasses.Length == 0) ? ZClass : ZClasses + Environment.NewLine + ZClass;
                    HighestSolos = (HighestSolos.Length == 0) ? HighestSolo : HighestSolos + Environment.NewLine + HighestSolo ;
                   }
-                  
+
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
-             {
-              int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevel / Hud.Game.NumberOfPlayersInGame + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
-              if (GRAverage > 150) GRAverage = 150;
+            {
+                int maxGRlevels = 0;
+                if (maxGRlevelZ > maxGRlevel) maxGRlevels = maxGRlevel + (maxGRlevelZ - (NumberOfZplayers * 10));
+                else maxGRlevels = maxGRlevel + maxGRlevelZ;
+
+
+                int GRAverage = Convert.ToInt32(Convert.ToDouble(maxGRlevels / Hud.Game.NumberOfPlayersInGame + (((1 + Math.Sqrt(5)) / 2) * (Hud.Game.NumberOfPlayersInGame - 1))));
+
               GRLevelText = GRAverage.ToString();
               if (NumberOfZplayers == Hud.Game.NumberOfPlayersInGame) GRLevelText = "Zero DPS party?";
-              else if (NumberOfZplayers == 0 && Hud.Game.NumberOfPlayersInGame != 1) GRLevelText = (int)(GRAverage - (GRAverage/5)) + " no sup!";
+              else if (NumberOfZplayers == 0 && Hud.Game.NumberOfPlayersInGame != 1) GRLevelText = GRAverage + " no sup!";
               else if (NumberOfZplayers == (Hud.Game.NumberOfPlayersInGame - 1) && Hud.Game.NumberOfPlayersInGame == 4) GRLevelText = GRAverage  + " 3 sup!";
               var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Rectangle;
               if (Hud.Window.CursorY >= uiRect.Top && Hud.Window.CursorY <= (uiRect.Top + uiRect.Height) && Hud.Window.CursorX >= uiRect.Left && Hud.Window.CursorX <= (uiRect.Left + uiRect.Width)) 
