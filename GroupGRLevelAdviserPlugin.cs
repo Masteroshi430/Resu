@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 61/09/2019 15:16
+// Group GR Level Adviser Plugin for TurboHUD version 17/09/2019 09:09
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -337,14 +337,13 @@ namespace Turbo.Plugins.Resu
                    if (!IsZDPS(player))
                     {
                     var SheetDPS = player.Offense.SheetDps;
-                    var DPSmaxGRlevel = (150 - (((15 - (SheetDPS / 1000000)) / 3) * 12.5));
-                     maxGRlevel += (int)DPSmaxGRlevel;
+                    var DPSmaxGRlevel = SheetDPSToGRLevel(SheetDPS);
+                    maxGRlevel += DPSmaxGRlevel;
                     }
                    else
                     {
                     var EHP = player.Defense.EhpMax;
-                    var ZmaxGRlevel = (150 - (((220 - (EHP / 1000000)) / 5) * 2));
-                    maxGRlevelZ += (int)ZmaxGRlevel;
+                    maxGRlevelZ += EHPToGRLevel(EHP);
                     NumberOfZplayers++;
                     }
 
@@ -367,7 +366,7 @@ namespace Turbo.Plugins.Resu
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
             {
                 int maxGRlevels = 0;
-                if (maxGRlevelZ > maxGRlevel) maxGRlevels = maxGRlevel + (maxGRlevelZ - (NumberOfZplayers * 10));
+                if (maxGRlevelZ > maxGRlevel) maxGRlevels = maxGRlevel + ((maxGRlevel / (Hud.Game.NumberOfPlayersInGame - NumberOfZplayers)) * NumberOfZplayers);
                 else maxGRlevels = maxGRlevel + maxGRlevelZ;
 
 
@@ -478,6 +477,48 @@ namespace Turbo.Plugins.Resu
         if (Points >= 4) {return true;} else {return false;}
          
         }
+
+        private int SheetDPSToGRLevel(float SheetDPS)
+        {
+            var result = 50000f;
+            var GRLevel = 1;
+            var DPS = SheetDPS;
+
+            for (var i = 1; i < 151; i++)
+            {
+                var percentage = result * .0425f;
+                var current = result + percentage;
+
+                if (current < DPS)
+                {
+                    result = current;
+                    GRLevel = i;
+                }
+            }
+            return GRLevel;
+        }
+
+        private int EHPToGRLevel(float EHP)
+        {
+
+            var result = 900000f;
+            var GRLevel = 1;
+
+            for (var i = 1; i < 151; i++)
+            {
+                var percentage = result * .0425f;
+                var current = result + percentage;
+
+                if (current < EHP)
+                {
+                    result = current;
+                    GRLevel = i;
+                }
+
+            }
+            return GRLevel;
+        }
+
     }
 
 }
