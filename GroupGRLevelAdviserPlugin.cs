@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 17/09/2019 09:09
+// Group GR Level Adviser Plugin for TurboHUD version 17/09/2019 12:40
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -39,6 +39,7 @@ namespace Turbo.Plugins.Resu
         private IWatch _Countdown;
         public bool TimeToGRBoss { get; set; }
         public bool BossSpawned { get; set; }
+
         public int BossFightStart { get; set; }
         public int NumberOfZplayers { get; set; }
         public int Position { get; set; }
@@ -338,6 +339,7 @@ namespace Turbo.Plugins.Resu
                     {
                     var SheetDPS = player.Offense.SheetDps;
                     var DPSmaxGRlevel = SheetDPSToGRLevel(SheetDPS);
+                    if (DPSmaxGRlevel < player.HighestHeroSoloRiftLevel)  DPSmaxGRlevel = player.HighestHeroSoloRiftLevel;
                     maxGRlevel += DPSmaxGRlevel;
                     }
                    else
@@ -347,7 +349,7 @@ namespace Turbo.Plugins.Resu
                     NumberOfZplayers++;
                     }
 
-                   if (player.IsInTown) PlayerInTownCount++;
+                if (player.IsInTown) PlayerInTownCount++;
                    string Battletag = player.BattleTagAbovePortrait;
                    
                    string DPS = string.Empty;
@@ -356,7 +358,7 @@ namespace Turbo.Plugins.Resu
                    string WhiteSpaces = new String(' ', WhiteSpaceNumber);
                    
                    string ZClass = (IsZDPS(player)) ? "Z " + player.HeroClassDefinition.HeroClass  : player.HeroClassDefinition.HeroClass + WhiteSpaces + DPS;
-                   string HighestSolo = player.HighestHeroSoloRiftLevel.ToString().PadLeft(3);
+                   string HighestSolo = (IsZDPS(player)) ? EHPToGRLevel(player.Defense.EhpMax).ToString().PadLeft(3) : (SheetDPSToGRLevel(player.Offense.SheetDps) < player.HighestHeroSoloRiftLevel) ? player.HighestHeroSoloRiftLevel.ToString().PadLeft(3) : SheetDPSToGRLevel(player.Offense.SheetDps).ToString().PadLeft(3);
                    if (player.SnoArea.Sno != Hud.Game.Me.SnoArea.Sno && player.HighestHeroSoloRiftLevel == 0) HighestSolo = "???".PadLeft(3);
                    Battletags = (Battletags.Length == 0) ? Battletag : Battletags + Environment.NewLine + Battletag ;
                    ZClasses = (ZClasses.Length == 0) ? ZClass : ZClasses + Environment.NewLine + ZClass;
@@ -366,7 +368,14 @@ namespace Turbo.Plugins.Resu
             if (Hud.Render.GetUiElement("Root.NormalLayer.rift_dialog_mainPage").Visible)
             {
                 int maxGRlevels = 0;
-                if (maxGRlevelZ > maxGRlevel) maxGRlevels = maxGRlevel + ((maxGRlevel / (Hud.Game.NumberOfPlayersInGame - NumberOfZplayers)) * NumberOfZplayers);
+                int nonZplayers = (Hud.Game.NumberOfPlayersInGame - NumberOfZplayers);
+
+                if (nonZplayers == 0)
+                 {
+                   nonZplayers = 1;
+                 }
+
+                if (maxGRlevelZ > maxGRlevel) maxGRlevels = maxGRlevel + ((maxGRlevel / nonZplayers) * NumberOfZplayers);
                 else maxGRlevels = maxGRlevel + maxGRlevelZ;
 
 
