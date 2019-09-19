@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Group GR Level Adviser Plugin for TurboHUD version 17/09/2019 12:40
+// Group GR Level Adviser Plugin for TurboHUD version 19/09/2019 10:11
 using Turbo.Plugins.Default;
 using System;
 using System.Collections.Generic;
@@ -491,31 +491,30 @@ namespace Turbo.Plugins.Resu
         {
             var result = 50000f;
             var GRLevel = 1;
-            var DPS = SheetDPS;
 
             for (var i = 1; i < 151; i++)
             {
                 var percentage = result * .0425f;
                 var current = result + percentage;
 
-                if (current < DPS)
+                if (current < SheetDPS)
                 {
                     result = current;
                     GRLevel = i;
                 }
+                else break;
             }
             return GRLevel;
         }
 
         private int EHPToGRLevel(float EHP)
         {
-
-            var result = 900000f;
+            var result = 9000000f;
             var GRLevel = 1;
 
             for (var i = 1; i < 151; i++)
             {
-                var percentage = result * .0425f;
+                var percentage = result * .0234f;
                 var current = result + percentage;
 
                 if (current < EHP)
@@ -523,7 +522,7 @@ namespace Turbo.Plugins.Resu
                     result = current;
                     GRLevel = i;
                 }
-
+                else break;
             }
             return GRLevel;
         }
