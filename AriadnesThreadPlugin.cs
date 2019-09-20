@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Ariadne's Thread plugin for TurboHUD version 20/09/2019 08:54
+// Ariadne's Thread plugin for TurboHUD version 20/09/2019 09:25
 // Shamelessly contains Xenthalon's AdvancedMarkerPlugin ^^;
 
 using System;
@@ -509,8 +509,10 @@ namespace Turbo.Plugins.Resu
 
             DistanceFromLastSecond = (OldPos.XYDistanceTo(Hud.Game.Me.FloorCoordinate)/4);
 
-            if (DistanceFromLastSecond > SpeedCooler) SpeedCooler = SpeedCooler + (float)((DistanceFromLastSecond - SpeedCooler) / (DistanceFromLastSecond + 1));
-            else if (DistanceFromLastSecond < SpeedCooler) SpeedCooler = SpeedCooler - (float)((SpeedCooler - DistanceFromLastSecond) / (DistanceFromLastSecond + 1));
+            if (DistanceFromLastSecond > SpeedCooler) SpeedCooler = SpeedCooler + (float)((DistanceFromLastSecond - SpeedCooler) / ((DistanceFromLastSecond * 4) + 1));
+            else if (DistanceFromLastSecond < SpeedCooler) SpeedCooler = SpeedCooler - (float)((SpeedCooler - DistanceFromLastSecond) / ((DistanceFromLastSecond * 4) + 1));
+
+            if (Hud.Game.Me.AnimationState != AcdAnimationState.Running) SpeedCooler = 0;
 
             double mph = Math.Round(SpeedCooler * 2.04545);
             double kmh = Math.Round(SpeedCooler * 3.29184);
