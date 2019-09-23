@@ -450,9 +450,7 @@ Heroes not in the same Hardcore/Softcore Seasonal/Regular mode will be ignored.
 ------
 
 #### [UrshisGiftPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/UrshisGiftPlugin.cs) - Adds GR level for n% chance of upgrade on the bottom-right of your legendary gems in your stash and your inventory, maxed Gems are labelled "max", hint in itemhovered menu.The default setting is 100% chance for all 3 consecutive attempts.
-```diff
--  Press F3 to update data after a GRift.
-```
+
 ![alt text](READMEpics/urshi.png) ![alt text](READMEpics/urshimin.png)
 
 <p><details>
