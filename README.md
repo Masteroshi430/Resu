@@ -205,10 +205,6 @@ It's the default InventoryFreeSpacePlugin with new features :
 
 Indicates Equipped Items durability (helps to know when to repair).
 
-```diff
--  You will be notified to press F3 to update the data.
-```
-
 ------
 
 #### [CraftCountPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/CraftCountPlugin.cs) 
