@@ -17,6 +17,7 @@ namespace Turbo.Plugins.Resu
         public IBrush ShadowBrush { get; set; }
         public IBrush InventoryLockBorderBrush { get; set; }
         public IFont GRupgradeChanceFont { get; set; }
+        public IFont GRupgradeNoChanceFont { get; set; }
         public int GRlevel { get; set; }
         public int ChanceWantedPercentage { get; set; }
         public int NumberOfAttempts { get; set; }
@@ -130,6 +131,10 @@ namespace Turbo.Plugins.Resu
             ShadowBrush = Hud.Render.CreateBrush(175, 0, 0, 0, -1.6f);
             GRupgradeChanceFont = Hud.Render.CreateFont("arial", 7, 255, 0, 0, 0, true, false, false);
             GRupgradeChanceFont.SetShadowBrush(128, 39, 229, 224, true);
+
+
+            GRupgradeNoChanceFont = Hud.Render.CreateFont("arial", 7, 170, 0, 0, 0, true, false, false);
+            GRupgradeNoChanceFont.SetShadowBrush(43, 39, 229, 224, true);
 
             LeftFunc = () =>
             {
@@ -259,10 +264,10 @@ namespace Turbo.Plugins.Resu
 
            if (Max)
             {
-                var layout = GRupgradeChanceFont.GetTextLayout("max");
+                var layout = GRupgradeNoChanceFont.GetTextLayout("max");
                 if ((rect.Bottom - layout.Metrics.Height - 3) > UpgradeGemPanelRect.Top && (rect.Bottom - layout.Metrics.Height - 3) < UpgradeGemPanelRect.Bottom)
                  {
-                  GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
+                  GRupgradeNoChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
                  }
                 return;
             }
@@ -323,14 +328,24 @@ namespace Turbo.Plugins.Resu
                         break;
                 }
 
-                var layout = GRupgradeChanceFont.GetTextLayout(Percentage);
-                if ((rect.Bottom - layout.Metrics.Height - 3) > UpgradeGemPanelRect.Top && (rect.Bottom - layout.Metrics.Height - 3) < UpgradeGemPanelRect.Bottom)
-                {
-                    GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
-                }
-
+                if (Percentage == "0%")
+                 {
+                  var layout = GRupgradeNoChanceFont.GetTextLayout(Percentage);
+                  if ((rect.Bottom - layout.Metrics.Height - 3) > UpgradeGemPanelRect.Top && (rect.Bottom - layout.Metrics.Height - 3) < UpgradeGemPanelRect.Bottom)
+                   {
+                    GRupgradeNoChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
+                   }
+                  }
+                 else
+                  {
+                   var layout = GRupgradeChanceFont.GetTextLayout(Percentage);
+                   if ((rect.Bottom - layout.Metrics.Height - 3) > UpgradeGemPanelRect.Top && (rect.Bottom - layout.Metrics.Height - 3) < UpgradeGemPanelRect.Bottom)
+                    {
+                     GRupgradeChanceFont.DrawText(layout, rect.Right - layout.Metrics.Width - 3, rect.Bottom - layout.Metrics.Height - 3);
+                    }
+                  }
             }
-        }
+        } 
 
         private void DrawTextLine()
         {

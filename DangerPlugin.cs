@@ -205,8 +205,8 @@ namespace Turbo.Plugins.Resu
                 Radius = 10.0f,
                 ShapePainter = new CircleShapePainter(Hud),
                 RadiusTransformator = new StandardPingRadiusTransformator(Hud, 333),
-            }
-      /*      new MapLabelDecorator(Hud)
+            }/*,
+            new MapLabelDecorator(Hud)
             {
                 LabelFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, true, false, false),
             },
@@ -1447,6 +1447,11 @@ namespace Turbo.Plugins.Resu
                         case "739.639, 1824.021, 0.0":
                             worldCoord1 = Hud.Window.CreateWorldCoordinate(703.058f, 1814.118f, 0.1f);
                             worldCoord2 = Hud.Window.CreateWorldCoordinate(703.696f, 1834.336f, 0.5f);
+                            break;
+
+                        case "1143.500, 1590.500, 0.0":
+                            worldCoord1 = Hud.Window.CreateWorldCoordinate(1178.362f, 1575.043f, 0.1f);
+                            worldCoord2 = Hud.Window.CreateWorldCoordinate(1165.389f, 1557.444f, 0.1f);
                             break;
 
                         default:
