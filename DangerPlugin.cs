@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Danger Plugin for TurboHUD Version 28/03/2019 20:11
+// Danger Plugin for TurboHUD Version 10/10/2019 15:30
 // Note : This plugin merges BM's DemonForgePlugin, ShockTowerPlugin, my BloodSpringsPlugin and adds many new features
 
 using SharpDX;
@@ -21,6 +21,7 @@ namespace Turbo.Plugins.Resu
         public WorldDecoratorCollection BloodSpringsDecoratorMedium { get; set; }
         public WorldDecoratorCollection BloodSpringsDecoratorBig { get; set; }
         public WorldDecoratorCollection DemonicForgeDecorator { get; set; }
+        public WorldDecoratorCollection UnknownDemonicForgeDecorator { get; set; }
         public WorldDecoratorCollection ShockTowerDecorator { get; set; }
         public WorldDecoratorCollection MoveWarningDecorator { get; set; }
         public WorldDecoratorCollection ArcaneDecorator { get; set; }
@@ -205,7 +206,17 @@ namespace Turbo.Plugins.Resu
                 Radius = 10.0f,
                 ShapePainter = new CircleShapePainter(Hud),
                 RadiusTransformator = new StandardPingRadiusTransformator(Hud, 333),
-            }/*,
+            }
+            );
+
+            UnknownDemonicForgeDecorator = new WorldDecoratorCollection(
+            new MapShapeDecorator(Hud)
+            {
+                Brush = Hud.Render.CreateBrush(255, 255, 0, 0, 0),
+                Radius = 10.0f,
+                ShapePainter = new CircleShapePainter(Hud),
+                RadiusTransformator = new StandardPingRadiusTransformator(Hud, 333),
+            },
             new MapLabelDecorator(Hud)
             {
                 LabelFont = Hud.Render.CreateFont("tahoma", 6, 255, 255, 255, 255, true, false, false),
@@ -214,7 +225,7 @@ namespace Turbo.Plugins.Resu
             {
                 BackgroundBrush = Hud.Render.CreateBrush(160, 255, 0, 0, 0),
                 TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 220, true, false, false),
-            }*/
+            }
             );
 
             ShockTowerDecorator = new WorldDecoratorCollection(
@@ -1454,8 +1465,13 @@ namespace Turbo.Plugins.Resu
                             worldCoord2 = Hud.Window.CreateWorldCoordinate(1165.389f, 1557.444f, 0.1f);
                             break;
 
+                        case "1953.510, 691.200, 0.1":
+                            worldCoord1 = Hud.Window.CreateWorldCoordinate(1988.417f, 683.042f, 0.2f);
+                            worldCoord2 = Hud.Window.CreateWorldCoordinate(1990.678f, 696.895f, 0.1f);
+                            break;
+
                         default:
-                            DemonicForgeDecorator.Paint(layer, actor, actor.FloorCoordinate, "!!! Not repertoriated !!! " + actor.FloorCoordinate);
+                            UnknownDemonicForgeDecorator.Paint(layer, actor, actor.FloorCoordinate, "!!! Not repertoriated !!! " + actor.FloorCoordinate);
                             var cursorScreen = Hud.Window.CreateScreenCoordinate(Hud.Window.CursorX, Hud.Window.CursorY);
                             var World = cursorScreen.ToWorldCoordinate();
                             string worldstring = World.ToString();
