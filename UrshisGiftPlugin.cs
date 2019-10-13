@@ -133,8 +133,8 @@ namespace Turbo.Plugins.Resu
             GRupgradeChanceFont.SetShadowBrush(128, 39, 229, 224, true);
 
 
-            GRupgradeNoChanceFont = Hud.Render.CreateFont("arial", 7, 170, 0, 0, 0, true, false, false);
-            GRupgradeNoChanceFont.SetShadowBrush(43, 39, 229, 224, true);
+            GRupgradeNoChanceFont = Hud.Render.CreateFont("arial", 7, 255, 0, 0, 0, true, false, false);
+            GRupgradeNoChanceFont.SetShadowBrush(128, 255, 0, 0, true);
 
             LeftFunc = () =>
             {
