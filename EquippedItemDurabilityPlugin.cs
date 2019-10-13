@@ -70,6 +70,7 @@ namespace Turbo.Plugins.Resu
             if ((Hud.Game.MapMode == MapMode.WaypointMap) || (Hud.Game.MapMode == MapMode.ActMap) || (Hud.Game.MapMode == MapMode.Map)) return;
             
               var uiRect = Hud.Render.InGameBottomHudUiElement.Rectangle;
+              if (uiRect == null) return;
 
               decimal TotalCurrentDurability = 0;
               decimal TotalMaxDurability = 0;
@@ -86,7 +87,7 @@ namespace Turbo.Plugins.Resu
               }
 
                if (TotalMaxDurability == 0) TotalMaxDurability = 1;
-               Percentage = TotalCurrentDurability / TotalMaxDurability* 100;
+               Percentage = TotalCurrentDurability / TotalMaxDurability * 100;
                
                var decorator = Percentage < 21 ? RedDecorator : Percentage < 51 ? YellowDecorator : GreenDecorator;
                

@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Paragon Percentage Plugin for TurboHUD Version 10/09/2019 18:21
+// Paragon Percentage Plugin for TurboHUD Version 12/10/2019 05:34
 
 using System;
 using System.Globalization;
@@ -129,7 +129,7 @@ namespace Turbo.Plugins.Resu
             {
                 BackgroundBrush = Hud.Render.CreateBrush(0, 0, 0, 0, 0),
                 BorderBrush = Hud.Render.CreateBrush(0, 182, 26, 255, 1),
-                TextFont = Hud.Render.CreateFont("Segoe UI Light", 30, 255, 255, 0, 0, true, false, 255, 255, 255, 255, true),
+                TextFont = Hud.Render.CreateFont("Segoe UI Light", 10, 255, 255, 0, 0, true, false, 255, 255, 255, 255, true),
                 
                 TextFunc = () =>  "AFK",
                 HintFunc = () => "",
@@ -328,8 +328,8 @@ namespace Turbo.Plugins.Resu
                    int AFK0 = (int)(_watch0.ElapsedMilliseconds/60000);
                         if (AFK0 > 3)
                         {
-                         AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
-                         isAFK0 = true;
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            isAFK0 = true;
                         }
                         else
                             isAFK0 = false; 
@@ -340,7 +340,7 @@ namespace Turbo.Plugins.Resu
                    int AFK1 = (int)(_watch1.ElapsedMilliseconds/60000);
                         if (AFK1 > 3)
                         {
-                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                             isAFK1 = true;
                         }
                         else
@@ -352,7 +352,7 @@ namespace Turbo.Plugins.Resu
                    int AFK2 = (int)(_watch2.ElapsedMilliseconds/60000);
                         if (AFK2 > 3)
                         {
-                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                             isAFK2 = true;
                         }
                         else
@@ -364,7 +364,7 @@ namespace Turbo.Plugins.Resu
                    int AFK3 = (int)(_watch3.ElapsedMilliseconds/60000);
                         if (AFK3 > 3)
                         {
-                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.4f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
+                            AFKDecorator.Paint(portrait.Left + portrait.Width * 0.26f, portrait.Top + portrait.Height * 0.6f, portrait.Width * 0.5f, portrait.Height * 0.1f, HorizontalAlign.Center);
                             isAFK3 = true;
                         }
                         else

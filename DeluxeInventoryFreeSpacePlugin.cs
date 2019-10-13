@@ -187,12 +187,11 @@ namespace Turbo.Plugins.Resu
             var BloodShard = Hud.Inventory.GetSnoItem(itemSno);
             var texture = Hud.Texture.GetItemTexture(BloodShard);
             var remaining = 500 + (Hud.Game.Me.HighestSoloRiftLevel * 10) - Hud.Game.Me.Materials.BloodShard;
-            if (remaining < 100)
-                ;
+            if (remaining < 100) ;
             else if (Hud.Game.Me.Materials.BloodShard < 1000)
-                texture.Draw(uiRect.Left + uiRect.Width * 0.648f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.09f, uiRect.Height * 0.09f, 0.5f);
+                texture.Draw(uiRect.Left + (uiRect.Width * 0.648f), uiRect.Top + (uiRect.Height * 0.90f), uiRect.Height * 0.09f, uiRect.Height * 0.09f, 0.5f);
             else
-                texture.Draw(uiRect.Left + uiRect.Width * 0.6475f, uiRect.Top + uiRect.Height * 0.90f, uiRect.Height * 0.08f, uiRect.Height * 0.08f, 0.5f);
+                texture.Draw(uiRect.Left + (uiRect.Width * 0.6475f), uiRect.Top + (uiRect.Height * 0.90f), uiRect.Height * 0.08f, uiRect.Height * 0.08f, 0.5f);
 
 
             if (HeroName != Hud.Game.Me.HeroName)
@@ -232,8 +231,8 @@ namespace Turbo.Plugins.Resu
             else if (clipState == ClipState.Inventory)
              {
               InventoryOpen = true;
-              float FirstSquareTop = ContainerRect.Top;
-              float FirstSquareLeft = ContainerRect.Left;
+              var FirstSquareTop = ContainerRect.Top;
+              var FirstSquareLeft = ContainerRect.Left;
               
               var Items = Hud.Game.Items.Where(i => i.Location == ItemLocation.Inventory);
               
@@ -246,19 +245,19 @@ namespace Turbo.Plugins.Resu
               {
                 var ItemRect = Hud.Inventory.GetItemRect(Item);
                
-                for (int c = 0; c < 10; c++) // 10 columns
+                for (var c = 0; c < 10; c++) // 10 columns
                  {
-                   for (int r = 0; r < 6; r++) // 6 rows
+                   for (var r = 0; r < 6; r++) // 6 rows
                     {
-                     float DatSquareTop = FirstSquareTop + (SquareSide * r);
-                     float DatSquareLeft = FirstSquareLeft + (SquareSide * c);
+                     var DatSquareTop = FirstSquareTop + (SquareSide * r);
+                     var DatSquareLeft = FirstSquareLeft + (SquareSide * c);
                      
                      
                      if ( Math.Abs(ItemRect.Height - SquareSide) < 1)
                       {
                        if ( Math.Abs(ItemRect.Top - DatSquareTop) < 4 && Math.Abs(ItemRect.Left - DatSquareLeft) < 4) //populate inventory slot
                         {
-                         string DatKey = "C" + c + "R" + r;
+                         var DatKey = "C" + c + "R" + r;
                          InventorySlots[DatKey] = Item.SnoItem.Sno.ToString() + Item.CreatedAtInGameTick.ToString(); //Item.ItemUniqueId;
                         }
                        
@@ -267,9 +266,9 @@ namespace Turbo.Plugins.Resu
                       {
                        if (Math.Abs(ItemRect.Top - DatSquareTop) < 4 && Math.Abs(ItemRect.Left - DatSquareLeft) < 4) //populate 2 inventory slots
                         {
-                         string DatKey = "C" + c + "R" + r;
+                         var DatKey = "C" + c + "R" + r;
                          InventorySlots[DatKey] = Item.SnoItem.Sno.ToString() + Item.CreatedAtInGameTick.ToString(); //Item.ItemUniqueId;
-                         string DatKeyTwo = "C" + c + "R" + (r+1);
+                         var DatKeyTwo = "C" + c + "R" + (r+1);
                          InventorySlots[DatKeyTwo] = Item.SnoItem.Sno.ToString() + Item.CreatedAtInGameTick.ToString(); //Item.ItemUniqueId;
                         }
                       }
@@ -281,16 +280,16 @@ namespace Turbo.Plugins.Resu
             if (SquareSide != 0f && ContainerRect != null) // calculate the freespacetwo value
              {
               var TwoSlotsCount = 0;
-              for (int c = 0; c < 10; c++) // 10 columns
+              for (var c = 0; c < 10; c++) // 10 columns
                  {
-                   for (int r = 0; r < 6; r++) // 6 rows
+                   for (var r = 0; r < 6; r++) // 6 rows
                     {
-                         string DatKey = "C" + c + "R" + r;
-                         string DatValue = InventorySlots[DatKey];
+                         var DatKey = "C" + c + "R" + r;
+                         var DatValue = InventorySlots[DatKey];
                          if (DatValue == string.Empty && r < 5)
                           {
-                           string DatKeyTwo = "C" + c + "R" + (r+1);
-                           string DatValueTwo = InventorySlots[DatKeyTwo];
+                           var DatKeyTwo = "C" + c + "R" + (r+1);
+                           var DatValueTwo = InventorySlots[DatKeyTwo];
                            if (DatValueTwo == string.Empty)
                             {
                              TwoSlotsCount++;
@@ -316,17 +315,17 @@ namespace Turbo.Plugins.Resu
                  
                   if (CachesLoopCount > CachesCount)
                    {
-                    int HoradricCachesToAdd = CachesLoopCount - CachesCount;
-                    for (int h = 0; h < HoradricCachesToAdd; h++)
+                    var HoradricCachesToAdd = CachesLoopCount - CachesCount;
+                    for (var h = 0; h < HoradricCachesToAdd; h++)
                      {   
-                       for (int r = 0; r < 5; r++) // 5 rows (we don't need the last one)
+                       for (var r = 0; r < 5; r++) // 5 rows (we don't need the last one)
                         {
-                          for (int c = 0; c < 10; c++) // 10 columns
+                          for (var c = 0; c < 10; c++) // 10 columns
                            {
-                            string DatKey = "C" + c + "R" + r;
-                            string DatValue = InventorySlots[DatKey];
-                            string DatKeyTwo = "C" + c + "R" + (r+1);
-                            string DatValueTwo = InventorySlots[DatKeyTwo];
+                            var DatKey = "C" + c + "R" + r;
+                            var DatValue = InventorySlots[DatKey];
+                            var DatKeyTwo = "C" + c + "R" + (r+1);
+                            var DatValueTwo = InventorySlots[DatKeyTwo];
                             if (DatValue == string.Empty && DatValueTwo == string.Empty)
                              {
                               InventorySlots[DatKey] = "HoradricWorkaroundFromHell";
@@ -348,8 +347,8 @@ namespace Turbo.Plugins.Resu
             var decorator = freeSpace < 2 ? RedDecorator : freeSpace < 20 ? YellowDecorator : GreenDecorator;
             var decoratorTwo = freeSpaceTwo < 2 ? RedDecoratorTwo : freeSpaceTwo < 10 ? YellowDecoratorTwo : GreenDecoratorTwo;
             
-            decorator.Paint(uiRect.Left + uiRect.Width * 0.595f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.028f, uiRect.Height * 0.12f, HorizontalAlign.Center);
-            decoratorTwo.Paint(uiRect.Left + uiRect.Width * 0.625f, uiRect.Top + uiRect.Height * 0.88f, uiRect.Width * 0.021f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+            decorator.Paint(uiRect.Left + (uiRect.Width * 0.595f), uiRect.Top + (uiRect.Height * 0.88f), uiRect.Width * 0.028f, uiRect.Height * 0.12f, HorizontalAlign.Center);
+            decoratorTwo.Paint(uiRect.Left + (uiRect.Width * 0.625f), uiRect.Top + (uiRect.Height * 0.88f), uiRect.Width * 0.021f, uiRect.Height * 0.12f, HorizontalAlign.Center);
 
         }
         
@@ -363,7 +362,7 @@ namespace Turbo.Plugins.Resu
         {
          if (!InventoryOpen)
          {
-           string ItemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();
+                var ItemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();
            if (item.SnoItem.MainGroupCode == "helm" || item.SnoItem.MainGroupCode == "chestarmor" ||
                item.SnoItem.MainGroupCode == "gloves" || item.SnoItem.MainGroupCode == "boots" || item.SnoItem.MainGroupCode == "shoulders" ||
                item.SnoItem.MainGroupCode == "pants" || item.SnoItem.MainGroupCode == "bracers" ||item.SnoItem.MainGroupCode == "crusadershield" ||
@@ -371,14 +370,14 @@ namespace Turbo.Plugins.Resu
                item.SnoItem.MainGroupCode == "shield" || item.SnoItem.MainGroupCode == "necromanceroffhand" ||item.SnoItem.MainGroupCode == "1h" ||
                item.SnoItem.MainGroupCode == "2h") // 2 slot items
             {
-             for (int r = 0; r < 5; r++) // 5 rows (we don't need the last one)
+             for (var r = 0; r < 5; r++) // 5 rows (we don't need the last one)
                  {
-                   for (int c = 0; c < 10; c++) // 10 columns
+                   for (var c = 0; c < 10; c++) // 10 columns
                     {
-                     string DatKey = "C" + c + "R" + r;
-                     string DatValue = InventorySlots[DatKey];
-                     string DatKeyTwo = "C" + c + "R" + (r+1);
-                     string DatValueTwo = InventorySlots[DatKeyTwo];
+                            var DatKey = "C" + c + "R" + r;
+                            var DatValue = InventorySlots[DatKey];
+                            var DatKeyTwo = "C" + c + "R" + (r+1);
+                            var DatValueTwo = InventorySlots[DatKeyTwo];
                      if (DatValue == string.Empty && DatValueTwo == string.Empty)
                       {
                        InventorySlots[DatKey] = ItemID;
@@ -390,12 +389,12 @@ namespace Turbo.Plugins.Resu
             }
            else if (item.SnoItem.MainGroupCode != "horadriccache")// 1 slot item
             {
-             for (int c = 0; c < 10; c++) // 10 columns
+             for (var c = 0; c < 10; c++) // 10 columns
                  {
-                   for (int r = 0; r < 6; r++) // 6 rows
+                   for (var r = 0; r < 6; r++) // 6 rows
                     {
-                     string DatKey = "C" + c + "R" + r;
-                     string DatValue = InventorySlots[DatKey];
+                            var DatKey = "C" + c + "R" + r;
+                            var DatValue = InventorySlots[DatKey];
                      if (DatValue == string.Empty)
                       {
                        InventorySlots[DatKey] = ItemID;
