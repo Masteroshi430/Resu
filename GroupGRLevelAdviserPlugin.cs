@@ -402,7 +402,7 @@ namespace Turbo.Plugins.Resu
              }
 
             // time to Grift boss part
-            if (clipState == ClipState.Inventory) return;
+            if (clipState != ClipState.BeforeClip) return;
             var GriftBar = Hud.Render.GreaterRiftBarUiElement;
             if (GriftBar.Visible && TimeToGRBoss)
              {

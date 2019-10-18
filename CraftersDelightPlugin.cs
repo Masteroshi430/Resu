@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Crafter's Delight Plugin for TurboHUD Version 02/09/2019 08:07
+// Crafter's Delight Plugin for TurboHUD Version 15/10/2019 05:10
 
 using System;
 using System.Collections.Generic;
@@ -489,7 +489,7 @@ namespace Turbo.Plugins.Resu
 
                     if (SnoMapping.ContainsKey(firstItem.SnoItem.Sno)) //2979276674
                     {
-                        var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
+                        var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) < 21).Sum(i => i.Quantity); // previously .XYDistanceTo(firstItem.FloorCoordinate) <= 40
                         if (count > 1)
                         {
                             var Qtt = " (" + count + ")";
@@ -513,7 +513,7 @@ namespace Turbo.Plugins.Resu
 
                 if (SnoMapping.ContainsKey(items.Key))
                 {
-                    var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) <= 40).Sum(i => i.Quantity);
+                    var count = orderedItems.Where(i => i.FloorCoordinate.XYDistanceTo(firstItem.FloorCoordinate) < 21).Sum(i => i.Quantity); // previously .XYDistanceTo(firstItem.FloorCoordinate) <= 40
                     if (count > 1)
                     {
                         var Qtt = " (" + count + ")";
