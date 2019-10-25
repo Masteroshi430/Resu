@@ -48,16 +48,17 @@ namespace Turbo.Plugins.Resu
                  TextFont = Hud.Render.CreateFont("arial", 7, 220, 227, 153, 25, true, false, 255, 0, 0, 0, true),
                  TextFunc = () => ancientText,
                  HintFunc = () => "Chance for the next Legendary drop to be Ancient." + Environment.NewLine + "Total Ancient drops : " + AncientTotal + " (" + TotalPercAncient + ") of Legendary drops",
-              
-            };
+                 BackgroundBrush = Hud.Render.CreateBrush(50, 0, 0, 0, 0),
+             };
             
              primalDecorator = new TopLabelDecorator(Hud)
             {
+
                  TextFont = Hud.Render.CreateFont("arial", 7, 180, 255, 64, 64, true, false, 255, 0, 0, 0, true),
                  TextFunc = () => primalText,
                  HintFunc = () => "Chance for the next Legendary drop to be Primal Ancient." + Environment.NewLine + "Total Primal Ancient drops : " + PrimalAncientTotal + " (" + TotalPercPrimal + ") of Legendary drops",
-              
-            };
+                 BackgroundBrush = Hud.Render.CreateBrush(50, 0, 0, 0, 0),
+             };
 
 
             double RNGprobaAncient = 9.7753333;
@@ -79,11 +80,11 @@ namespace Turbo.Plugins.Resu
 
             var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_progressBar_healthBall").Rectangle;
             
-            ancientDecorator.Paint(uiRect.Right - (uiRect.Width / 0.35f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
+            ancientDecorator.Paint(uiRect.Right - (uiRect.Width / 0.35f), uiRect.Top + (uiRect.Height / 1.168f), 75f, 25f, HorizontalAlign.Left);
 
             if (Hud.Game.Me.HighestSoloRiftLevel >= 70)
             {
-            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 0.42f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
+            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 0.42f), uiRect.Top + (uiRect.Height / 1.168f), 75f, 25f, HorizontalAlign.Left);
             }
             
             
