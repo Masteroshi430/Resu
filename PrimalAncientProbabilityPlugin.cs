@@ -1,5 +1,5 @@
 ﻿// https://github.com/User5981/Resu
-// Primal Ancient Probability Plugin for TurboHUD Version 09/08/2019 18:03
+// Primal Ancient Probability Plugin for TurboHUD Version 25/10/2019 14:39
 
 using System;
 using System.Globalization;
@@ -9,21 +9,13 @@ using System.Collections.Generic;
 
 namespace Turbo.Plugins.Resu
 {
-    public class PrimalAncientProbabilityPlugin : BasePlugin, IInGameTopPainter, ILootGeneratedHandler
+    public class PrimalAncientProbabilityPlugin : BasePlugin, IInGameTopPainter
     {
       
         public TopLabelDecorator ancientDecorator { get; set; }
         public TopLabelDecorator primalDecorator { get; set; }
         public string ancientText{ get; set; }
         public string primalText{ get; set; }
-        public double ancientMarker{ get; set; }
-        public double primalMarker{ get; set; }
-        public double legendaryCount{ get; set; }
-        public double prevInventoryLegendaryCount { get; set; }
-        public double prevInventoryAncientCount { get; set; }
-        public double prevInventoryPrimalCount { get; set; }
-        public bool RunOnlyOnce { get; set; }
-        public HashSet<string> legendaries = new HashSet<string>() {"0"};
         
         public PrimalAncientProbabilityPlugin()
         {
@@ -35,50 +27,15 @@ namespace Turbo.Plugins.Resu
             base.Load(hud);
             ancientText = String.Empty;
             primalText = String.Empty;
-            ancientMarker = 0;
-            primalMarker = 0;
-            legendaryCount = 0;
-            prevInventoryLegendaryCount = 0;
-            prevInventoryAncientCount = 0;
-            prevInventoryPrimalCount = 0;
-            RunOnlyOnce = true;
             
         }
         
-         public void OnLootGenerated(IItem item, bool gambled)
-        {
-          if (item != null && item.SnoItem != null && item.SnoItem.MainGroupCode != "gems_unique" && item.SnoItem.MainGroupCode != "potion") 
-           {
-            string itemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();
-            if (item.IsLegendary && !legendaries.Contains(itemID)) legendaryCount++;
-            if (item.AncientRank == 1 && !legendaries.Contains(itemID)) ancientMarker = legendaryCount;
-            if (item.AncientRank == 2 && !legendaries.Contains(itemID)) primalMarker = legendaryCount;
-            if (item.IsLegendary && !legendaries.Contains(itemID)) legendaries.Add(itemID);
-           }
-        } 
-        
-        public void OnNewArea(bool newGame, ISnoArea area)
-        {
-            if (newGame)
-            {
-                legendaries.Clear();
-                legendaries.Add("0");
-            }
-        }
         
         public void PaintTopInGame(ClipState clipState)
         {
                 
-            if (Hud.Game.Me.CurrentLevelNormal != 70 && Hud.Game.Me.CurrentLevelNormal > 0)  {ancientMarker = legendaryCount; return;}
-            if (Hud.Game.Me.HighestSoloRiftLevel < 70 && Hud.Game.Me.HighestSoloRiftLevel > 0) primalMarker = legendaryCount;
-            
-           if(RunOnlyOnce)
-            {
-             legendaryCount = Hud.Tracker.CurrentAccountTotal.DropLegendary;
-             ancientMarker = legendaryCount;
-             primalMarker = legendaryCount;
-             RunOnlyOnce = false;
-            }
+            if (Hud.Game.Me.CurrentLevelNormal != 70 && Hud.Game.Me.CurrentLevelNormal > 0)  { return;}
+            if (Hud.Game.Me.HighestSoloRiftLevel < 70 && Hud.Game.Me.HighestSoloRiftLevel > 0){ return; }
 
             long PrimalAncientTotal = Hud.Tracker.CurrentAccountTotal.DropPrimalAncient;
             long AncientTotal = Hud.Tracker.CurrentAccountTotal.DropAncient;
@@ -88,7 +45,7 @@ namespace Turbo.Plugins.Resu
                     
              ancientDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("arial", 6, 220, 227, 153, 25, true, false, 255, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("arial", 7, 220, 227, 153, 25, true, false, 255, 0, 0, 0, true),
                  TextFunc = () => ancientText,
                  HintFunc = () => "Chance for the next Legendary drop to be Ancient." + Environment.NewLine + "Total Ancient drops : " + AncientTotal + " (" + TotalPercAncient + ") of Legendary drops",
               
@@ -96,69 +53,40 @@ namespace Turbo.Plugins.Resu
             
              primalDecorator = new TopLabelDecorator(Hud)
             {
-                 TextFont = Hud.Render.CreateFont("arial", 6, 180, 255, 64, 64, true, false, 255, 0, 0, 0, true),
+                 TextFont = Hud.Render.CreateFont("arial", 7, 180, 255, 64, 64, true, false, 255, 0, 0, 0, true),
                  TextFunc = () => primalText,
                  HintFunc = () => "Chance for the next Legendary drop to be Primal Ancient." + Environment.NewLine + "Total Primal Ancient drops : " + PrimalAncientTotal + " (" + TotalPercPrimal + ") of Legendary drops",
               
             };
-            
-           
-            double probaAncient = 0;
-            double probaPrimal = 0;
-            double powAncient = legendaryCount-ancientMarker;
-            double powPrimal = legendaryCount-primalMarker;
-            double ancientMaths = 90.2246666/100;
-            double primalMaths = 99.7753334/100;
-            
-            if (powAncient == 0) powAncient = 1;
-            if (powPrimal == 0) powPrimal = 1;
-            
-            probaAncient = (1 - Math.Pow(ancientMaths, powAncient))*100;
-            probaPrimal = (1 - Math.Pow(primalMaths, powPrimal))*100;
-            
-            probaAncient = Math.Round(probaAncient, 2);
-            probaPrimal = Math.Round(probaPrimal, 2);
-            
-            
+
+
+            double RNGprobaAncient = 9.7753333;
+            double RNGprobaPrimal = 0.2246666;
+            double probaAncient = ((float)(AncientTotal) / (float)(LegendariesTotal)) * 100;
+            double probaPrimal = ((float)(PrimalAncientTotal) / (float)(LegendariesTotal)) * 100;
+            double DiffProbaAncient = (RNGprobaAncient - probaAncient);
+            double DiffProbaPrimal = (RNGprobaPrimal - probaPrimal);
+
+            probaAncient += (DiffProbaAncient * 2);
+            probaPrimal += (DiffProbaPrimal * 2);
+
+             probaAncient = Math.Round(probaAncient, 4);
+             probaPrimal = Math.Round(probaPrimal, 5);
+
+
             ancientText = "A: " + probaAncient  + "%";
             primalText =  "P: " + probaPrimal  + "%";
 
             var uiRect = Hud.Render.GetUiElement("Root.NormalLayer.game_dialog_backgroundScreenPC.game_progressBar_healthBall").Rectangle;
             
-            ancientDecorator.Paint(uiRect.Right - (uiRect.Width/1.6f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
+            ancientDecorator.Paint(uiRect.Right - (uiRect.Width / 0.35f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
 
             if (Hud.Game.Me.HighestSoloRiftLevel >= 70)
             {
-            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 4.1f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
+            primalDecorator.Paint(uiRect.Right - (uiRect.Width / 0.42f), uiRect.Top + (uiRect.Height / 1.168f), 50f, 50f, HorizontalAlign.Left);
             }
             
-            bool KanaiRecipe = Hud.Render.GetUiElement("Root.NormalLayer.Kanais_Recipes_main").Visible;
-            double InventoryLegendaryCount = 0;
-            double InventoryAncientCount = 0;
-            double InventoryPrimalCount = 0;
             
-            foreach (var item in Hud.Inventory.ItemsInInventory)
-                    {
-                     if (item != null) 
-                      {
-                       if (item.SnoItem == null || item.SnoItem.MainGroupCode == "gems_unique" || item.SnoItem.MainGroupCode == "potion") continue;
-                                              
-                       string itemID = item.SnoItem.Sno.ToString() + item.CreatedAtInGameTick.ToString();
-                       if (item.IsLegendary && !legendaries.Contains(itemID)) InventoryLegendaryCount++;
-                       if (item.AncientRank == 1 && !legendaries.Contains(itemID)) InventoryAncientCount++;
-                       if (item.AncientRank == 2 && !legendaries.Contains(itemID)) InventoryPrimalCount++;
-                       if (item.IsLegendary && !legendaries.Contains(itemID)) legendaries.Add(itemID);
-                      }
-                    }
-            
-            if (KanaiRecipe)
-               {
-                if (InventoryLegendaryCount > prevInventoryLegendaryCount) legendaryCount++; prevInventoryLegendaryCount = InventoryLegendaryCount;
-                if (InventoryAncientCount > prevInventoryAncientCount) ancientMarker = legendaryCount; prevInventoryAncientCount = InventoryAncientCount;
-                if (InventoryPrimalCount > prevInventoryPrimalCount) primalMarker = legendaryCount; prevInventoryPrimalCount = InventoryPrimalCount;
-               }
-            else prevInventoryLegendaryCount = InventoryLegendaryCount; prevInventoryAncientCount = InventoryAncientCount; prevInventoryPrimalCount = InventoryPrimalCount;
-           
 
         }
     }
