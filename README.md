@@ -146,7 +146,7 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 
 ------
 
-#### [DarkerDiablo3Plugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeInventoryFreeSpacePlugin.cs) 
+#### [DarkerDiablo3Plugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DarkerDiablo3Plugin.cs) 
 Simple color filter that kills shiny colors and brings a darker Diablo 3. 
 
 ------
