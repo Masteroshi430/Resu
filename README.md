@@ -146,6 +146,11 @@ Note : [HotEnablerDisablerPlugin.cs](https://minhaskamal.github.io/DownGit/#/hom
 
 ------
 
+#### [DarkerDiablo3Plugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeInventoryFreeSpacePlugin.cs) 
+Simple color filter that kills shiny colors and brings a darker Diablo 3. 
+
+------
+
 #### [DeluxeShrineLabelsPlugin.cs](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/User5981/Resu/blob/master/DeluxeShrineLabelsPlugin.cs) 
 ![alt text](READMEpics/Deluxe.png)
 It's Psycho's ShrineLabelsPlugin with new features :
