@@ -25,8 +25,8 @@ namespace Turbo.Plugins.Resu
         public override void Load(IController hud)
         {
             base.Load(hud);
-            ancientText = String.Empty;
-            primalText = String.Empty;
+            ancientText = string.Empty;
+            primalText = string.Empty;
             
         }
         
